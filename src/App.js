@@ -93,6 +93,7 @@ function DropdownMenu() {
         onEnter={calcHeight}>
         <div className="menu">
           <DropdownItem>
+          {/* LINK ADDED HERE */}
             <Link to="/profile">My Profile</Link>
           </DropdownItem>
           <DropdownItem
