@@ -16,7 +16,6 @@ import {Route, Link} from 'react-router-dom';
 import Home from './Home'
 import Profile from './Profile'
 
-//testing git
 
 function App() {
   return (
