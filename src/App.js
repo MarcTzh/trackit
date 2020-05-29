@@ -1,14 +1,16 @@
 import './index.css';
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
+//import Paper from '@material-ui/core/Paper';
 //Routing
 import NavMenu from './NavMenu';
+import Drawer from './Drawer'
 //apollo
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 function App() {
-  return <div> <NavMenu/></div>
+  // return <div> <NavMenu/></div>
+  return <div> <Drawer/></div>
 }
 
 // const TodosQuery = gql`
