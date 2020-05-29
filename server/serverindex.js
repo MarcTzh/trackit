@@ -1,7 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga')
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://teamBogo:@cluster0-vo9fe.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://teamBogo:rainbow6siege@cluster0-vo9fe.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true});
 
 
 //schema model

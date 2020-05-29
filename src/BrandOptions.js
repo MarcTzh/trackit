@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BrandOptions() {
-  const [value, setValue] = React.useState(options[0]);
-  const [inputValue, setInputValue] = React.useState('');
+  const [value, setValue] = useState(options[0]);
+  const [inputValue, setInputValue] = useState('');
   const classes = useStyles();
 
   return (
