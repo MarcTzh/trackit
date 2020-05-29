@@ -160,3 +160,11 @@ a {
   transform: translateX(110%);
   transition: all var(--speed) ease;
 }
+
+/* For chart.js */
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 80vh;
+  width: 80vw;
+}

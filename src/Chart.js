@@ -6,24 +6,55 @@ const Chart = () => {
 
     const chart = () => {
         setChartData({
-            labels: ['day1', 'day2', 'day3', 'day4'],
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [{
-                label: 'Prices of Product A',
-                data: [10,11,12,13,11,12],
-                backgroundColor: [
-                    'rgba(75.192,192,0.6)'
-                ],
-                borderWidth: 4
+                label: 'Product A',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45]
             }]
         })
     }
     useEffect(() => {
         chart()
     }, [])
+
     return (
         <div>
-            <h1>Dank</h1>
-            <Line data={chartData}/>
+            <h1>Category 1</h1>
+            {/* //options */}
+            <div class="chart-container">
+                <Line data={chartData} options={{
+                    responsive: true,
+                    title: {text:'Category 1', display: true},
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    // autoskip: true,
+                                    // maxTicksLimit: 10,
+                                    // beginAtZero: true
+                                },
+                                gridLines: {
+                                    display: false
+                                }
+                            }
+                        ],
+                        xAxes: [
+                            {
+                                gridLines : {
+                                    display: false
+                                }
+                            }
+                        ]
+                    }
+                }}/>
+            </div>
+            <h1>Category 2</h1>
+            {/* //options */}
+            <div>
+                <Line data={chartData}/>
+            </div>
         </div>
     )
 }
