@@ -45,7 +45,7 @@ function ProductPage() {
             return (
                 <ListItem >
             
-                <ListItemText id={labelId} primary={`${product.name}`} />
+                <ListItemText id={labelId} primary={`${product.name}  $${product.price}`} />
     
                 
                 <ListItemSecondaryAction>

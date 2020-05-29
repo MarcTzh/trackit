@@ -3,8 +3,25 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import BrandOptions from './BrandOptions';
 import CategoryOptions from './CategoryOptions';
+import { gql } from 'apollo-boost';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
+const PRODUCTS_QUERY = gql`
+{
+    products {
+        id
+        name
+        price
+    }
+}`;
 
+const CREATE_MUTATION = gql`
+  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Int!, $url: String!){
+  createProduct(name: $name, category: $category, brand: $brand, price: $price, url: $url) {
+    id
+  }
+}
+`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LayoutTextFields() {
+export default function Form() {
   const classes = useStyles();
 
   return (
