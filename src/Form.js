@@ -1,7 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Options from './Options';
+import BrandOptions from './BrandOptions';
+import CategoryOptions from './CategoryOptions';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: '25ch',
   },
 }));
 
@@ -21,59 +23,62 @@ export default function LayoutTextFields() {
   return (
     <div className={classes.root}>
       <div>
-        <Options/>
+        <CategoryOptions/>
+        <BrandOptions/>
       </div>
       <div>
+        
         <TextField
+        //PRODUCT NAME
           id="outlined-full-width"
-        //   label="Product name"
-          style={{ margin: 8 }}
+          // style={{ margin: 8 }}
           placeholder="Product name"
-        //   helperText="Full width!"
           fullWidth
           margin="normal"
+          className={classes.textField}
           InputLabelProps={{
             shrink: true,
           }}
           variant="outlined"
         />
+
         <TextField
-        //   id="outlined-full-width"
-        //   label="Product name"
-          style={{ margin: 8 }}
+        //PRODUCT URL
+          // style={{ margin: 8 }}
           placeholder="Product url"
-        //   helperText="Full width!"
           fullWidth
           margin="normal"
+          className={classes.textField}
           InputLabelProps={{
             shrink: true,
           }}
           variant="outlined"
         />
+
         <TextField
-        //   label="None"
+          id="outlined-margin-none"
+          placeholder="Price"
+          margin="normal"
+          className={classes.textField}
+          variant="outlined"
+        />
+
+        <TextField
           id="outlined-margin-none"
           placeholder="Price floor"
+          margin="normal"
           className={classes.textField}
-          helperText="Some important text"
           variant="outlined"
         />
+        
         <TextField
-        //   label="None"
           id="outlined-margin-none"
           placeholder="Price ceiling"
+          margin="normal"
           className={classes.textField}
-          helperText="Some important text"
           variant="outlined"
         />
-        <TextField
-        //   label="None"
-          id="outlined-margin-none"
-          defaultValue="Default Value"
-          className={classes.textField}
-          helperText="Some important text"
-          variant="outlined"
-        />
+        
 
       </div>
     </div>

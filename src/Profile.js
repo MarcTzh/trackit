@@ -3,10 +3,10 @@ import Form from './Form';
 
 function Profile() {
     return (
-        <div>
+        <div> 
             <h1>My profile</h1>
 
-            <Form/>
+            <Form />
         </div>
         
     );
