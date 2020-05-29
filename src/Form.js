@@ -77,6 +77,10 @@ export default function LayoutTextFields() {
           margin="normal"
           className={classes.textField}
           variant="outlined"
+          error
+          label="Error"
+          helperText="Must be a number"
+          variant="outlined"
         />
         
 
