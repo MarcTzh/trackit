@@ -4,6 +4,7 @@ import React from 'react';
 //Routing
 import Home from './Home';
 import Profile from './Profile';
+import ProductsPage from './ProductPage';
 
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -58,12 +59,22 @@ function NavMenu() {
                 <ListItemText primary={"Profile"} />
               </ListItem>
             </Link>
+            <Link to="/ProductsPage" className={classes.link}>
+              <ListItem button>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Products"} />
+              </ListItem>
+            </Link>
           </List>
         </Drawer>
         <Switch>
           <Route exact path="/" component={Home}>
           </Route>
           <Route exact path="/Profile" component={Profile}>
+          </Route>
+          <Route exact path="/ProductsPage" component={ProductsPage}>
           </Route>
         </Switch>
       </div>
