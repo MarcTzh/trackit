@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import BrandOptions from './BrandOptions';
-import CategoryOptions from './CategoryOptions';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Button from '@material-ui/core/Button';
+
 
 const PRODUCTS_QUERY = gql`
 {
@@ -20,37 +20,112 @@ const CREATE_MUTATION = gql`
   mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Int!, $url: String!){
   createProduct(name: $name, category: $category, brand: $brand, price: $price, url: $url) {
     id
+    name
   }
 }
 `;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
 }));
 
-
+const categoryOptions = ['to', 'be', 'updated', 'Audio devices'];
 const brandOptions = ['Amazon', 'e-commerce 2', 'e-commerce 3'];
 
 
 export default function Form() {
   const classes = useStyles();
+  const [createProduct] = useMutation(CREATE_MUTATION);
   const [brandValue, setBrandValue] = useState(brandOptions[0]);
   const [inputBrandValue, setInputBrandValue] = useState('');
+  const [categoryValue, setCategoryValue] = useState(categoryOptions[0]);
+  const [inputCategoryValue, setInputCategoryValue] = useState('');
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState(0);
+  const [url, setUrl] = useState('');
 
+
+  
+//   function handleChange(e) {
+//     const newText = e.target.value;
+//     console.log(newText);
+//     setText(newText);
+// }
+
+function handleNameChange(e) {
+  const newName = e.target.value;
+  setName(newName);
+}
+
+function handlePriceChange(e) {
+  const newPrice = e.target.value;
+  setPrice(newPrice);
+}
+
+function handleUrlChange(e) {
+  const newUrl = e.target.value;
+  setUrl(newUrl);
+}
+
+// function handleKeyDown(e) {
+
+//     if (e.key === "Enter") {
+//         e.preventDefault();
+//         createTodo( 
+//             {
+//                 variables: {text: text},
+//                 refetchQueries: [{ query: TodosQuery}] 
+//             }
+//          )
+//          setText('');
+//         }
+//     }
+
+
+
+
+
+  function handleSubmit() {
+    if(brandValue !== null && categoryValue !== null && name !== '' && url !== '' && price > 0){
+      createProduct( 
+                    {
+                        variables: {name: name, category: categoryValue, brand: brandValue, price: parseInt(price), url: url},
+                        // refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                    }
+                 )
+                 setName('');
+                 setPrice(0);
+                 setUrl('');
+      
+    }
+}
   return (
     <div>
+
+    <div className={classes.textField}>
+        <Autocomplete
+            categoryValue={categoryValue}
+            onChange={(event, newValue) => {
+            setCategoryValue(newValue);
+            }}
+            inputCategoryValue={inputCategoryValue}
+            onInputChange={(event, newInputValue) => {
+            setInputCategoryValue(newInputValue);
+            }}
+            id="controllable-states-demo"
+            options={categoryOptions}
+            style={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label="Category" variant="outlined" />}
+        />
+      </div>
       
       <div>
       {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
       <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
-      <br />
       <div className={classes.textField}>
         <Autocomplete
           brandValue={brandValue}
@@ -83,6 +158,8 @@ export default function Form() {
             shrink: true,
           }}
           variant="outlined"
+          onChange ={handleNameChange}
+          value = {name}
         />
 
         <TextField
@@ -96,6 +173,8 @@ export default function Form() {
             shrink: true,
           }}
           variant="outlined"
+          onChange ={handleUrlChange}
+          value = {url}
         />
 
         <TextField
@@ -104,6 +183,8 @@ export default function Form() {
           margin="normal"
           className={classes.textField}
           variant="outlined"
+          onChange ={handlePriceChange}
+          value = {price}
         />
 
         <TextField
@@ -125,6 +206,10 @@ export default function Form() {
           helperText="Must be a number"
           variant="outlined"
         />
+
+        <Button variant="contained" color="secondary" onClick={handleSubmit}>
+          Submit 
+        </Button>
         
 
       </div>

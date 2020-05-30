@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const options = ['to', 'be', 'updated', 'Audio devices'];
+const categoryOptions = ['to', 'be', 'updated', 'Audio devices'];
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -13,23 +13,23 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function CategoryOptions() {
-  const [value, setValue] = useState(options[0]);
-  const [inputValue, setInputValue] = useState('');
+  const [categoryValue, setCategoryValue] = useState(categoryOptions[0]);
+  const [inputCategoryValue, setInputCategoryValue] = useState('');
   const classes = useStyles();
 
   return (
     <div className={classes.textField}>
         <Autocomplete
-            value={value}
+            categoryValue={categoryValue}
             onChange={(event, newValue) => {
-            setValue(newValue);
+            setCategoryValue(newValue);
             }}
-            inputValue={inputValue}
+            inputCategoryValue={inputCategoryValue}
             onInputChange={(event, newInputValue) => {
-            setInputValue(newInputValue);
+            setInputCategoryValue(newInputValue);
             }}
             id="controllable-states-demo"
-            options={options}
+            options={categoryOptions}
             style={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label="Category" variant="outlined" />}
         />
