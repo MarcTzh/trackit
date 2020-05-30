@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const options = ['Amazon', 'e-commerce 2', 'e-commerce 3'];
+const brandOptions = ['Amazon', 'e-commerce 2', 'e-commerce 3'];
 
 const useStyles = makeStyles((theme) => ({
   textField: {
@@ -12,28 +12,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BrandOptions() {
-  const [value, setValue] = useState(options[0]);
-  const [inputValue, setInputValue] = useState('');
+export default function BrandbrandOptions() {
+  const [brandValue, setBrandValue] = useState(brandOptions[0]);
+  const [inputBrandValue, setInputBrandValue] = useState('');
   const classes = useStyles();
 
   return (
     <div>
-      {/* <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
-      <div>{`inputValue: '${inputValue}'`}</div> */}
+      {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
+      <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
       <br />
       <div className={classes.textField}>
         <Autocomplete
-          value={value}
+          brandValue={brandValue}
           onChange={(event, newValue) => {
-            setValue(newValue);
+            setBrandValue(newValue);
           }}
-          inputValue={inputValue}
+          inputBrandValue={inputBrandValue}
           onInputChange={(event, newInputValue) => {
-            setInputValue(newInputValue);
+            setInputBrandValue(newInputValue);
           }}
           id="controllable-states-demo"
-          options={options}
+          options={brandOptions}
           style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="Brand" variant="outlined" />}
         />

@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+const brandOptions = ['Amazon', 'e-commerce 2', 'e-commerce 3'];
+
+
 export default function Form() {
   const classes = useStyles();
 
@@ -43,6 +47,7 @@ export default function Form() {
         <CategoryOptions/>
         <BrandOptions/>
       </div>
+      
       <div>
         
         <TextField

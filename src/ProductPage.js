@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 // import CommentIcon from '@material-ui/icons/Comment';
 import ClearIcon from '@material-ui/icons/Clear';
 
+
 const PRODUCTS_QUERY = gql `
 {
     products {
