@@ -169,17 +169,16 @@ export default function PersistentDrawerLeft() {
           ))} */}
         </List>
       </Drawer>
-      {/* <main
+      <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
       >
         <div className={classes.drawerHeader} />
-        <Typography paragraph>
+        {/* <Typography paragraph>
           Blank page
-        </Typography>
-      </main> */}
-      <Switch>
+        </Typography> */}
+        <Switch>
           <Route exact path="/" component={Home}>
           </Route>
           <Route exact path="/Profile" component={Profile}>
@@ -189,6 +188,8 @@ export default function PersistentDrawerLeft() {
           <Route exact path="/Products" component={ProductPage}>
           </Route>
         </Switch>
+      </main>
+      
     </div>
   );
 }
