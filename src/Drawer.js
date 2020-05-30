@@ -25,7 +25,7 @@ import {
 import Home from './Home';
 import Profile from './Profile';
 import Settings from './Settings';
-import ProductsPage from './ProductPage';
+import ProductPage from './ProductPage';
 
 import HomeIcon from "@material-ui/icons/Home";
 import InfoIcon from '@material-ui/icons/Info';
@@ -181,6 +181,8 @@ export default function PersistentDrawerLeft() {
           <Route exact path="/Profile" component={Profile}>
           </Route>
           <Route exact path="/Settings" component={Settings}>
+          </Route>
+          <Route exact path="/Products" component={ProductPage}>
           </Route>
         </Switch>
     </div>
