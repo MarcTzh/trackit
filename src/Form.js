@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import BrandOptions from './BrandOptions';
 import CategoryOptions from './CategoryOptions';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const PRODUCTS_QUERY = gql`
 {
@@ -40,16 +41,36 @@ const brandOptions = ['Amazon', 'e-commerce 2', 'e-commerce 3'];
 
 export default function Form() {
   const classes = useStyles();
+  const [brandValue, setBrandValue] = useState(brandOptions[0]);
+  const [inputBrandValue, setInputBrandValue] = useState('');
 
   return (
-    <div className={classes.root}>
-      <div>
-        <CategoryOptions/>
-        <BrandOptions/>
-      </div>
+    <div>
       
       <div>
-        
+      {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
+      <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
+      <br />
+      <div className={classes.textField}>
+        <Autocomplete
+          brandValue={brandValue}
+          onChange={(event, newValue) => {
+            setBrandValue(newValue);
+          }}
+          inputBrandValue={inputBrandValue}
+          onInputChange={(event, newInputValue) => {
+            setInputBrandValue(newInputValue);
+          }}
+          id="controllable-states-demo"
+          options={brandOptions}
+          style={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="Brand" variant="outlined" />}
+        />
+      </div>
+    </div>
+
+
+      <div>
         <TextField
         //PRODUCT NAME
           id="outlined-full-width"
