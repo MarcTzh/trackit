@@ -27,8 +27,8 @@ import Profile from './Profile';
 import Settings from './Settings';
 import ProductPage from './ProductPage';
 
-import HomeIcon from "@material-ui/icons/Home";
-import InfoIcon from '@material-ui/icons/Info';
+// import HomeIcon from "@material-ui/icons/Home";
+// import InfoIcon from '@material-ui/icons/Info';
 
 const drawerWidth = 240;
 
@@ -150,6 +150,10 @@ export default function PersistentDrawerLeft() {
             <MenuItem component={Link} to="/profile">
             <ListItemIcon><MailIcon /></ListItemIcon>
                 Profile
+            </MenuItem>
+            <MenuItem component={Link} to="/products">
+            <ListItemIcon><MailIcon /></ListItemIcon>
+                Products
             </MenuItem>
             <MenuItem component={Link} to="/settings">
             <ListItemIcon><MailIcon /></ListItemIcon>
