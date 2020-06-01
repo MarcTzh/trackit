@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const categoryOptions = ['to', 'be', 'updated', 'Audio devices'];
+const categoryOptions = ['Electronics', 'Clothing', 'Food', 'Lifestyle'];
 
 const useStyles = makeStyles((theme) => ({
     textField: {

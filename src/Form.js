@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const categoryOptions = ['to', 'be', 'updated', 'Audio devices'];
-const brandOptions = ['Amazon', 'e-commerce 2', 'e-commerce 3'];
+const categoryOptions = ['Electronics', 'Clothing', 'Food', 'Lifestyle'];
+const brandOptions = ['Amazon', 'Shopee', 'Lazada'];
 
 
 export default function Form() {
@@ -84,10 +84,6 @@ function handleUrlChange(e) {
 //          setText('');
 //         }
 //     }
-
-
-
-
 
   function handleSubmit() {
     if(brandValue !== null && categoryValue !== null && name !== '' && url !== '' && price > 0){

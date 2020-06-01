@@ -38,7 +38,8 @@ function ProductPage() {
     if (error) return <p>Error! :(</p>;
 
     return (
-        <Paper>
+        <Paper>   
+            <h1>My Products</h1>
             <List>
             {data.products.map((product) => {
             const labelId = `checkbox-list-label-${product.id}`;

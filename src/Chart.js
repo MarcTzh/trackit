@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Bar, Line, Pie} from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2'; //there is also pie and bar
 
 const Chart = () => {
     const [chartData, setChartData] = useState({})
@@ -8,10 +8,10 @@ const Chart = () => {
         setChartData({
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [{
-                label: 'Product A',
+                label: 'Amazon',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45]
+                data: [200, 210, 215, 212, 220, 230, 225]
             }]
         })
     }
@@ -21,12 +21,12 @@ const Chart = () => {
 
     return (
         <div>
-            <h1>Category 1</h1>
+            <h1 align='center'>Electronics</h1>
             {/* //options */}
             <div class="chart-container">
                 <Line data={chartData} options={{
                     responsive: true,
-                    title: {text:'Category 1', display: true},
+                    title: {text:'Sony Wireless Headphones', display: true},
                     scales: {
                         yAxes: [
                             {
@@ -50,11 +50,7 @@ const Chart = () => {
                     }
                 }}/>
             </div>
-            <h1>Category 2</h1>
-            {/* //options */}
-            <div>
-                <Line data={chartData}/>
-            </div>
+        
         </div>
     )
 }
