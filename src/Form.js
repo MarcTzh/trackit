@@ -90,7 +90,7 @@ function handleUrlChange(e) {
       createProduct( 
                     {
                         variables: {name: name, category: categoryValue, brand: brandValue, price: parseInt(price), url: url},
-                        // refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                        refetchQueries: [{ query: PRODUCTS_QUERY}] 
                     }
                  )
                  setName('');
