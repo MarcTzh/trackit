@@ -29,6 +29,7 @@ import ProductPage from './ProductPage';
 
 // import HomeIcon from "@material-ui/icons/Home";
 // import InfoIcon from '@material-ui/icons/Info';
+import Trackit_logo from './Trackit_logo.png';
 
 const drawerWidth = 240;
 
@@ -121,9 +122,13 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          
+          {/* <Typography variant="h6" noWrap>
             Trackit
-          </Typography>
+          </Typography> */}
+          <img src={Trackit_logo} 
+          alt="Trackit_logo"
+          height='60' />;
         </Toolbar>
       </AppBar>
       <Drawer
