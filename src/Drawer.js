@@ -25,11 +25,13 @@ import {
 import Home from './Home';
 import Profile from './Profile';
 import Settings from './Settings';
+import AddNew from './AddNew';
 import ProductPage from './ProductPage';
 
 // import HomeIcon from "@material-ui/icons/Home";
 // import InfoIcon from '@material-ui/icons/Info';
-import Trackit_logo from './Trackit_logo.png';
+//for menu logo
+import Trackit_logo from './images/Trackit_logo.png';
 
 const drawerWidth = 240;
 
@@ -128,7 +130,7 @@ export default function PersistentDrawerLeft() {
           </Typography> */}
           <img src={Trackit_logo} 
           alt="Trackit_logo"
-          height='60' />;
+          height='60' />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -159,6 +161,10 @@ export default function PersistentDrawerLeft() {
             <MenuItem component={Link} to="/products">
             <ListItemIcon><MailIcon /></ListItemIcon>
                 Products
+            </MenuItem>
+            <MenuItem component={Link} to="/addnew">
+            <ListItemIcon><MailIcon /></ListItemIcon>
+                Add Products
             </MenuItem>
             <MenuItem component={Link} to="/settings">
             <ListItemIcon><MailIcon /></ListItemIcon>
@@ -191,6 +197,8 @@ export default function PersistentDrawerLeft() {
           <Route exact path="/Settings" component={Settings}>
           </Route>
           <Route exact path="/Products" component={ProductPage}>
+          </Route>
+          <Route exact path="/AddNew" component={AddNew}>
           </Route>
         </Switch>
       </main>

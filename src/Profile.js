@@ -6,8 +6,8 @@ import CategoryOptions from './CategoryOptions';
 function Profile() {
     return (
         <div> 
-            <h1 align='center'>My profile</h1>
-            <CategoryOptions align='center'/>
+            <h1 align='center'>My Profile</h1>
+            <CategoryOptions/>
             <BrandOptions/>
             <Chart />
         </div>

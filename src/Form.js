@@ -195,7 +195,7 @@ function handleUrlChange(e) {
           variant="outlined"
         />
         
-        <TextField
+        {/* <TextField
           id="outlined-margin-none"
           placeholder="Price ceiling"
           margin="normal"
@@ -205,12 +205,12 @@ function handleUrlChange(e) {
           label="Error"
           helperText="Must be a number"
           variant="outlined"
-        />
-
-        <Button variant="contained" color="secondary" onClick={handleSubmit}>
-          Submit 
-        </Button>
-        
+        /> */}
+        <div>
+          <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}>
+            Submit 
+          </Button>
+        </div>
 
       </div>
     </div>
