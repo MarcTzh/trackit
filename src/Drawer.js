@@ -27,6 +27,7 @@ import Profile from './Profile';
 import Settings from './Settings';
 import AddNew from './AddNew';
 import ProductPage from './ProductPage';
+import CategoryPage from './CategoryPage'
 
 // import HomeIcon from "@material-ui/icons/Home";
 // import InfoIcon from '@material-ui/icons/Info';
@@ -162,6 +163,10 @@ export default function PersistentDrawerLeft() {
             <ListItemIcon><MailIcon /></ListItemIcon>
                 Products
             </MenuItem>
+            <MenuItem component={Link} to="/categories">
+            <ListItemIcon><MailIcon /></ListItemIcon>
+                Categories
+            </MenuItem>
             <MenuItem component={Link} to="/addnew">
             <ListItemIcon><MailIcon /></ListItemIcon>
                 Add Products
@@ -199,6 +204,8 @@ export default function PersistentDrawerLeft() {
           <Route exact path="/Products" component={ProductPage}>
           </Route>
           <Route exact path="/AddNew" component={AddNew}>
+          </Route>
+          <Route exact path="/Categories" component={CategoryPage}>
           </Route>
         </Switch>
       </main>

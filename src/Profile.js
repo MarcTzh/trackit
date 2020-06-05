@@ -3,6 +3,7 @@ import Chart from './Chart';
 import BrandOptions from './BrandOptions';
 import CategoryOptions from './CategoryOptions';
 
+
 function Profile() {
     return (
         <div> 

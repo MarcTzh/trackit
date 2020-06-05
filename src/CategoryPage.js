@@ -11,7 +11,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 // import CommentIcon from '@material-ui/icons/Comment';
 import ClearIcon from '@material-ui/icons/Clear';
+import AddNewCategory from './AddNewCategory';
 
+const CATEGORIES_QUERY = gql `
+{
+    categories {
+        id
+        name
+    }
+}`;
 
 const PRODUCTS_QUERY = gql `
 {
@@ -22,41 +30,53 @@ const PRODUCTS_QUERY = gql `
     }
 }`;
 
-const REMOVE_MUTATION = gql `
-    mutation RemoveProduct($id: ID!) {
-        removeProduct(id: $id)
+const REMOVE_CATEGORIES_MUTATION = gql `
+    mutation RemoveCategory($id: ID!) {
+        removeCategory(id: $id)
     }
 `;
 
-function ProductPage() {
-
-    const { loading, error, data } = useQuery(PRODUCTS_QUERY);
-
-    const [removeProduct] = useMutation(REMOVE_MUTATION);
+function CategoryPage() {
+    const { productLoading, productError, productData } = useQuery(PRODUCTS_QUERY);
+    
+    const { loading, error, data } = useQuery(CATEGORIES_QUERY);
+    
+    const [removeCategory] = useMutation(REMOVE_CATEGORIES_MUTATION);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
-
+    
     return (
         <Paper>   
-            <h1>My Products</h1>
+        <AddNewCategory/>
+            <h1>My Categories</h1>
             <List>
-            {data.products.map((product) => {
-            const labelId = `checkbox-list-label-${product.id}`;
-    
+            {data.categories.map((category) => {
+
+            if (productLoading) return <p>Loading...</p>;
+            console.log("loading done")
+            if (productError) return <p>Error! :(</p>;
+
+            const numOf = 0;
+            {/* productData.products.map((product) => product.category === category.name? numOf++: numOf += 0 ); */}
+
+            const productArray =[]
+
+            {/* productData.products.map((product) => productArray.push(product.name)); */}
+
             return (
-                <ListItem >
+                <ListItem>
             
-                <ListItemText id={labelId} primary={`${product.name}  $${product.price}`} />
+                <ListItemText primary={`${category.name}`} />
     
                 <ListItemSecondaryAction>
                     <IconButton onClick={
-                () => {removeProduct(
+                () => {removeCategory(
                 {
                     variables: 
                     {
-                    id: product.id},
-                    refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                    id: category.id},
+                    refetchQueries: [{ query: CATEGORIES_QUERY}] 
                 }
                 )
                 }
@@ -75,4 +95,4 @@ function ProductPage() {
     
     
 
-export default ProductPage;
+export default CategoryPage;

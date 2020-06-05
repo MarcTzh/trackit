@@ -5,7 +5,8 @@ mongoose.connect('mongodb+srv://teamBogo:rainbow6siege@cluster0-vo9fe.gcp.mongod
 
 
 //schema model
-const ProductSchema = new mongoose.Schema({
+
+const Product = mongoose.model('product', {
   name: String,
   category: String,
   brand: String,
@@ -13,12 +14,9 @@ const ProductSchema = new mongoose.Schema({
   url: String
 });
 
-const Product = mongoose.model('product', ProductSchema);
-
 
 const Category = mongoose.model('category', {
   name: String,
-  listProducts: [ProductSchema]
 });
 
 
@@ -37,21 +35,10 @@ const typeDefs = `
     price: Int!
     url: String!
   }
-  input ProductInput {
-    id : ID!
-    name: String!
-    category: String!
-    brand: String!
-    price: Int!
-    url: String!
-  }
+ 
   type Category {
     id: ID!
     name: String!
-    listProducts: [Product!]
-  }
-  input ListProductsInput {
-    listProducts: [ProductInput]!
   }
   
   type Mutation {
@@ -78,7 +65,7 @@ const typeDefs = `
 
       updateCategory(
         id: ID!,
-        listProducts: ListProductsInput!
+        name: String!
       ): Boolean
 
       removeCategory(
@@ -93,7 +80,7 @@ const resolvers = {
     // if no name given, say "hello world"
     hello: (_, { name }) => `Hello ${name || 'World'}`,
     products: () => Product.find(),
-    categories: () => Categories.find()
+    categories: () => Category.find()
   },
   Mutation: { 
       createProduct: async (_,{ name, category, brand, price, url }) => {
@@ -114,8 +101,8 @@ const resolvers = {
         return true;
       },
 
-      updateCategory: async (_, {id, listProducts}) => {
-        await Category.findByIdAndUpdate(id, {listProducts});
+      updateCategory: async (_, {id, name}) => {
+        await Category.findByIdAndUpdate(id, {name});
         return true;
       },
 

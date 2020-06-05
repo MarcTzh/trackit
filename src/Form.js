@@ -5,6 +5,7 @@ import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
+import { List } from '@material-ui/core';
 
 
 const PRODUCTS_QUERY = gql`
@@ -25,6 +26,14 @@ const CREATE_MUTATION = gql`
 }
 `;
 
+const CATEGORIES_QUERY = gql `
+{
+    categories {
+        id
+        name
+    }
+}`;
+
 const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
@@ -33,11 +42,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const categoryOptions = ['Electronics', 'Clothing', 'Food', 'Lifestyle'];
 const brandOptions = ['Amazon', 'Shopee', 'Lazada'];
 
 
+
 export default function Form() {
+
+  const { loading, error, data } = useQuery(CATEGORIES_QUERY);
+  
+  const categoryOptions = [];
+    
   const classes = useStyles();
   const [createProduct] = useMutation(CREATE_MUTATION);
   const [brandValue, setBrandValue] = useState(brandOptions[0]);
@@ -47,14 +61,6 @@ export default function Form() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [url, setUrl] = useState('');
-
-
-  
-//   function handleChange(e) {
-//     const newText = e.target.value;
-//     console.log(newText);
-//     setText(newText);
-// }
 
 function handleNameChange(e) {
   const newName = e.target.value;
@@ -71,20 +77,6 @@ function handleUrlChange(e) {
   setUrl(newUrl);
 }
 
-// function handleKeyDown(e) {
-
-//     if (e.key === "Enter") {
-//         e.preventDefault();
-//         createTodo( 
-//             {
-//                 variables: {text: text},
-//                 refetchQueries: [{ query: TodosQuery}] 
-//             }
-//          )
-//          setText('');
-//         }
-//     }
-
   function handleSubmit() {
     if(brandValue !== null && categoryValue !== null && name !== '' && url !== '' && price > 0){
       createProduct( 
@@ -99,6 +91,13 @@ function handleUrlChange(e) {
       
     }
 }
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error! :(</p>;
+  data.categories.map((category) => categoryOptions.push(category.name));
+
+
+
   return (
     <div>
 
