@@ -19,6 +19,7 @@ const PRODUCTS_QUERY = gql `
         id
         name
         price
+        category
     }
 }`;
 

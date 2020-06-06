@@ -9,7 +9,6 @@ function Profile() {
         <div> 
             <h1 align='center'>My Profile</h1>
             <CategoryOptions/>
-            <BrandOptions/>
             <Chart />
         </div>
         

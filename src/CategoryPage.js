@@ -31,6 +31,12 @@ const PRODUCTS_QUERY = gql `
     }
 }`;
 
+const REMOVE_MUTATION = gql `
+    mutation RemoveProduct($id: ID!) {
+        removeProduct(id: $id)
+    }
+`;
+
 const REMOVE_CATEGORIES_MUTATION = gql `
     mutation RemoveCategory($id: ID!) {
         removeCategory(id: $id)
@@ -41,7 +47,9 @@ function CategoryPage() {
     const { loading: productLoading, error: productError, data: productData } = useQuery(PRODUCTS_QUERY);
     
     const { loading, error, data } = useQuery(CATEGORIES_QUERY);
-    
+
+    const [removeProduct] = useMutation(REMOVE_MUTATION);
+
     const [removeCategory] = useMutation(REMOVE_CATEGORIES_MUTATION);
 
     if (loading) return <p>Loading...</p>;
@@ -71,16 +79,17 @@ function CategoryPage() {
                 <ListItemText primary={`${category.name} ${numOf}`} />
     
                 <ListItemSecondaryAction>
-                    <IconButton onClick={
-                () => {removeCategory(
-                {
-                    variables: 
-                    {
-                    id: category.id},
-                    refetchQueries: [{ query: CATEGORIES_QUERY}] 
-                }
-                )
-                }
+                    <IconButton onClick = {
+                    () => {
+                        removeCategory(
+                            {
+                                variables: {
+                                    id: category.id},
+                                refetchQueries: [{ query: CATEGORIES_QUERY}] 
+                            }
+                        );
+                } 
+
             }>
                     <ClearIcon />
                     </IconButton>
