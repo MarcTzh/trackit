@@ -47,7 +47,7 @@ function ProductPage() {
             return (
                 <ListItem >
             
-                <ListItemText id={labelId} primary={`${product.name}  $${product.price}`} />
+                <ListItemText id={labelId} primary={`${product.name} ${product.category} $${product.price}`} />
     
                 <ListItemSecondaryAction>
                     <IconButton onClick={

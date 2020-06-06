@@ -27,6 +27,7 @@ const PRODUCTS_QUERY = gql `
         id
         name
         price
+        category
     }
 }`;
 
@@ -37,7 +38,7 @@ const REMOVE_CATEGORIES_MUTATION = gql `
 `;
 
 function CategoryPage() {
-    const { productLoading, productError, productData } = useQuery(PRODUCTS_QUERY);
+    const { loading: productLoading, error: productError, data: productData } = useQuery(PRODUCTS_QUERY);
     
     const { loading, error, data } = useQuery(CATEGORIES_QUERY);
     
@@ -57,8 +58,8 @@ function CategoryPage() {
             console.log("loading done")
             if (productError) return <p>Error! :(</p>;
 
-            const numOf = 0;
-            {/* productData.products.map((product) => product.category === category.name? numOf++: numOf += 0 ); */}
+            var numOf = 0;
+            productData.products.map((product) => product.category == category.name? numOf+=1: numOf += 0 );
 
             const productArray =[]
 
@@ -67,7 +68,7 @@ function CategoryPage() {
             return (
                 <ListItem>
             
-                <ListItemText primary={`${category.name}`} />
+                <ListItemText primary={`${category.name} ${numOf}`} />
     
                 <ListItemSecondaryAction>
                     <IconButton onClick={
