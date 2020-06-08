@@ -8,7 +8,7 @@ function AddNew() {
             <h1>Add a new product to track!</h1>
             <p>Need a new Category?</p>
             <AddNewCategory/>
-            <p>Add your new prodcut below</p>
+            <p>Add your new product below</p>
             <Form />
         </div>
     );

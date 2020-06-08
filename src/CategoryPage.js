@@ -58,9 +58,9 @@ function CategoryPage() {
     return (
         <Paper>   
         <AddNewCategory/>
-            <h1>My Categories</h1>
-            <List>
-            {data.categories.map((category) => {
+        <h1>My Categories</h1>
+        <List>
+        {data.categories.map((category) => {
 
             if (productLoading) return <p>Loading...</p>;
             console.log("loading done")
@@ -80,17 +80,16 @@ function CategoryPage() {
     
                 <ListItemSecondaryAction>
                     <IconButton onClick = {
-                    () => {
-                        removeCategory(
-                            {
-                                variables: {
-                                    id: category.id},
-                                refetchQueries: [{ query: CATEGORIES_QUERY}] 
-                            }
-                        );
-                } 
-
-            }>
+                        () => {
+                            removeCategory(
+                                {
+                                    variables: {
+                                        id: category.id},
+                                    refetchQueries: [{ query: CATEGORIES_QUERY}] 
+                                }
+                            );
+                        } 
+                    }>
                     <ClearIcon />
                     </IconButton>
                 </ListItemSecondaryAction>

@@ -7,17 +7,19 @@ const Chart = () => {
     const chart = () => {
         setChartData({
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'Amazon',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [200, 210, 215, 212, 220, 230, 225]
-            }, {
-                label: 'Shoppee',
-                backgroundColor: 'rgb(255, 165, 0)',
-                borderColor: 'rgb(255, 165, 0)',
-                data: [100, 110, 115, 112, 120, 130, 125]}
-        ]
+            datasets: [
+                {
+                    label: 'Amazon',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [200, 210, 215, 212, 220, 230, 225]
+                }, {
+                    label: 'Shopee',
+                    backgroundColor: 'rgb(255, 165, 0)',
+                    borderColor: 'rgb(255, 165, 0)',
+                    data: [100, 110, 115, 112, 120, 130, 125]
+                }
+            ]
         })
     }
     useEffect(() => {

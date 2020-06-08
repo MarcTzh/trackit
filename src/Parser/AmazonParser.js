@@ -7,11 +7,11 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 const nightmare = require("nightmare")()
 
-const args = process.argv.slice(2)
-const url = args[0]
-const minPrice = args[1]
+// const args = process.argv.slice(2)
+// const url = args[0]
+// const minPrice = args[1]
 
-async function checkPrice() {
+async function checkPrice(url) {
     try {
         const priceString = await nightmare
         .goto(url)
@@ -27,15 +27,16 @@ async function checkPrice() {
                 //for values above 1000
                 .replace(',', '')
         )
-        if(priceNumber < minPrice) { //TODO: send to client
-            sendEmail(
-                //subject of email
-                'Price is low',
-                //body of email
-                `The price on ${url} has dropped below ${minPrice}`
-            )
-        console.log("Below price floor: " + priceNumber)
-        }
+        return priceNumber;
+        // if(priceNumber < minPrice) { //TODO: send to client
+        //     sendEmail(
+        //         //subject of email
+        //         'Price is low',
+        //         //body of email
+        //         `The price on ${url} has dropped below ${minPrice}`
+        //     )
+        //     console.log("Below price floor: " + priceNumber)
+        // }
     } catch (e) {
         //TODO: to send to developer
         await sendEmail('Price checker error', e.message)
@@ -57,4 +58,6 @@ function sendEmail(subject, body) {
     return sgMail.send(email)
 }
 
-checkPrice()
+// checkPrice()
+
+export default checkPrice;

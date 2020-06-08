@@ -11,6 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 // import CommentIcon from '@material-ui/icons/Comment';
 import ClearIcon from '@material-ui/icons/Clear';
+// import checkPrice from './Parser/AmazonParser';
 
 
 const PRODUCTS_QUERY = gql `
@@ -19,7 +20,7 @@ const PRODUCTS_QUERY = gql `
         id
         name
         price
-        category
+        url
     }
 }`;
 
@@ -42,36 +43,33 @@ function ProductPage() {
         <Paper>   
             <h1>My Products</h1>
             <List>
-            {data.products.map((product) => {
-            const labelId = `checkbox-list-label-${product.id}`;
-    
-            return (
-                <ListItem >
-            
-                <ListItemText id={labelId} primary={`${product.name} ${product.category} $${product.price}`} />
-    
-                <ListItemSecondaryAction>
-                    <IconButton onClick={
-                () => {removeProduct(
-                {
-                    variables: 
-                    {
-                    id: product.id},
-                    refetchQueries: [{ query: PRODUCTS_QUERY}] 
-                }
-                )
-                }
-            }>
-                    <ClearIcon />
-                    </IconButton>
-                </ListItemSecondaryAction>
-    
-                </ListItem>
-            );
-            })}
-        </List>
+                {data.products.map((product) => {
+                const labelId = `checkbox-list-label-${product.id}`;
+                return (
+                    <ListItem >
+                    <ListItemText id={labelId} primary={`${product.name} ${product.category} $${product.price}`} />
+        
+                    <ListItemSecondaryAction>
+                        <IconButton onClick={
+                        () => {removeProduct(
+                        {
+                            variables: 
+                            {
+                            id: product.id},
+                            refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                        }
+                        )
+                        }}>
+                        <ClearIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
+        
+                    </ListItem>
+                );
+                })}
+            </List>
         </Paper>
-    );
+    )
 }
     
     

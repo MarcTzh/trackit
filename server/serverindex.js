@@ -5,13 +5,13 @@ mongoose.connect('mongodb+srv://teamBogo:rainbow6siege@cluster0-vo9fe.gcp.mongod
 
 
 //schema model
-
 const Product = mongoose.model('product', {
   name: String,
   category: String,
   brand: String,
   price: Number,
-  url: String
+  url: String,
+  minPrice: Number,
 });
 
 
@@ -27,6 +27,7 @@ const typeDefs = `
     products: [Product]
     categories: [Category]
   }
+
   type Product {
     id : ID!
     name: String!
@@ -34,6 +35,7 @@ const typeDefs = `
     brand: String!
     price: Int!
     url: String!
+    minPrice: Int!
   }
  
   type Category {
@@ -80,11 +82,11 @@ const resolvers = {
     // if no name given, say "hello world"
     hello: (_, { name }) => `Hello ${name || 'World'}`,
     products: () => Product.find(),
-    categories: () => Category.find()
+    categories: () => Category.find(),
   },
   Mutation: { 
-      createProduct: async (_,{ name, category, brand, price, url }) => {
-          const product = new Product({name, category, brand, price, url});
+      createProduct: async (_,{ name, category, brand, price, url, minPrice }) => {
+          const product = new Product({name, category, brand, price, url, minPrice});
           //saves in data base as it is a promise
           await product.save();
           return product;
@@ -114,7 +116,7 @@ const resolvers = {
       removeCategory: async (_, {id}) => {
         await Category.findByIdAndRemove(id);
         return true;
-      }
+      },
 
   }
 };
