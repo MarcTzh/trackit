@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 //updated import
-import Chart from './Chart/LineChart';
-import BrandOptions from './BrandOptions';
-import CategoryOptions from './CategoryOptions';
+import Chart from '../Chart/LineChart';
+import BrandOptions from '../Input/BrandOptions';
+import CategoryOptions from '../Input/CategoryOptions';
 //graphql stuff
 // import { gql } from 'apollo-boost';
 // import { useQuery, useMutation } from '@apollo/react-hooks';

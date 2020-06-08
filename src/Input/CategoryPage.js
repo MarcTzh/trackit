@@ -67,9 +67,9 @@ function CategoryPage() {
             if (productError) return <p>Error! :(</p>;
 
             var numOf = 0;
-            productData.products.map((product) => product.category == category.name? numOf+=1: numOf += 0 );
+            productData.products.map((product) => product.category === category.name? numOf+=1: numOf += 0 );
 
-            const productArray =[]
+            {/* const productArray =[] */}
 
             {/* productData.products.map((product) => productArray.push(product.name)); */}
 

@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -22,17 +22,17 @@ import {
 } from "react-router-dom";
 
 //Routing
-import Home from './Home';
-import Profile from './Profile';
-import Settings from './Settings';
-import AddNew from './AddNew';
-import ProductPage from './ProductPage';
-import CategoryPage from './CategoryPage'
+import Home from '../Pages/Home';
+import Profile from '../Pages/Profile';
+import Settings from '../Pages/Settings';
+import AddNew from '../Pages/AddNew';
+import ProductPage from '../Pages/ProductPage';
+import CategoryPage from '../Input/CategoryPage'
 
 // import HomeIcon from "@material-ui/icons/Home";
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
-import Trackit_logo from './images/Trackit_logo.png';
+import Trackit_logo from '../Images/Trackit_logo.png';
 
 const drawerWidth = 240;
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import Form from './Form';
-import AddNewCategory from './AddNewCategory';
+import Form from '../Input/Form';
+import AddNewCategory from '../Input/AddNewCategory';
 
 function AddNew() {
     return (

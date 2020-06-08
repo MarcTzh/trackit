@@ -2,10 +2,10 @@ import './index.css';
 import React from 'react';
 //import Paper from '@material-ui/core/Paper';
 //Routing
-import NavMenu from './NavMenu';
-import Drawer from './Drawer'
+// import NavMenu from './Sidebar/NavMenu';
+import Drawer from './Sidebar/Drawer'
 //apollo
-import { gql } from 'apollo-boost';
+// import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 function App() {

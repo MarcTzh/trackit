@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 // import CommentIcon from '@material-ui/icons/Comment';
 import ClearIcon from '@material-ui/icons/Clear';
 // import checkPrice from './Parser/AmazonParser';
+import CategoryOptions from '../Input/CategoryOptions'
 
 
 const PRODUCTS_QUERY = gql `
@@ -43,6 +44,7 @@ function ProductPage() {
         <Paper>   
             <h1>My Products</h1>
             <List>
+                <CategoryOptions />
                 {data.products.map((product) => {
                 const labelId = `checkbox-list-label-${product.id}`;
                 return (
