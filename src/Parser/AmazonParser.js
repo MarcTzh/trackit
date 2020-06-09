@@ -7,11 +7,11 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 const nightmare = require("nightmare")()
 
-// const args = process.argv.slice(2)
-// const url = args[0]
-// const minPrice = args[1]
+const args = process.argv.slice(2)
+const url = args[0]
+const minPrice = args[1]
 
-async function checkPrice(url) {
+async function checkPrice() {
     try {
         const priceString = await nightmare
         .goto(url)
@@ -58,6 +58,6 @@ function sendEmail(subject, body) {
     return sgMail.send(email)
 }
 
-// checkPrice()
+checkPrice()
 
 export default checkPrice;

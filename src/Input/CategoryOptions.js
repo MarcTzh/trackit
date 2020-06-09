@@ -5,8 +5,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { gql } from 'apollo-boost';
 import { useQuery, } from '@apollo/react-hooks';
 
-// const categoryOptions = ['Electronics', 'Clothing', 'Food', 'Lifestyle'];
-
 
 const CATEGORIES_QUERY = gql `
 {

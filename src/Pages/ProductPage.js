@@ -66,11 +66,10 @@ function ProductPage() {
                 {//data.products
                 displayedPdts //changes with useEffect
                 .map((product) => {
-                const labelId = checkbox-list-label-${product.id};
-                console.log(product);
+                const labelId = `checkbox-list-label-${product.id}`;
                 return (
                     <ListItem >
-                    <ListItemText id={labelId} primary={${product.name} ${product.category} $${product.price}} />
+                    <ListItemText id={labelId} primary={`${product.name} ${product.category} $${product.price}`} />
                     <ListItemSecondaryAction>
                         <IconButton onClick={
                         () => {removeProduct(
@@ -85,7 +84,6 @@ function ProductPage() {
                         <ClearIcon />
                         </IconButton>
                     </ListItemSecondaryAction>
-        
                     </ListItem>
                 );
                 })}
