@@ -2,8 +2,19 @@ import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { gql } from 'apollo-boost';
+import { useQuery, } from '@apollo/react-hooks';
 
-const categoryOptions = ['Electronics', 'Clothing', 'Food', 'Lifestyle'];
+// const categoryOptions = ['Electronics', 'Clothing', 'Food', 'Lifestyle'];
+
+
+const CATEGORIES_QUERY = gql `
+{
+    categories {
+        id
+        name
+    }
+}`;
 
 const useStyles = makeStyles((theme) => ({
     textField: {
@@ -12,10 +23,17 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function CategoryOptions() {
+export default function CategoryOptions(props) {
+  const categoryOptions = [];
   const [categoryValue, setCategoryValue] = useState(categoryOptions[0]);
-  const [inputCategoryValue, setInputCategoryValue] = useState('');
   const classes = useStyles();
+
+  const { loading, error, data } = useQuery(CATEGORIES_QUERY);
+  const [inputCategoryValue, setInputCategoryValue] = useState('');
+  
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error! :(</p>;
+  data.categories.map((category) => categoryOptions.push(category.name));
 
   return (
     <div className={classes.textField}>
@@ -23,6 +41,8 @@ export default function CategoryOptions() {
             categoryValue={categoryValue}
             onChange={(event, newValue) => {
             setCategoryValue(newValue);
+            //for filtering purposes
+            if(props.callBackFromParent) {props.callBackFromParent(newValue); }
             }}
             inputCategoryValue={inputCategoryValue}
             onInputChange={(event, newInputValue) => {
@@ -35,4 +55,4 @@ export default function CategoryOptions() {
         />
     </div>
   );
-}
+} 

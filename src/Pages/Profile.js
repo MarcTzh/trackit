@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 //updated import
 import Chart from '../Chart/LineChart';
-import BrandOptions from '../Input/BrandOptions';
+// import BrandOptions from '../Input/BrandOptions';
 import CategoryOptions from '../Input/CategoryOptions';
 //graphql stuff
 // import { gql } from 'apollo-boost';
