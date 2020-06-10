@@ -8,7 +8,10 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const nightmare = require("nightmare")()
 
 const args = process.argv.slice(2)
-const url = args[0]
+const rawUrl = args[0]
+//remove tracking bits (part after ?)
+const url = rawUrl.split('?')[0];
+console.log(url);
 const minPrice = args[1]
 
 async function checkPrice() {
@@ -27,6 +30,7 @@ async function checkPrice() {
                 //for values above 1000
                 .replace(',', '')
         )
+        console.log(priceNumber);
         return priceNumber;
         // if(priceNumber < minPrice) { //TODO: send to client
         //     sendEmail(
@@ -60,4 +64,4 @@ function sendEmail(subject, body) {
 
 checkPrice()
 
-export default checkPrice;
+// export default checkPrice;
