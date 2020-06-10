@@ -32,7 +32,7 @@ import CategoryPage from '../Input/CategoryPage'
 // import HomeIcon from "@material-ui/icons/Home";
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
-import Trackit_logo from '../Images/Trackit_logo.png';
+import Trackit_logo from '../images/Trackit_logo.png';
 
 const drawerWidth = 240;
 
