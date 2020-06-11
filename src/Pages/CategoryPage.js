@@ -60,10 +60,8 @@ function CategoryPage() {
                 refetchQueries: [{ query: CATEGORIES_QUERY}] 
             }
         )
-        // console.log(productData)
         productData.products.map((product) => {
             if(product.category === cat.name) {
-                console.log(product.category)
                 removeProduct(
                     {
                         variables: {
@@ -73,8 +71,8 @@ function CategoryPage() {
                     }
                 )
             }
-        } )
-
+        } 
+        )
     } 
 
     if (loading) return <p>Loading...</p>;
@@ -89,16 +87,8 @@ function CategoryPage() {
         <List>
         {data.categories.map((category) => {
 
-            if (productLoading) return <p>Loading...</p>;
-            console.log("loading done")
-            if (productError) return <p>Error! :(</p>;
-
             var numOf = 0;
             productData.products.map((product) => product.category === category.name? numOf+=1: numOf += 0 );
-
-            {/* const productArray =[] */}
-
-            {/* productData.products.map((product) => productArray.push(product.name)); */}
 
             return (
                 <ListItem>
@@ -117,8 +107,6 @@ function CategoryPage() {
         </List>
         </Paper>
     );
-}
-    
-    
+} 
 
 export default CategoryPage;
