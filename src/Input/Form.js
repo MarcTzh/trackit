@@ -7,8 +7,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import CategoryOptions from '../Input/CategoryOptions'
 
-
-
 const PRODUCTS_QUERY = gql`
 {
     products {
@@ -45,21 +43,18 @@ const useStyles = makeStyles((theme) => ({
 
 const brandOptions = ['Amazon', 'Shopee', 'Lazada'];
 
-
 export default function Form() {
 
-  const { loading, error, data } = useQuery(CATEGORIES_QUERY);
-  
-  const categoryOptions = [];
-    
+  const { loading, error, data } = useQuery(CATEGORIES_QUERY);    
   const classes = useStyles();
   const [createProduct] = useMutation(CREATE_MUTATION);
   const [brandValue, setBrandValue] = useState(brandOptions[0]);
   const [inputBrandValue, setInputBrandValue] = useState('');
-  const [categoryValue, setCategoryValue] = useState(categoryOptions[0]);
-  const [inputCategoryValue, setInputCategoryValue] = useState('');
+  // categoryValue is set to undefined. if user selects and unselects it, it will be set to null. 
+  // therefore below categoryValue will check for both undefined and null value
+  const [categoryValue, setCategoryValue] = useState();
   const [name, setName] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
   const [url, setUrl] = useState('');
 
 function handleNameChange(e) {
@@ -78,7 +73,7 @@ function handleUrlChange(e) {
 }
 
   function handleSubmit() {
-    if(brandValue !== null && categoryValue !== null && name !== '' && url !== '' && price > 0){
+    if(brandValue !== null && categoryValue !== null && categoryValue !== undefined && name !== '' && url !== '' && price > 0){
       createProduct( 
                     {
                         variables: {name: name, category: categoryValue, brand: brandValue, price: parseInt(price), url: url},
@@ -86,7 +81,7 @@ function handleUrlChange(e) {
                     }
                  )
                  setName('');
-                 setPrice(0);
+                 setPrice('');
                  setUrl('');
       
     }
@@ -94,9 +89,6 @@ function handleUrlChange(e) {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error! :(</p>;
-  data.categories.map((category) => categoryOptions.push(category.name));
-
-
 
   return (
     <div>

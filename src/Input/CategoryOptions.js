@@ -5,7 +5,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { gql } from 'apollo-boost';
 import { useQuery, } from '@apollo/react-hooks';
 
-
 const CATEGORIES_QUERY = gql `
 {
     categories {
@@ -25,7 +24,6 @@ export default function CategoryOptions(props) {
   const categoryOptions = [];
   const [categoryValue, setCategoryValue] = useState(categoryOptions[0]);
   const classes = useStyles();
-
   const { loading, error, data } = useQuery(CATEGORIES_QUERY);
   const [inputCategoryValue, setInputCategoryValue] = useState('');
   
