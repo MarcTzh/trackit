@@ -52,8 +52,35 @@ function CategoryPage() {
 
     const [removeCategory] = useMutation(REMOVE_CATEGORIES_MUTATION);
 
+    function removeCategoryAndProduct(cat) {
+        removeCategory(
+            {
+                variables: {
+                    id: cat.id},
+                refetchQueries: [{ query: CATEGORIES_QUERY}] 
+            }
+        )
+        // console.log(productData)
+        productData.products.map((product) => {
+            if(product.category === cat.name) {
+                console.log(product.category)
+                removeProduct(
+                    {
+                        variables: {
+                            id: product.id
+                        },
+                        refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                    }
+                )
+            }
+        } )
+
+    } 
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
+    if (productLoading) return <p>Loading...</p>;
+    if (productError) return <p>Error! :(</p>;
     
     return (
         <Paper>   
@@ -79,18 +106,8 @@ function CategoryPage() {
                 <ListItemText primary={`${category.name} ${numOf}`} />
     
                 <ListItemSecondaryAction>
-                    <IconButton onClick = {
-                        () => {
-                            removeCategory(
-                                {
-                                    variables: {
-                                        id: category.id},
-                                    refetchQueries: [{ query: CATEGORIES_QUERY}] 
-                                }
-                            );
-                        } 
-                    }>
-                    <ClearIcon />
+                    <IconButton onClick = { () => removeCategoryAndProduct(category)}>
+                        <ClearIcon />
                     </IconButton>
                 </ListItemSecondaryAction>
     
