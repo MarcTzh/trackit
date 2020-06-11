@@ -36,20 +36,23 @@ export default function CategoryOptions(props) {
   return (
     <div className={classes.textField}>
         <Autocomplete
-            categoryValue={categoryValue}
-            onChange={(event, newValue) => {
-            setCategoryValue(newValue);
-            //for filtering purposes
-            if(props.callBackFromParent) {props.callBackFromParent(newValue); }
+            categoryValue = {categoryValue}
+            onChange = {(event, newValue) => {
+                setCategoryValue(newValue);
+                //for filtering purposes
+                if(props.callBackFromParent) {
+                  props.callBackFromParent(newValue); 
+                }
+              }
+            }
+            inputCategoryValue = {inputCategoryValue}
+            onInputChange = {(event, newInputValue) => {
+              setInputCategoryValue(newInputValue);
             }}
-            inputCategoryValue={inputCategoryValue}
-            onInputChange={(event, newInputValue) => {
-            setInputCategoryValue(newInputValue);
-            }}
-            id="controllable-states-demo"
-            options={categoryOptions}
-            style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Category" variant="outlined" />}
+            id = "controllable-states-demo"
+            options = {categoryOptions}
+            style = {{ width: 300 }}
+            renderInput = {(params) => <TextField {...params} label="Category" variant="outlined" />}
         />
     </div>
   );

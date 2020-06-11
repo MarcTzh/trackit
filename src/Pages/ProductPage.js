@@ -15,6 +15,8 @@ import ClearIcon from '@material-ui/icons/Clear';
 import CategoryOptions from '../Input/CategoryOptions'
 // import AddNewCategory from '../Input/AddNewCategory';
 
+//BUG FOUND. WHEN CLEARING OPTIONS FOR THE CATEGORIES, NON PRODUCTS ARE DISPLAYED INSTEAD OF ALL PRODUCTS DISPLAYED.
+
 const PRODUCTS_QUERY = gql `
 {
     products {

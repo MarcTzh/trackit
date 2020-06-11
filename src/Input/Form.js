@@ -6,6 +6,8 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import { List } from '@material-ui/core';
+import CategoryOptions from '../Input/CategoryOptions'
+
 
 
 const PRODUCTS_QUERY = gql`
@@ -43,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const brandOptions = ['Amazon', 'Shopee', 'Lazada'];
-
 
 
 export default function Form() {
@@ -101,23 +102,8 @@ function handleUrlChange(e) {
   return (
     <div>
 
-    <div className={classes.textField}>
-        <Autocomplete
-            categoryValue={categoryValue}
-            onChange={(event, newValue) => {
-            setCategoryValue(newValue);
-            }}
-            inputCategoryValue={inputCategoryValue}
-            onInputChange={(event, newInputValue) => {
-            setInputCategoryValue(newInputValue);
-            }}
-            id="controllable-states-demo"
-            options={categoryOptions}
-            style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Category" variant="outlined" />}
-        />
-      </div>
-      
+      <CategoryOptions callBackFromParent={setCategoryValue}/>
+
       <div>
       {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
       <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
