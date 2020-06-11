@@ -10,6 +10,12 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from "@material-ui/icons/Home";
+import PersonIcon from "@material-ui/icons/Person";
+import AddIcon from "@material-ui/icons/Add";
+import SettingsIcon from "@material-ui/icons/Settings";
+import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
+import PhoneAndroidTwoToneIcon from '@material-ui/icons/PhoneAndroidTwoTone';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -27,9 +33,8 @@ import Profile from '../Pages/Profile';
 import Settings from '../Pages/Settings';
 import AddNew from '../Pages/AddNew';
 import ProductPage from '../Pages/ProductPage';
-import CategoryPage from '../Input/CategoryPage'
+import CategoryPage from '../Pages/CategoryPage'
 
-// import HomeIcon from "@material-ui/icons/Home";
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
 import Trackit_logo from '../images/Trackit_logo.png';
@@ -133,7 +138,9 @@ export default function PersistentDrawerLeft() {
           alt="Trackit_logo"
           height='60' />
         </Toolbar>
+
       </AppBar>
+
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -152,27 +159,27 @@ export default function PersistentDrawerLeft() {
         <List>
         <MenuList>
             <MenuItem component={Link} to="/">
-            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemIcon><HomeIcon /></ListItemIcon>
                 Home
             </MenuItem>
             <MenuItem component={Link} to="/profile">
-            <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItemIcon><PersonIcon /></ListItemIcon>
                 Profile
             </MenuItem>
             <MenuItem component={Link} to="/products">
-            <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItemIcon><PhoneAndroidIcon /></ListItemIcon>
                 Products
             </MenuItem>
             <MenuItem component={Link} to="/categories">
-            <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItemIcon><PhoneAndroidTwoToneIcon /></ListItemIcon>
                 Categories
             </MenuItem>
             <MenuItem component={Link} to="/addnew">
-            <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItemIcon><AddIcon /></ListItemIcon>
                 Add Products
             </MenuItem>
             <MenuItem component={Link} to="/settings">
-            <ListItemIcon><MailIcon /></ListItemIcon>
+            <ListItemIcon><SettingsIcon /></ListItemIcon>
                 Settings
             </MenuItem>
         </MenuList>

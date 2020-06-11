@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { gql } from 'apollo-boost';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import {useMutation } from '@apollo/react-hooks';
 import Button from '@material-ui/core/Button';
 
 
