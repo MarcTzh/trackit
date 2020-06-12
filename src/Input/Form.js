@@ -67,10 +67,10 @@ function handleNameChange(e) {
   setName(newName);
 }
 
-function handlePriceChange(e) {
-  const newPrice = e.target.value;
-  setPrice(newPrice);
-}
+// function handlePriceChange(e) {
+//   const newPrice = e.target.value;
+//   setPrice(newPrice);
+// }
 
 function handleUrlChange(e) {
   const newUrl = e.target.value;
@@ -86,7 +86,7 @@ function handleUrlChange(e) {
                     }
                  )
                  setName('');
-                 setPrice(0);
+                //  setPrice(0);
                  setUrl('');
       
     }
@@ -172,7 +172,7 @@ function handleUrlChange(e) {
           value = {url}
         />
 
-        <TextField
+        {/* <TextField
           id="outlined-margin-none"
           placeholder="Price"
           margin="normal"
@@ -180,7 +180,7 @@ function handleUrlChange(e) {
           variant="outlined"
           onChange ={handlePriceChange}
           value = {price}
-        />
+        /> */}
 
         <TextField
           id="outlined-margin-none"
