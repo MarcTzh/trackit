@@ -37,7 +37,7 @@ const REMOVE_MUTATION = gql `
 `;
 
 
-async function ProductPage() {
+ function ProductPage() {
 
     const { loading, error, data } = useQuery(PRODUCTS_QUERY);
 
@@ -75,7 +75,7 @@ async function ProductPage() {
                 const labelId = `checkbox-list-label-${product.id}`;
                 const url = product.url;
                 //const currPrice = await checkPrice(url);
-                const currPrice = "placeholder value since parser is not working yet";
+                const currPrice = "";
 
                 return (
                     <ListItem >
