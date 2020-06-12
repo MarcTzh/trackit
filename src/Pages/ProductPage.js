@@ -41,7 +41,7 @@ function ProductPage() {
 
     const [removeProduct] = useMutation(REMOVE_MUTATION);
 
-    const [currCat, setCat] = useState('All');
+    const [currCat, setCat] = useState();
 
     const [displayedPdts, setDisplayedPdts] = useState([]);
 
@@ -50,7 +50,7 @@ function ProductPage() {
         if(data) {
             setDisplayedPdts(data
                 .products
-                .filter((product) => currCat === 'All'
+                .filter((product) => currCat === undefined || currCat === null
                 || currCat === product.category))
         }
     }, 
