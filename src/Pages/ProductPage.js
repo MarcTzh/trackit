@@ -15,7 +15,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 import CategoryOptions from '../Input/CategoryOptions'
 // import AddNewCategory from '../Input/AddNewCategory';
 
-
 //price checker
 // import checkPrice from '../Parser/AmazonParser';
 
@@ -43,7 +42,7 @@ const REMOVE_MUTATION = gql `
 
     const [removeProduct] = useMutation(REMOVE_MUTATION);
 
-    const [currCat, setCat] = useState('All');
+    const [currCat, setCat] = useState();
 
     const [displayedPdts, setDisplayedPdts] = useState([]);
 
@@ -54,7 +53,7 @@ const REMOVE_MUTATION = gql `
         if(data) {
             setDisplayedPdts(data
                 .products
-                .filter((product) => currCat === 'All'
+                .filter((product) => currCat === undefined || currCat === null
                 || currCat === product.category))
         }
     }, 
