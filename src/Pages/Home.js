@@ -1,5 +1,5 @@
 import React from 'react';
-import Poster from "../Images/Poster final.jpg";
+import Poster from "../images/Poster final.jpg";
 function Home() {
     return (
         <div>

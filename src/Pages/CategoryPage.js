@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 // import CommentIcon from '@material-ui/icons/Comment';
 import ClearIcon from '@material-ui/icons/Clear';
-import AddNewCategory from './AddNewCategory';
+import AddNewCategory from '../Input/AddNewCategory';
 
 const CATEGORIES_QUERY = gql `
 {

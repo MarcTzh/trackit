@@ -15,6 +15,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import CategoryOptions from '../Input/CategoryOptions'
 // import AddNewCategory from '../Input/AddNewCategory';
 
+
 //price checker
 // import checkPrice from '../Parser/AmazonParser';
 

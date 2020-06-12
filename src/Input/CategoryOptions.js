@@ -5,7 +5,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { gql } from 'apollo-boost';
 import { useQuery, } from '@apollo/react-hooks';
 
-
 const CATEGORIES_QUERY = gql `
 {
     categories {
@@ -25,7 +24,6 @@ export default function CategoryOptions(props) {
   const categoryOptions = [];
   const [categoryValue, setCategoryValue] = useState(categoryOptions[0]);
   const classes = useStyles();
-
   const { loading, error, data } = useQuery(CATEGORIES_QUERY);
   const [inputCategoryValue, setInputCategoryValue] = useState('');
   
@@ -36,20 +34,23 @@ export default function CategoryOptions(props) {
   return (
     <div className={classes.textField}>
         <Autocomplete
-            categoryValue={categoryValue}
-            onChange={(event, newValue) => {
-            setCategoryValue(newValue);
-            //for filtering purposes
-            if(props.callBackFromParent) {props.callBackFromParent(newValue); }
+            categoryValue = {categoryValue}
+            onChange = {(event, newValue) => {
+                setCategoryValue(newValue);
+                //for filtering purposes
+                if(props.callBackFromParent) {
+                  props.callBackFromParent(newValue); 
+                }
+              }
+            }
+            inputCategoryValue = {inputCategoryValue}
+            onInputChange = {(event, newInputValue) => {
+              setInputCategoryValue(newInputValue);
             }}
-            inputCategoryValue={inputCategoryValue}
-            onInputChange={(event, newInputValue) => {
-            setInputCategoryValue(newInputValue);
-            }}
-            id="controllable-states-demo"
-            options={categoryOptions}
-            style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Category" variant="outlined" />}
+            id = "controllable-states-demo"
+            options = {categoryOptions}
+            style = {{ width: 300 }}
+            renderInput = {(params) => <TextField {...params} label="Category" variant="outlined" />}
         />
     </div>
   );
