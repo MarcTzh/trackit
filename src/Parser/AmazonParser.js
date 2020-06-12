@@ -12,7 +12,7 @@ const nightmare = require("nightmare")();
 // // console.log(url);
 // // const minPrice = args[1]
 
-async function checkPrice(rawUrl) {
+export async function checkPrice(rawUrl) {
     try {
         //remove tracking bits (part after ?)
         const url = rawUrl.split('?')[0];
