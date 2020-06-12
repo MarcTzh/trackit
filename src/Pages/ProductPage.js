@@ -15,7 +15,9 @@ import ClearIcon from '@material-ui/icons/Clear';
 import CategoryOptions from '../Input/CategoryOptions'
 // import AddNewCategory from '../Input/AddNewCategory';
 
-//BUG FOUND. WHEN CLEARING OPTIONS FOR THE CATEGORIES, NON PRODUCTS ARE DISPLAYED INSTEAD OF ALL PRODUCTS DISPLAYED.
+
+//price checker
+// import checkPrice from '../Parser/AmazonParser';
 
 const PRODUCTS_QUERY = gql `
 {
@@ -35,7 +37,7 @@ const REMOVE_MUTATION = gql `
 `;
 
 
-function ProductPage() {
+async function ProductPage() {
 
     const { loading, error, data } = useQuery(PRODUCTS_QUERY);
 
@@ -45,7 +47,9 @@ function ProductPage() {
 
     const [displayedPdts, setDisplayedPdts] = useState([]);
 
+    // const [productPrices, setProductPrices] = useState([]);
 
+    
     useEffect(() => {
         if(data) {
             setDisplayedPdts(data
@@ -69,9 +73,15 @@ function ProductPage() {
                 displayedPdts //changes with useEffect
                 .map((product) => {
                 const labelId = `checkbox-list-label-${product.id}`;
+                const url = product.url;
+                //const currPrice = await checkPrice(url);
+                const currPrice = "placeholder value since parser is not working yet";
+
                 return (
                     <ListItem >
-                    <ListItemText id={labelId} primary={`${product.name} ${product.category} ${product.price}`} />
+                    <ListItemText 
+                    id={labelId} 
+                    primary={`${product.name} ${product.category} ${currPrice}`} />
                     <ListItemSecondaryAction>
                         <IconButton onClick={
                         () => {removeProduct(
