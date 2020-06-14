@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Line} from 'react-chartjs-2';
 //test
 function LineChart(props) {
@@ -11,7 +11,8 @@ function LineChart(props) {
                     title: {
                         // display: this.props.displayTitle,
                         display: true,
-                        text: props.catValue
+                        text: props.catValue,
+                        responsive: true,
                     },
                     legend: {
                         // display: this.props.displayLegend,
