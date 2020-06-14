@@ -17,6 +17,7 @@ import CategoryOptions from '../Input/CategoryOptions'
 
 //price checker
 // import checkPrice from '../Parser/AmazonParser';
+const { checkPrice } = require("../Parser/AmazonParser");
 
 const PRODUCTS_QUERY = gql `
 {
@@ -74,7 +75,8 @@ const REMOVE_MUTATION = gql `
                 const labelId = `checkbox-list-label-${product.id}`;
                 const url = product.url;
                 //const currPrice = await checkPrice(url);
-                const currPrice = "";
+                //const currPrice = product.currPrice;
+                const currPrice = '';
 
                 return (
                     <ListItem >
