@@ -12,6 +12,8 @@ const Product = mongoose.model('product', {
   price: Number,
   url: String,
   minPrice: Number,
+  priceArray: [Number],
+  dateArray: [Number],
 });
 
 
@@ -36,6 +38,8 @@ const typeDefs = `
     price: Int!
     url: String!
     minPrice: Int!
+    priceArray:  [Int!]!
+    dateArray:  [Int!]!
   }
  
   type Category {
@@ -50,11 +54,19 @@ const typeDefs = `
         brand: String!, 
         price: Int!, 
         url: String!
+        priceArray: [Int!]!
+        dateArray: [Int!]!
       ): Product
 
       updateProductPrice(
         id: ID!,
         price: Int!
+      ): Boolean
+
+      addPriceAndDate(
+        id: ID!,
+        priceArray: [Int!]!
+        dateArray: [Int!]!
       ): Boolean
 
       removeProduct(
@@ -85,8 +97,8 @@ const resolvers = {
     categories: () => Category.find(),
   },
   Mutation: { 
-      createProduct: async (_,{ name, category, brand, price, url, minPrice }) => {
-          const product = new Product({name, category, brand, price, url, minPrice});
+      createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray }) => {
+          const product = new Product({name, category, brand, price, url, minPrice, priceArray});
           //saves in data base as it is a promise
           await product.save();
           return product;
@@ -100,6 +112,11 @@ const resolvers = {
 
       updateProductPrice: async (_, {id, price}) => {
         await Product.findByIdAndUpdate(id, {price});
+        return true;
+      },
+
+      addPriceAndDate: async (_, {id, priceArray, dateArray}) => {
+        await Product.findByIdAndUpdate(id, {priceArray, dateArray});
         return true;
       },
 

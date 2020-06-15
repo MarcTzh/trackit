@@ -68,4 +68,5 @@ async function checkPrice(rawUrl) {
 
 // export default checkPrice;
 module.exports.checkPrice = checkPrice;
+
 // export { checkPrice };

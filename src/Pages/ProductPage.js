@@ -17,7 +17,7 @@ import CategoryOptions from '../Input/CategoryOptions'
 
 //price checker
 // import checkPrice from '../Parser/AmazonParser';
-const { checkPrice } = require("../Parser/AmazonParser");
+// const { checkPrice } = require("../Parser/AmazonParser");
 
 const PRODUCTS_QUERY = gql `
 {
