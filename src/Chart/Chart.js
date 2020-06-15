@@ -57,7 +57,6 @@ const Chart = () => {
                     }
                 }}/>
             </div>
-        
         </div>
     )
 }

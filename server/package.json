@@ -14,5 +14,4 @@
     "graphql-yoga": "^1.18.3",
     "mongoose": "^5.9.17"
   }
-  ,"type": "module"
 }
