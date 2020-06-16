@@ -33,7 +33,8 @@ import Profile from '../Pages/Profile';
 import Settings from '../Pages/Settings';
 import AddNew from '../Pages/AddNew';
 import ProductPage from '../Pages/ProductPage';
-import CategoryPage from '../Pages/CategoryPage'
+import CategoryPage from '../Pages/CategoryPage';
+import UpdateProduct from '../Pages/UpdateProduct';
 
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
@@ -178,6 +179,10 @@ export default function PersistentDrawerLeft() {
             <ListItemIcon><AddIcon /></ListItemIcon>
                 Add Products
             </MenuItem>
+            <MenuItem component={Link} to="/updateProduct">
+            <ListItemIcon><SettingsIcon /></ListItemIcon>
+                Update Product
+            </MenuItem>
             <MenuItem component={Link} to="/settings">
             <ListItemIcon><SettingsIcon /></ListItemIcon>
                 Settings
@@ -213,6 +218,8 @@ export default function PersistentDrawerLeft() {
           <Route exact path="/AddNew" component={AddNew}>
           </Route>
           <Route exact path="/Categories" component={CategoryPage}>
+          </Route>
+          <Route exact path="/UpdateProduct" component={UpdateProduct}>
           </Route>
         </Switch>
       </main>

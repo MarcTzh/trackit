@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { gql } from 'apollo-boost';
@@ -13,14 +13,16 @@ const PRODUCTS_QUERY = gql`
         id
         name
         price
+        dateArray
     }
 }`;
 
 const CREATE_MUTATION = gql`
-  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Int!, $url: String!){
-  createProduct(name: $name, category: $category, brand: $brand, price: $price, url: $url) {
+  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Int!, $url: String!, $minPrice: Int!, $priceArray: [Int!]!, $dateArray: [Int!]!){
+  createProduct(name: $name, category: $category, brand: $brand, price: $price, url: $url, minPrice: $minPrice, priceArray: $priceArray, dateArray: $dateArray) {
     id
     name
+    dateArray
   }
 }
 `;
@@ -29,7 +31,7 @@ const CATEGORIES_QUERY = gql `
 {
     categories {
         id
-        name
+        name  
     }
 }`;
 
@@ -56,16 +58,26 @@ export default function Form() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [url, setUrl] = useState('');
+  
+  //For dates
+  const [today, setToday] = useState(new Date());  
+  useEffect(() => {
+      const interval = setInterval(() => {
+          setToday(new Date());
+      }, 1000);
+      return () => clearInterval(interval);
+    }, []);
+  const dateAndTime = (today.getFullYear() - 2000)*100000000 + today.getMonth() * 1000000 + today.getDate() * 10000 + today.getHours()*100 + today.getMinutes();
 
 function handleNameChange(e) {
   const newName = e.target.value;
   setName(newName);
 }
 
-// function handlePriceChange(e) {
-//   const newPrice = e.target.value;
-//   setPrice(newPrice);
-// }
+function handlePriceChange(e) {
+  const newPrice = e.target.value;
+  setPrice(newPrice);
+}
 
 function handleUrlChange(e) {
   const newUrl = e.target.value;
@@ -76,8 +88,16 @@ function handleUrlChange(e) {
     if(brandValue !== null && categoryValue !== null && categoryValue !== undefined && name !== '' && url !== '' && price > 0){
       createProduct( 
                     {
-                        variables: {name: name, category: categoryValue, brand: brandValue, price: parseInt(price), url: url},
-                        refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                      variables: {name: name, 
+                                  category: categoryValue, 
+                                  brand: brandValue, 
+                                  price: parseInt(price), 
+                                  url: url, 
+                                  minPrice: 0,
+                                  priceArray:[1], 
+                                  dateArray:[dateAndTime]
+                                },
+                      refetchQueries: [{ query: PRODUCTS_QUERY}] 
                     }
                  )
                  setName('');
@@ -151,7 +171,7 @@ function handleUrlChange(e) {
           value = {url}
         />
 
-        {/* <TextField
+        <TextField
           id="outlined-margin-none"
           placeholder="Price"
           margin="normal"
@@ -159,7 +179,7 @@ function handleUrlChange(e) {
           variant="outlined"
           onChange ={handlePriceChange}
           value = {price}
-        /> */}
+        />
 
         <TextField
           id="outlined-margin-none"
