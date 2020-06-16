@@ -53,8 +53,9 @@ const typeDefs = `
         category: String!, 
         brand: String!, 
         price: Int!, 
-        url: String!
-        priceArray: [Int!]!
+        url: String!,
+        minPrice: Int!,
+        priceArray: [Int!]!,
         dateArray: [Int!]!
       ): Product
 
@@ -65,7 +66,7 @@ const typeDefs = `
 
       addPriceAndDate(
         id: ID!,
-        priceArray: [Int!]!
+        priceArray: [Int!]!,
         dateArray: [Int!]!
       ): Boolean
 
@@ -97,8 +98,8 @@ const resolvers = {
     categories: () => Category.find(),
   },
   Mutation: { 
-      createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray }) => {
-          const product = new Product({name, category, brand, price, url, minPrice, priceArray});
+      createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray}) => {
+          const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray});
           //saves in data base as it is a promise
           await product.save();
           return product;
