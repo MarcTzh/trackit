@@ -1,5 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import Poster from "../Images/Poster final.jpg";
+// const Poster = require('../Images/Poster final.jpg')
+// const { React, useEffect, useState } = require('react');
+// const { test } = require("../Parser/AutorunScript.js");
+// import test from "../Parser/AutorunScript.js";
 
 function Home() {
     const [today, setToday] = useState(new Date());
