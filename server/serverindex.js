@@ -148,3 +148,4 @@ db.once('open', function() {
   server.start(() => console.log('Server is running on localhost:4000'))
 });
 
+module.exports = db
