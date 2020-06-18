@@ -19,10 +19,11 @@ import PhoneAndroidTwoToneIcon from '@material-ui/icons/PhoneAndroidTwoTone';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+// import InboxIcon from '@material-ui/icons/MoveToInbox';
+// import MailIcon from '@material-ui/icons/Mail';
 import { MenuList, MenuItem } from '@material-ui/core';
 import {
+  // eslint-disable-next-line no-unused-vars
   BrowserRouter as Router,
   Switch, Route, Link
 } from "react-router-dom";
@@ -35,6 +36,7 @@ import AddNew from '../Pages/AddNew';
 import ProductPage from '../Pages/ProductPage';
 import CategoryPage from '../Pages/CategoryPage';
 import UpdateProduct from '../Pages/UpdateProduct';
+import Register from '../auth/Register';
 
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
@@ -220,6 +222,8 @@ export default function PersistentDrawerLeft() {
           <Route exact path="/Categories" component={CategoryPage}>
           </Route>
           <Route exact path="/UpdateProduct" component={UpdateProduct}>
+          </Route>
+          <Route exact path="/Register" component={Register}>
           </Route>
         </Switch>
       </main>
