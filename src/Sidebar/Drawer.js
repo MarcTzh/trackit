@@ -25,7 +25,7 @@ import { MenuList, MenuItem } from '@material-ui/core';
 import {
   // eslint-disable-next-line no-unused-vars
   BrowserRouter as Router,
-  Switch, Route, Link
+  Switch, Route, Link, Redirect
 } from "react-router-dom";
 
 //Routing
@@ -42,6 +42,8 @@ import AuthOptions from "../auth/AuthOptions";
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
 import Trackit_logo from '../Images/Trackit_logo.png';
+
+import '../style.css';
 
 const drawerWidth = 240;
 
@@ -111,7 +113,7 @@ export default function PersistentDrawerLeft(props) {
     if(props.user !== undefined) {
       setOpen(true);
     } else {
-      alert("Please log in")
+      return <Redirect to='/login' />
     }
   };
 
@@ -145,7 +147,10 @@ export default function PersistentDrawerLeft(props) {
           <img src={Trackit_logo} 
           alt="Trackit_logo"
           height='60' />
-          <AuthOptions align='right'/>
+          <div id='header'>
+            <AuthOptions/>
+          </div>
+          
         </Toolbar>
       </AppBar>
 
