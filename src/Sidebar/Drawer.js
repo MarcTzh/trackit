@@ -37,6 +37,7 @@ import ProductPage from '../Pages/ProductPage';
 import CategoryPage from '../Pages/CategoryPage';
 import UpdateProduct from '../Pages/UpdateProduct';
 import Register from '../auth/Register';
+import AuthOptions from "../auth/AuthOptions";
 
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
@@ -226,6 +227,7 @@ export default function PersistentDrawerLeft() {
           <Route exact path="/Register" component={Register}>
           </Route>
         </Switch>
+        <AuthOptions />
       </main>
       
     </div>

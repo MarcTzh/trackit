@@ -1,6 +1,7 @@
 import './index.css';
 import React from 'react';
 import Drawer from './Sidebar/Drawer'
+import Profile from './Pages/Profile';
 
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -55,6 +56,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
+              <Route exact path="/Profile" component={Profile}></Route>
             </Switch>
           </div>
         </UserContext.Provider>
