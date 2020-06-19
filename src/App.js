@@ -6,7 +6,7 @@ import Profile from './Pages/Profile';
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Axios from "axios";
-import Header from "./layout/Header";
+// import Header from "./layout/Header";
 import Home from "./Pages/Home";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -50,7 +50,8 @@ function App() {
     <>
       <BrowserRouter>
         <UserContext.Provider value={{ userData, setUserData }}>
-          <Header />
+          {/* <Header /> */}
+          <Drawer />
           <div className="container">
             <Switch>
               <Route exact path="/" component={Home} />

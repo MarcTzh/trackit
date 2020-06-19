@@ -141,8 +141,8 @@ export default function PersistentDrawerLeft() {
           <img src={Trackit_logo} 
           alt="Trackit_logo"
           height='60' />
+          <AuthOptions align='right'/>
         </Toolbar>
-
       </AppBar>
 
       <Drawer
@@ -227,7 +227,7 @@ export default function PersistentDrawerLeft() {
           <Route exact path="/Register" component={Register}>
           </Route>
         </Switch>
-        <AuthOptions />
+        
       </main>
       
     </div>
