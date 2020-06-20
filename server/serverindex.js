@@ -43,7 +43,7 @@ const typeDefs = `
     minPrice: Int!
     priceArray:  [Int!]!
     dateArray:  [Int!]!
-    isScraped: Boolean!
+    isScraped: Boolean
   }
  
   type Category {
@@ -61,7 +61,7 @@ const typeDefs = `
         minPrice: Int!,
         priceArray: [Int!]!,
         dateArray: [Int!]!,
-        isScraped: Boolean!
+        isScraped: Boolean
       ): Product
 
       updateProductPrice(
@@ -105,10 +105,11 @@ const resolvers = {
   },
   Mutation: { 
       createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray}) => {
-          const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray});
-          //saves in data base as it is a promise
-          await product.save();
-          return product;
+        price = await (parser.checkPrice(url));
+        const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray});
+        //saves in data base as it is a promise
+        await product.save();
+        return product;
       },
 
       createCategory: async (_,{ name }) => {
