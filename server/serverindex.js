@@ -1,7 +1,9 @@
-const { GraphQLServer } = require('graphql-yoga')
+const { GraphQLServer } = require('graphql-yoga');
+const parser = require('./AmazonParser.js');
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://teamBogo:rainbow6siege@cluster0-vo9fe.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useFindAndModify', false);
 
 
 //schema model
@@ -14,6 +16,7 @@ const Product = mongoose.model('product', {
   minPrice: Number,
   priceArray: [Number],
   dateArray: [Number],
+  isScraped: Boolean,
 });
 
 
@@ -35,11 +38,12 @@ const typeDefs = `
     name: String!
     category: String!
     brand: String!
-    price: Int!
+    price: Float!
     url: String!
     minPrice: Int!
     priceArray:  [Int!]!
     dateArray:  [Int!]!
+    isScraped: Boolean!
   }
  
   type Category {
@@ -52,16 +56,18 @@ const typeDefs = `
         name: String!, 
         category: String!, 
         brand: String!, 
-        price: Int!, 
+        price: Float!, 
         url: String!,
         minPrice: Int!,
         priceArray: [Int!]!,
-        dateArray: [Int!]!
+        dateArray: [Int!]!,
+        isScraped: Boolean!
       ): Product
 
       updateProductPrice(
         id: ID!,
-        price: Int!
+        price: Float!,
+        isScraped: Boolean!
       ): Boolean
 
       addPriceAndDate(
@@ -111,11 +117,12 @@ const resolvers = {
         return category;
       },
 
-      updateProductPrice: async (_, {id, price}) => {
-        await Product.findByIdAndUpdate(id, {price});
+      updateProductPrice: async (_, {id, price, isScraped}) => {
+        price = await (parser.checkPrice('https://www.amazon.sg/ASUS-MX34VQ-Curved-Monitor-Dark/dp/B076G3X26M?ref_=s9_apbd_simh_hd_bw_b6tKmeR&pf_rd_r=Q8JXJJGZ570KZ05BZK33&pf_rd_p=4176285e-21fd-5c35-ae64-d5444cdbee0e&pf_rd_s=merchandised-search-12&pf_rd_t=BROWSE&pf_rd_i=6314449051'));
+        await Product.findByIdAndUpdate(id, {price, isScraped});
         return true;
       },
-
+      
       addPriceAndDate: async (_, {id, priceArray, dateArray}) => {
         await Product.findByIdAndUpdate(id, {priceArray, dateArray});
         return true;
