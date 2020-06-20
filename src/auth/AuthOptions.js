@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
-export default function AuthOptions() {
+
+export default function AuthOptions(props) {
   const { userData, setUserData } = useContext(UserContext);
 
   const history = useHistory();
@@ -15,6 +16,8 @@ export default function AuthOptions() {
       user: undefined,
     });
     localStorage.setItem("auth-token", "");
+    props.closeDrawer()
+    history.push('/')
   };
 
   return (

@@ -110,7 +110,8 @@ export default function PersistentDrawerLeft(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    if(props.user !== undefined) {
+    console.log(props)
+    if(props.user && (props.user.user !== undefined)) {
       setOpen(true);
     } else {
       return <Redirect to='/login' />
@@ -148,7 +149,7 @@ export default function PersistentDrawerLeft(props) {
           alt="Trackit_logo"
           height='60' />
           <div id='header'>
-            <AuthOptions/>
+            <AuthOptions closeDrawer={handleDrawerClose}/>
           </div>
           
         </Toolbar>
