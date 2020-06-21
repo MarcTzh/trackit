@@ -51,15 +51,15 @@ function App() {
       <BrowserRouter>
         <UserContext.Provider value={{ userData, setUserData }}>
           {/* <Header /> */}
-          <Drawer />
-          <div className="container">
+          <Drawer user={userData} />
+          {/* <div className="container">
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route exact path="/Profile" component={Profile}></Route>
             </Switch>
-          </div>
+          </div> */}
         </UserContext.Provider>
       </BrowserRouter>
     </>
