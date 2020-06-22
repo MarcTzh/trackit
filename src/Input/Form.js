@@ -18,7 +18,7 @@ const PRODUCTS_QUERY = gql`
 }`;
 
 const CREATE_MUTATION = gql`
-  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Int!, $url: String!, $minPrice: Int!, $priceArray: [Int!]!, $dateArray: [Int!]!){
+  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Float!, $url: String!, $minPrice: Int!, $priceArray: [Int!]!, $dateArray: [Int!]!){
   createProduct(name: $name, category: $category, brand: $brand, price: $price, url: $url, minPrice: $minPrice, priceArray: $priceArray, dateArray: $dateArray) {
     id
     name
@@ -85,7 +85,7 @@ function handleUrlChange(e) {
 }
 
   function handleSubmit() {
-    if(brandValue !== null && categoryValue !== null && categoryValue !== undefined && name !== '' && url !== '' && price > 0){
+    if(brandValue !== null && categoryValue !== null && categoryValue !== undefined && name !== '' && url !== ''){
       createProduct( 
                     {
                       variables: {name: name, 
