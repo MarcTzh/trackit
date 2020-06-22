@@ -25,7 +25,7 @@ import { MenuList, MenuItem } from '@material-ui/core';
 import {
   // eslint-disable-next-line no-unused-vars
   BrowserRouter as Router,
-  Switch, Route, Link
+  Switch, Route, Link, Redirect
 } from "react-router-dom";
 
 //Routing
@@ -38,10 +38,13 @@ import CategoryPage from '../Pages/CategoryPage';
 import UpdateProduct from '../Pages/UpdateProduct';
 import Register from '../auth/Register';
 import AuthOptions from "../auth/AuthOptions";
+import Login from '../auth/Login';
 
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
 import Trackit_logo from '../Images/Trackit_logo.png';
+
+import '../style.css';
 
 const drawerWidth = 240;
 
@@ -102,13 +105,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PersistentDrawerLeft() {
+export default function PersistentDrawerLeft(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    console.log(props)
+    if(props.user && (props.user.user !== undefined)) {
+      setOpen(true);
+    } else {
+      return <Redirect to='/login' />
+    }
   };
 
   const handleDrawerClose = () => {
@@ -141,7 +149,10 @@ export default function PersistentDrawerLeft() {
           <img src={Trackit_logo} 
           alt="Trackit_logo"
           height='60' />
-          <AuthOptions align='right'/>
+          <div id='header'>
+            <AuthOptions closeDrawer={handleDrawerClose}/>
+          </div>
+          
         </Toolbar>
       </AppBar>
 
@@ -213,6 +224,8 @@ export default function PersistentDrawerLeft() {
           <Route exact path="/" component={Home}>
           </Route>
           <Route exact path="/Profile" component={Profile}>
+          </Route>
+          <Route exact path="/Login" component={Login}>
           </Route>
           <Route exact path="/Settings" component={Settings}>
           </Route>
