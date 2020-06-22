@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 

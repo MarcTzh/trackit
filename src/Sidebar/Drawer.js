@@ -143,9 +143,6 @@ export default function PersistentDrawerLeft(props) {
             <MenuIcon />
           </IconButton>
           
-          {/* <Typography variant="h6" noWrap>
-            Trackit
-          </Typography> */}
           <img src={Trackit_logo} 
           alt="Trackit_logo"
           height='60' />
@@ -202,13 +199,7 @@ export default function PersistentDrawerLeft(props) {
                 Settings
             </MenuItem>
         </MenuList>
-        {/* original code */}
-          {/* {['Dashboard', 'Notifications', 'Settings'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))} */}
+
         </List>
       </Drawer>
       <main
@@ -217,9 +208,6 @@ export default function PersistentDrawerLeft(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-        {/* <Typography paragraph>
-          Blank page
-        </Typography> */}
         <Switch>
           <Route exact path="/" component={Home}>
           </Route>
