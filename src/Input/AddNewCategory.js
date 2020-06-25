@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { gql } from 'apollo-boost';
 import {useMutation } from '@apollo/react-hooks';
 import Button from '@material-ui/core/Button';
-
+import UserContext from '../context/UserContext';
 
 const CATEGORIES_QUERY = gql `
 {
@@ -15,10 +15,11 @@ const CATEGORIES_QUERY = gql `
 }`;
 
 const CREATE_CATEGORY_MUTATION = gql`
-  mutation createCategory($name: String!){
-  createCategory(name: $name) {
+  mutation createCategory($name: String!, $userID: String!){
+  createCategory(name: $name, userID: $userID) {
     id
     name
+    userID
   }
 }
 `;
@@ -35,17 +36,18 @@ export default function AddNewCategory() {
   const classes = useStyles();
   const [createCategory] = useMutation(CREATE_CATEGORY_MUTATION);
   const [name, setName] = useState('');
+  const { userData } = useContext(UserContext);
 
-function handleNameChange(e) {
-  const newName = e.target.value;
-  setName(newName);
-}
+  function handleNameChange(e) {
+    const newName = e.target.value;
+    setName(newName);
+  }
 
   function handleSubmit() {
     if(name !== '' ){
       createCategory( 
                     {
-                        variables: {name: name},
+                        variables: {name: name, userID: userData.user.id},
                         refetchQueries: [{ query: CATEGORIES_QUERY}] 
                     }
                  )
@@ -53,6 +55,7 @@ function handleNameChange(e) {
       
     }
 }
+
   return (
       <div>
         <TextField

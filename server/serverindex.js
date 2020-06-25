@@ -16,12 +16,14 @@ const Product = mongoose.model('product', {
   minPrice: Number,
   priceArray: [Number],
   dateArray: [Number],
+  userID: String,
   isScraped: Boolean,
 });
 
 
 const Category = mongoose.model('category', {
   name: String,
+  userID: String,
 });
 
 
@@ -43,12 +45,14 @@ const typeDefs = `
     minPrice: Int!
     priceArray:  [Int!]!
     dateArray:  [Int!]!
+    userID: String!
     isScraped: Boolean
   }
  
   type Category {
     id: ID!
     name: String!
+    userID: String!
   }
   
   type Mutation {
@@ -61,6 +65,7 @@ const typeDefs = `
         minPrice: Int!,
         priceArray: [Int!]!,
         dateArray: [Int!]!,
+        userID: String!,
         isScraped: Boolean
       ): Product
 
@@ -82,6 +87,7 @@ const typeDefs = `
 
       createCategory(
         name: String!
+        userID: String!
       ): Category
 
       updateCategory(
@@ -104,16 +110,16 @@ const resolvers = {
     categories: () => Category.find(),
   },
   Mutation: { 
-      createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray}) => {
+      createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray, userID}) => {
         price = await (parser.checkPrice(url));
-        const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray});
+        const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray, userID});
         //saves in data base as it is a promise
         await product.save();
         return product;
       },
 
-      createCategory: async (_,{ name }) => {
-        const category = new Category({name});
+      createCategory: async (_,{ name, userID }) => {
+        const category = new Category({name, userID});
         await category.save();
         return category;
       },

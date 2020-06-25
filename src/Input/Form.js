@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { gql } from 'apollo-boost';
@@ -6,6 +6,8 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import CategoryOptions from '../Input/CategoryOptions'
+import UserContext from '../context/UserContext';
+
 
 const PRODUCTS_QUERY = gql`
 {
@@ -18,8 +20,8 @@ const PRODUCTS_QUERY = gql`
 }`;
 
 const CREATE_MUTATION = gql`
-  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Float!, $url: String!, $minPrice: Int!, $priceArray: [Int!]!, $dateArray: [Int!]!){
-  createProduct(name: $name, category: $category, brand: $brand, price: $price, url: $url, minPrice: $minPrice, priceArray: $priceArray, dateArray: $dateArray) {
+  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Float!, $url: String!, $minPrice: Int!, $priceArray: [Int!]!, $dateArray: [Int!]!, $userID: String!){
+  createProduct(name: $name, category: $category, brand: $brand, price: $price, url: $url, minPrice: $minPrice, priceArray: $priceArray, dateArray: $dateArray, userID: $userID) {
     id
     name
     dateArray
@@ -58,6 +60,9 @@ export default function Form() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [url, setUrl] = useState('');
+
+  const { userData } = useContext(UserContext);
+
   
   //For dates
   const [today, setToday] = useState(new Date());  
@@ -91,11 +96,12 @@ function handleUrlChange(e) {
                       variables: {name: name, 
                                   category: categoryValue, 
                                   brand: brandValue, 
-                                  price: parseInt(price), 
+                                  price: 0, 
                                   url: url, 
                                   minPrice: 0,
                                   priceArray:[1], 
-                                  dateArray:[dateAndTime]
+                                  dateArray:[dateAndTime],
+                                  userID: userData.user.id
                                 },
                       refetchQueries: [{ query: PRODUCTS_QUERY}] 
                     }

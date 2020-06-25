@@ -1,23 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-// import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-// import CommentIcon from '@material-ui/icons/Comment';
 import ClearIcon from '@material-ui/icons/Clear';
 import AddNewCategory from '../Input/AddNewCategory';
+import UserContext from '../context/UserContext';
 
 const CATEGORIES_QUERY = gql `
 {
     categories {
         id
         name
+        userID
     }
 }`;
 
@@ -52,6 +51,8 @@ function CategoryPage() {
 
     const [removeCategory] = useMutation(REMOVE_CATEGORIES_MUTATION);
 
+    const { userData } = useContext(UserContext);
+
     function removeCategoryAndProduct(cat) {
         removeCategory(
             {
@@ -75,36 +76,41 @@ function CategoryPage() {
         )
     } 
 
+    const currUserID = String(userData.user.id);
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
-    if (productLoading) return <p>Loading...</p>;
-    if (productError) return <p>Error! :(</p>;
+    if (productLoading) return <p>Products Loading...</p>;
+    if (productError) return <p>Products Error! :(</p>;
     
     return (
         <Paper>   
         <AddNewCategory/>
-        <h1>My Categories</h1>
-        <List>
-        {data.categories.map((category) => {
+            <h1>My Categories</h1>
+            <List>
+                {
+                    data.categories.map(
+                        (category) => {
+                            if(category.userID == currUserID) {
+                                // number of products in each category
+                                var numOf = 0;
+                                productData.products.map((product) => product.category === category.name? numOf += 1: numOf += 0 );
 
-            var numOf = 0;
-            productData.products.map((product) => product.category === category.name? numOf+=1: numOf += 0 );
-
-            return (
-                <ListItem>
-            
-                <ListItemText primary={`${category.name} ${numOf}`} />
-    
-                <ListItemSecondaryAction>
-                    <IconButton onClick = { () => removeCategoryAndProduct(category)}>
-                        <ClearIcon />
-                    </IconButton>
-                </ListItemSecondaryAction>
-    
-                </ListItem>
-            );
-            })}
-        </List>
+                                return (
+                                    <ListItem>
+                                        <ListItemText primary={`${category.name} ${numOf}`} />
+                                        <ListItemSecondaryAction>
+                                            <IconButton onClick = { () => removeCategoryAndProduct(category)}>
+                                                <ClearIcon />
+                                            </IconButton>
+                                        </ListItemSecondaryAction>
+                                    </ListItem>
+                                );
+                            } 
+                        }
+                    )
+                }
+            </List>
         </Paper>
     );
 } 

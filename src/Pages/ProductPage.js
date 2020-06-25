@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Paper from '@material-ui/core/Paper';
@@ -14,11 +14,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 // import checkPrice from './Parser/AmazonParser';
 import CategoryOptions from '../Input/CategoryOptions'
 // import AddNewCategory from '../Input/AddNewCategory';
-
-//price checker
-// import checkPrice from '../Parser/AmazonParser';
-// const { checkPrice } = require("../Parser/AmazonParser");
-// import test from '../Parser/AutorunScript';
+import UserContext from '../context/UserContext';
 
 const PRODUCTS_QUERY = gql `
 {
@@ -28,6 +24,7 @@ const PRODUCTS_QUERY = gql `
         price
         category
         url
+        userID
     }
 }`;
 
@@ -48,6 +45,8 @@ const REMOVE_MUTATION = gql `
 
     const [displayedPdts, setDisplayedPdts] = useState([]);
 
+    const { userData } = useContext(UserContext);
+
     // const [productPrices, setProductPrices] = useState([]);
 
     
@@ -55,8 +54,9 @@ const REMOVE_MUTATION = gql `
         if(data) {
             setDisplayedPdts(data
                 .products
-                .filter((product) => currCat === undefined || currCat === null
-                || currCat === product.category))
+                .filter(
+                    (product) => product.userID == userData.user.id && currCat === undefined || currCat === null || currCat === product.category)
+                )
         }
     }, 
     //page is re-rendered whenever the currCat or data changes
@@ -74,9 +74,6 @@ const REMOVE_MUTATION = gql `
                 displayedPdts //changes with useEffect
                 .map((product) => {
                 const labelId = `checkbox-list-label-${product.id}`;
-                const url = product.url;
-                //const currPrice = await checkPrice(url);
-                //const currPrice = product.currPrice;
                 const currPrice = '';
 
                 return (
