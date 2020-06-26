@@ -46,6 +46,7 @@ const typeDefs = `
     priceArray:  [Int!]!
     dateArray:  [Int!]!
     userID: String!
+    date: Int
     isScraped: Boolean
   }
  
@@ -66,6 +67,7 @@ const typeDefs = `
         priceArray: [Int!]!,
         dateArray: [Int!]!,
         userID: String!,
+        date: Int,
         isScraped: Boolean
       ): Product
 
@@ -77,6 +79,9 @@ const typeDefs = `
 
       addPriceAndDate(
         id: ID!,
+        url: String!,
+        date: Int!,
+        price: Int!,
         priceArray: [Int!]!,
         dateArray: [Int!]!
       ): Boolean
@@ -130,8 +135,14 @@ const resolvers = {
         return true;
       },
       
-      addPriceAndDate: async (_, {id, priceArray, dateArray}) => {
-        await Product.findByIdAndUpdate(id, {priceArray, dateArray});
+      addPriceAndDate: async (_, {id, url, date, price, priceArray, dateArray}) => {
+        price = parseInt(await (parser.checkPrice(url))*100);
+        console.log(price);
+        priceArray.push(price);
+        console.log("pushed into priceArray");
+        dateArray.push(date);
+        console.log("pushed into dateArray");
+        await Product.findByIdAndUpdate(id, {url, date, price, priceArray, dateArray});
         return true;
       },
 
