@@ -16,13 +16,34 @@ async function checkPrice(rawUrl) {
     try {
         //remove tracking bits (part after ?)
         const url = rawUrl.split('?')[0];
+        // const url = 'https://www.amazon.sg/Reusable-Respirator-White-Disposable-Filter/dp/B089RNTJR2?ref_=Oct_DLandingS_PC_29cbf515_0&smid=A1GZO534BZZZJO'
 
         //original code
-        const priceString = await nightmare
+        let priceString;
+        let priceblock_ourprice;
+        priceblock_ourprice = await nightmare
         .goto(url)
-        .wait("#priceblock_ourprice")
-        .evaluate(() => document.getElementById("priceblock_ourprice").innerText)
-        .end()
+        .exists("#priceblock_ourprice")
+        if(priceblock_ourprice) {
+            priceblock_ourprice = priceblock_ourprice
+            .wait("#priceblock_ourprice")
+            .evaluate(() => document.getElementById("priceblock_ourprice").innerText)
+            .end()
+            priceString = priceblock_ourprice
+        } else {
+            const priceblock_dealprice = await nightmare
+            .goto(url)
+            .wait("#priceblock_dealprice")
+            .evaluate(() => document.getElementById("priceblock_dealprice").innerText)
+            .end()
+            if(priceblock_dealprice) {
+                priceString = priceblock_dealprice;
+            } else {
+                //both also failed
+                priceString = "0"; //added to prevent error
+            }
+        }
+
         const priceNumber = parseFloat(
             priceString
                 //specific to Singapore version of website
