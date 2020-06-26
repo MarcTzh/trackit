@@ -14,11 +14,7 @@ const nightmare = require("nightmare")();
 
 async function checkPrice(rawUrl) {
     try {
-        //remove tracking bits (part after ?)
         const url = rawUrl.split('?')[0];
-        // const url = 'https://www.amazon.sg/Reusable-Respirator-White-Disposable-Filter/dp/B089RNTJR2?ref_=Oct_DLandingS_PC_29cbf515_0&smid=A1GZO534BZZZJO'
-
-        //original code
         let priceString;
         let priceblock_ourprice;
         priceblock_ourprice = await nightmare
@@ -53,7 +49,7 @@ async function checkPrice(rawUrl) {
                 //for values above 1000
                 .replace(',', '')
         )
-        console.log(priceNumber);
+        // console.log(priceNumber);
         return priceNumber;
         // if(priceNumber < minPrice) { //TODO: send to client
         //     sendEmail(
