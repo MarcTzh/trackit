@@ -13,28 +13,48 @@ function Profile() {
 
     const [categoryValue, setCategoryValue] = useState();
     
-    const [chartData, setChartData] = useState({});
+    const [chartData, setChartData] = useState({
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        // datasets: [
+        //     {
+        //         label: 'Amazon',
+        //         backgroundColor: 'rgb(255, 99, 132)',
+        //         borderColor: 'rgb(255, 99, 132)',
+        //         fill: false,
+        //         data: [200, 210, 215, 212, 220, 230, 225]
+        //     }, {
+        //         label: 'Shopee',
+        //         backgroundColor: 'rgb(255, 165, 0)',
+        //         borderColor: 'rgb(255, 165, 0)',
+        //         fill: false,
+        //         data: [200, 200, 215, 202, 210, 220, 215]
+        //     }
+        // ]
+        datasets: []
+    });
 
     function handleClick() {
         return (
-            setChartData({
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [
-                    {
-                        label: 'Amazon',
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        fill: false,
-                        data: [200, 210, 215, 212, 220, 230, 225]
-                    }, {
-                        label: 'Shopee',
-                        backgroundColor: 'rgb(255, 165, 0)',
-                        borderColor: 'rgb(255, 165, 0)',
-                        fill: false,
-                        data: [200, 200, 215, 202, 210, 220, 215]
-                    }
-                ]
-            })
+            setChartData({}
+                // {
+                //     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                //     datasets: [
+                //         {
+                //             label: 'Amazon',
+                //             backgroundColor: 'rgb(255, 99, 132)',
+                //             borderColor: 'rgb(255, 99, 132)',
+                //             fill: false,
+                //             data: [200, 210, 215, 212, 220, 230, 225]
+                //         }, {
+                //             label: 'Shopee',
+                //             backgroundColor: 'rgb(255, 165, 0)',
+                //             borderColor: 'rgb(255, 165, 0)',
+                //             fill: false,
+                //             data: [200, 200, 215, 202, 210, 220, 215]
+                //         }
+                //     ]
+                // }
+            )
         )
     }
 
@@ -43,7 +63,7 @@ function Profile() {
             <h1 align='center'>My Profile</h1>
             <CategoryOptions callBackFromParent={setCategoryValue} />
             <LineChart chartData={chartData} catValue = {categoryValue}/>
-            <Button onClick = {handleClick}> click me to load</Button>
+            <Button onClick = {handleClick}> reload</Button>
         </div>
     );
     

@@ -20,7 +20,7 @@ const PRODUCTS_QUERY = gql`
 }`;
 
 const CREATE_MUTATION = gql`
-  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Float!, $url: String!, $minPrice: Int!, $priceArray: [Int!]!, $dateArray: [Int!]!, $userID: String!){
+  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Float!, $url: String!, $minPrice: Int!, $priceArray: [Int!]!, $dateArray: [String!]!, $userID: String!){
   createProduct(name: $name, category: $category, brand: $brand, price: $price, url: $url, minPrice: $minPrice, priceArray: $priceArray, dateArray: $dateArray, userID: $userID) {
     id
     name
@@ -90,6 +90,7 @@ function handleUrlChange(e) {
 }
 
   function handleSubmit() {
+    const currDate = (new Date().getTime()).toString(10);
     if(brandValue !== null && categoryValue !== null && categoryValue !== undefined && name !== '' && url !== ''){
       createProduct( 
                     {
@@ -100,7 +101,7 @@ function handleUrlChange(e) {
                                   url: url, 
                                   minPrice: 0,
                                   priceArray:[1], 
-                                  dateArray:[dateAndTime],
+                                  dateArray:[currDate],
                                   userID: userData.user.id
                                 },
                       refetchQueries: [{ query: PRODUCTS_QUERY}] 

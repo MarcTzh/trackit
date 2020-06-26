@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Paper from '@material-ui/core/Paper';
@@ -8,7 +8,10 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
+import ReplayIcon from '@material-ui/icons/Replay';
 import CategoryOptions from '../Input/CategoryOptions'
+import UserContext from '../context/UserContext';
+
 
 // DATEARRAY NOT SHOWING
 
@@ -20,6 +23,7 @@ const PRODUCTS_QUERY = gql `
         price
         category
         url
+        userID
         priceArray
         dateArray
     }
@@ -31,15 +35,25 @@ const REMOVE_MUTATION = gql `
     }
 `;
 
+const ADD_PRICE_AND_DATE_MUTATION = gql `
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Int!, $priceArray: [Int!]!, $dateArray: [String!]!) {
+        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
+    }
+`;
+
  function UpdateProduct() {
 
     const { loading, error, data } = useQuery(PRODUCTS_QUERY);
 
     const [removeProduct] = useMutation(REMOVE_MUTATION);
 
+    const [addPriceAndDate] = useMutation(ADD_PRICE_AND_DATE_MUTATION);
+
     const [currCat, setCat] = useState();
 
     const [displayedPdts, setDisplayedPdts] = useState([]);
+
+    const { userData } = useContext(UserContext);
 
     // const [productPrices, setProductPrices] = useState([]);
 
@@ -47,8 +61,9 @@ const REMOVE_MUTATION = gql `
         if(data) {
             setDisplayedPdts(data
                 .products
-                .filter((product) => currCat === undefined || currCat === null
-                || currCat === product.category))
+                .filter(
+                    (product) => product.userID == userData.user.id && currCat === undefined || currCat === null || currCat === product.category)
+                )
         }
     }, 
     //page is re-rendered whenever the currCat or data changes
@@ -63,47 +78,81 @@ const REMOVE_MUTATION = gql `
       }, 1000);
       return () => clearInterval(interval);
     }, []);
-  const dateAndTime = (today.getFullYear() - 2000)*100000000 + today.getMonth() * 1000000 + today.getDate() * 10000 + today.getHours()*100 + today.getMinutes();    
+
+    const currDate = (today.getTime()).toString(10);
+
+    function handleUpdate(product) {
+        addPriceAndDate(
+            {
+                variables: 
+                {
+                    id: product.id,
+                    url: product.url,
+                    date: currDate,
+                    price: 0,  
+                    priceArray:product.priceArray, 
+                    dateArray:product.dateArray,
+                }
+            }
+        )
+        
+    }
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
 
     return (
         <Paper>   
-            <h1>My Products</h1>
+            <h1>Manual Update Products</h1>
             <List>
                 <CategoryOptions callBackFromParent={setCat}/>
-                {//data.products
-                displayedPdts //changes with useEffect
-                .map((product) => {
-                const labelId = `checkbox-list-label-${product.id}`;
-                const url = product.url;
-                //const currPrice = await checkPrice(url);
-                //const currPrice = product.currPrice;
-                const currPrice = '';
+                { displayedPdts //changes with useEffect
+                    .map((product) => {
+                        const labelId = `checkbox-list-label-${product.id}`;
 
-                return (
-                    <ListItem >
-                    <ListItemText 
-                    id={labelId} 
-                    primary={`${product.name} ${product.category} ${currPrice} ${product.dateArray}`} />
-                    <ListItemSecondaryAction>
-                        <IconButton onClick={
-                        () => {removeProduct(
-                        {
-                            variables: 
-                            {
-                            id: product.id},
-                            refetchQueries: [{ query: PRODUCTS_QUERY}] 
-                        }
-                        )
-                        }}>
-                        <ClearIcon />
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                    </ListItem>
-                );
-                })}
+                        return (
+                            <ListItem >
+                                <ListItemText 
+                                id={labelId} 
+                                primary={`${product.name} ${product.category} ${product.dateArray}`} />
+                                    <ListItemSecondaryAction>
+                                        <IconButton onClick={
+                                            () => {handleUpdate(product)
+                                            //     addPriceAndDate(
+                                            // {
+                                            //     variables: 
+                                            //     {
+                                            //         id: product.id,
+                                            //         url: product.url,
+                                            //         date: currDate,
+                                            //         price: 0,  
+                                            //         priceArray:product.priceArray, 
+                                            //         dateArray:product.dateArray,
+                                            //     },
+                                            //     refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                                            // }
+                                            // )
+                                            }}>
+                                            <ReplayIcon />
+                                        </IconButton>
+                                        <IconButton onClick={
+                                            () => {removeProduct(
+                                            {
+                                                variables: 
+                                                {
+                                                id: product.id},
+                                                refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                                            }
+                                            )
+                                            }}>
+                                            <ClearIcon />
+                                        </IconButton>
+                                    </ListItemSecondaryAction>
+                            </ListItem>
+                        );
+                    }
+                    )
+                }
             </List>
         </Paper>
     )
