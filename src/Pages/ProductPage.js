@@ -54,13 +54,18 @@ const REMOVE_MUTATION = gql `
             setDisplayedPdts(data
                 .products
                 .filter(
-                    (product) => currCat === undefined || currCat === null || currCat === product.category)
+                    product => (product.userID === userData.user.id) && 
+                    (currCat === undefined ||
+                    currCat === null || 
+                    currCat === product.category)
+
                 )
+            )
         }
     }, 
     //page is re-rendered whenever the currCat or data changes
     [currCat, data]);
-    
+
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
