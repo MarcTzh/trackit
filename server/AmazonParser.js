@@ -13,7 +13,8 @@ async function checkPrice(rawUrl) {
         .goto(url)
         .exists("#priceblock_ourprice")
         if(priceblock_ourprice) {
-            priceblock_ourprice = priceblock_ourprice
+            priceblock_ourprice = await nightmare
+            .goto(url)
             .wait("#priceblock_ourprice")
             .evaluate(() => document.getElementById("priceblock_ourprice").innerText)
             .end()
@@ -21,11 +22,14 @@ async function checkPrice(rawUrl) {
         } else {
             const priceblock_dealprice = await nightmare
             .goto(url)
-            .wait("#priceblock_dealprice")
-            .evaluate(() => document.getElementById("priceblock_dealprice").innerText)
-            .end()
+            .exists("#priceblock_dealprice")
+
             if(priceblock_dealprice) {
-                priceString = priceblock_dealprice;
+                priceString = await nightmare
+                .goto(url)
+                .wait("#priceblock_dealprice")
+                .evaluate(() => document.getElementById("priceblock_dealprice").innerText)
+                .end()
             } else {
                 //both also failed
                 priceString = "0"; //added to prevent error
@@ -53,7 +57,7 @@ async function checkPrice(rawUrl) {
 
 // checkPrice('https://www.amazon.sg/ASUS-MX34VQ-Curved-Monitor-Dark/dp/B076G3X26M?ref_=s9_apbd_simh_hd_bw_b6tKmeR&pf_rd_r=Q8JXJJGZ570KZ05BZK33&pf_rd_p=4176285e-21fd-5c35-ae64-d5444cdbee0e&pf_rd_s=merchandised-search-12&pf_rd_t=BROWSE&pf_rd_i=6314449051')
 
-
+// checkPrice('https://www.amazon.com/dp/B07G7PMVR9/ref=dp_cerb_2')
 // export default checkPrice;
 exports.checkPrice = checkPrice;
 
