@@ -15,7 +15,7 @@ const Product = mongoose.model('product', {
   url: String,
   minPrice: Number,
   priceArray: [Number],
-  dateArray: [Number],
+  dateArray: [String],
   userID: String,
   isScraped: Boolean,
 });
@@ -24,6 +24,7 @@ const Product = mongoose.model('product', {
 const Category = mongoose.model('category', {
   name: String,
   userID: String,
+  date: Date
 });
 
 
@@ -44,7 +45,7 @@ const typeDefs = `
     url: String!
     minPrice: Int!
     priceArray:  [Int!]!
-    dateArray:  [Int!]!
+    dateArray:  [String!]!
     userID: String!
     date: Int
     isScraped: Boolean
@@ -54,6 +55,7 @@ const typeDefs = `
     id: ID!
     name: String!
     userID: String!
+    date: String
   }
   
   type Mutation {
@@ -65,7 +67,7 @@ const typeDefs = `
         url: String!,
         minPrice: Int!,
         priceArray: [Int!]!,
-        dateArray: [Int!]!,
+        dateArray: [String!]!,
         userID: String!,
         date: Int,
         isScraped: Boolean
@@ -80,10 +82,10 @@ const typeDefs = `
       addPriceAndDate(
         id: ID!,
         url: String!,
-        date: Int!,
+        date: String!,
         price: Int!,
         priceArray: [Int!]!,
-        dateArray: [Int!]!
+        dateArray: [String!]!
       ): Boolean
 
       removeProduct(
@@ -102,6 +104,11 @@ const typeDefs = `
 
       removeCategory(
         id: ID!
+      ): Boolean
+
+      addDateCategory(
+        id: ID!
+        date: String
       ): Boolean
   }
 `
@@ -136,6 +143,7 @@ const resolvers = {
       },
       
       addPriceAndDate: async (_, {id, url, date, price, priceArray, dateArray}) => {
+        console.log("Start");
         price = parseInt(await (parser.checkPrice(url))*100);
         console.log(price);
         priceArray.push(price);
@@ -158,6 +166,11 @@ const resolvers = {
 
       removeCategory: async (_, {id}) => {
         await Category.findByIdAndRemove(id);
+        return true;
+      },
+
+      addDateCategory: async (_, {id, date}) => {
+        await Category.findByIdAndUpdate(id, date);
         return true;
       },
 

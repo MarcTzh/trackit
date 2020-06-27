@@ -4,16 +4,12 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-// import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-// import CommentIcon from '@material-ui/icons/Comment';
 import ClearIcon from '@material-ui/icons/Clear';
-// import checkPrice from './Parser/AmazonParser';
 import CategoryOptions from '../Input/CategoryOptions'
-// import AddNewCategory from '../Input/AddNewCategory';
+import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
 
 const PRODUCTS_QUERY = gql `
@@ -49,8 +45,11 @@ const REMOVE_MUTATION = gql `
 
     // const [productPrices, setProductPrices] = useState([]);
 
-    
+
     useEffect(() => {
+        if(!userData.user){
+            console.log("FAILED");
+        }
         if(data) {
             setDisplayedPdts(data
                 .products
@@ -59,23 +58,28 @@ const REMOVE_MUTATION = gql `
                     (currCat === undefined ||
                     currCat === null || 
                     currCat === product.category)
+
                 )
             )
         }
     }, 
     //page is re-rendered whenever the currCat or data changes
-    [currCat, data, userData]);
+    [currCat, data]);
+
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
 
     return (
-        <Paper>   
+        <div>
+        {userData.user ? (
+            <Paper>   
             <h1>My Products</h1>
             <List>
                 <CategoryOptions callBackFromParent={setCat}/>
                 {//data.products
                 displayedPdts //changes with useEffect
+                .filter((product) => product.userID == userData.user.id)
                 .map((product) => {
                 const labelId = `checkbox-list-label-${product.id}`;
                 const currPrice = '';
@@ -104,6 +108,13 @@ const REMOVE_MUTATION = gql `
                 })}
             </List>
         </Paper>
+        ) : (
+            <>
+            <h2>You are not logged in</h2>
+            <Link to="/login">Log in</Link>
+            </>
+        )}
+        </div>
     )
 }
     
