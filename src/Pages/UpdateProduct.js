@@ -10,8 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 import ReplayIcon from '@material-ui/icons/Replay';
 import CategoryOptions from '../Input/CategoryOptions'
+import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
-
 
 // DATEARRAY NOT SHOWING
 
@@ -102,7 +102,9 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     if (error) return <p>Error! :(</p>;
 
     return (
-        <Paper>   
+        <>
+        {userData.user ? (
+            <Paper>   
             <h1>Manual Update Products</h1>
             <List>
                 <CategoryOptions callBackFromParent={setCat}/>
@@ -141,6 +143,13 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                 }
             </List>
         </Paper>
+        ) :(
+            <>
+            <h2>You are not logged in</h2>
+            <Link to="/login">Log in</Link>
+            </>
+        )}
+        </>
     )
 }
     

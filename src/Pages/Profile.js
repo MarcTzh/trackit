@@ -1,5 +1,5 @@
 // import React, {Component} from 'react';
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 //updated import
 import LineChart from '../Chart/LineChart';
 // import BrandOptions from '../Input/BrandOptions';
@@ -52,16 +52,13 @@ function Profile() {
         // ]
     });
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error! :(</p>;
-
-    function handleClick(product, user) {
+    const handleClick = (product, user) => {
         var dataset = [];
         for (var i = 0; i < product.length; i++) {
             if(product[i].userID === user.id && product[i].category === categoryValue) {
                 dataset.push({
                     label: product[i].name,
-                    data: product[i].priceArray
+                    data: product[i].priceArray.map(price => price/100)
                 });
             }
         }
@@ -73,6 +70,18 @@ function Profile() {
         
     }
 
+    // useEffect(() => {
+    //     if (loading) return <p>Loading...</p>;
+    //     if (error) return <p>Error! :(</p>;
+    //     handleCatChange(data.products, userData.user);
+    // }, 
+    // //page is re-rendered whenever the currCat or data changes
+    // [categoryValue]);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error! :(</p>;
+
+
     return (
         <>
         {userData.user ? (
@@ -80,7 +89,7 @@ function Profile() {
                 <h1 align='center'>My Profile</h1>
                 <CategoryOptions callBackFromParent={setCategoryValue} />
                 <LineChart chartData={chartData} catValue = {categoryValue}/>
-                <Button onClick = {() => handleClick(data.products, userData.user)}> reload</Button>
+                <Button onClick={()=> handleClick(data.products, userData.user) }>load</Button>
             </div>
         ) : (
             <>
