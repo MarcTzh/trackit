@@ -47,9 +47,6 @@ const REMOVE_MUTATION = gql `
 
 
     useEffect(() => {
-        if(!userData.user){
-            console.log("FAILED");
-        }
         if(data) {
             setDisplayedPdts(data
                 .products
