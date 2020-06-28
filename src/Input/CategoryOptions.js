@@ -32,7 +32,10 @@ export default function CategoryOptions(props) {
   
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error! :(</p>;
-  data.categories.filter((category) => category.userID == userData.user.id).map((category) => categoryOptions.push(category.name));
+  
+    data.categories.filter((category) => 
+    category.userID === userData.user.id)
+  .map((category) => categoryOptions.push(category.name));
 
   return (
     <div className={classes.textField}>
