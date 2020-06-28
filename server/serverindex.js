@@ -44,7 +44,7 @@ const typeDefs = `
     price: Float!
     url: String!
     minPrice: Int!
-    priceArray:  [Int!]!
+    priceArray:  [Int]!
     dateArray:  [String!]!
     userID: String!
     date: Int
@@ -66,7 +66,7 @@ const typeDefs = `
         price: Float!, 
         url: String!,
         minPrice: Int!,
-        priceArray: [Int!]!,
+        priceArray: [Int]!,
         dateArray: [String!]!,
         userID: String!,
         date: Int,
@@ -84,7 +84,7 @@ const typeDefs = `
         url: String!,
         date: String!,
         price: Int!,
-        priceArray: [Int!]!,
+        priceArray: [Int]!,
         dateArray: [String!]!
       ): Boolean
 
@@ -125,6 +125,7 @@ const resolvers = {
   Mutation: { 
       createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray, userID}) => {
         price = await (parser.checkPrice(url));
+        priceArray.push(price);
         const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray, userID});
         //saves in data base as it is a promise
         await product.save();

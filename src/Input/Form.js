@@ -100,7 +100,7 @@ function handleUrlChange(e) {
                                   price: 0, 
                                   url: url, 
                                   minPrice: 0,
-                                  priceArray:[1], 
+                                  priceArray:[], 
                                   dateArray:[currDate],
                                   userID: userData.user.id
                                 },
