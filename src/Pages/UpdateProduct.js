@@ -118,20 +118,6 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                     <ListItemSecondaryAction>
                                         <IconButton onClick={
                                             () => {handleUpdate(product)
-                                            //     addPriceAndDate(
-                                            // {
-                                            //     variables: 
-                                            //     {
-                                            //         id: product.id,
-                                            //         url: product.url,
-                                            //         date: currDate,
-                                            //         price: 0,  
-                                            //         priceArray:product.priceArray, 
-                                            //         dateArray:product.dateArray,
-                                            //     },
-                                            //     refetchQueries: [{ query: PRODUCTS_QUERY}] 
-                                            // }
-                                            // )
                                             }}>
                                             <ReplayIcon />
                                         </IconButton>

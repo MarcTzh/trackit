@@ -121,6 +121,7 @@ const resolvers = {
     products: () => Product.find(),
     categories: () => Category.find(),
   },
+  
   Mutation: { 
       createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray, userID}) => {
         price = await (parser.checkPrice(url));
