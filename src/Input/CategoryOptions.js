@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { gql } from 'apollo-boost';
 import { useQuery, } from '@apollo/react-hooks';
+import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
 
 const CATEGORIES_QUERY = gql `
@@ -35,26 +36,35 @@ export default function CategoryOptions(props) {
   data.categories.filter((category) => category.userID == userData.user.id).map((category) => categoryOptions.push(category.name));
 
   return (
-    <div className={classes.textField}>
-        <Autocomplete
-            categoryValue = {categoryValue}
-            onChange = {(event, newValue) => {
-                setCategoryValue(newValue);
-                //for filtering purposes
-                if(props.callBackFromParent) {
-                  props.callBackFromParent(newValue); 
+    <>
+      {userData.user ? (
+        <div className={classes.textField}>
+            <Autocomplete
+                categoryValue = {categoryValue}
+                onChange = {(event, newValue) => {
+                    setCategoryValue(newValue);
+                    //for filtering purposes
+                    if(props.callBackFromParent) {
+                      props.callBackFromParent(newValue); 
+                    }
+                  }
                 }
-              }
-            }
-            inputCategoryValue = {inputCategoryValue}
-            onInputChange = {(event, newInputValue) => {
-              setInputCategoryValue(newInputValue);
-            }}
-            id = "controllable-states-demo"
-            options = {categoryOptions}
-            style = {{ width: 300 }}
-            renderInput = {(params) => <TextField {...params} label="Category" variant="outlined" />}
-        />
-    </div>
+                inputCategoryValue = {inputCategoryValue}
+                onInputChange = {(event, newInputValue) => {
+                  setInputCategoryValue(newInputValue);
+                }}
+                id = "controllable-states-demo"
+                options = {categoryOptions}
+                style = {{ width: 300 }}
+                renderInput = {(params) => <TextField {...params} label="Category" variant="outlined" />}
+            />
+        </div>
+      ) : (
+            <>
+              <h2>You are not logged in</h2>
+              <Link to="/login">Log in</Link>
+            </>
+          )}
+    </>
   );
 } 

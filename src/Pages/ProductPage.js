@@ -66,7 +66,7 @@ const REMOVE_MUTATION = gql `
     if (error) return <p>Error! :(</p>;
 
     return (
-        <div>
+        <>
         {userData.user ? (
             <Paper>   
             <h1>My Products</h1>
@@ -109,7 +109,7 @@ const REMOVE_MUTATION = gql `
             <Link to="/login">Log in</Link>
             </>
         )}
-        </div>
+        </>
     )
 }
     
