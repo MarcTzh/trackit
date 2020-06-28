@@ -13,16 +13,16 @@ async function webscraping(url) {
     try {
         await page.goto(url);
 
-        const [el] = await page.$x('//*[@id="landingImage"]');
-        const src = await el.getProperty('src');
-        const imgURL = await src.jsonValue();
+        // const [el] = await page.$x('//*[@id="landingImage"]');
+        // const src = await el.getProperty('src');
+        // const imgURL = await src.jsonValue();
 
-        const [el2] = await page.$x('//*[@id="productTitle"]');
-        const txt = await el2.getProperty('textContent');
-        const rawtitle = await txt.jsonValue();
-        const title = rawtitle
-                    //to remove linebreaks
-                    .replace(/(\r\n|\n|\r)/gm, "");
+        // const [el2] = await page.$x('//*[@id="productTitle"]');
+        // const txt = await el2.getProperty('textContent');
+        // const rawtitle = await txt.jsonValue();
+        // const title = rawtitle
+        //             //to remove linebreaks
+        //             .replace(/(\r\n|\n|\r)/gm, "");
 
         const [el3] = await page.$x('//*[@id="priceblock_ourprice"]');
         const txt2 = await el3.getProperty('textContent');
@@ -38,11 +38,11 @@ async function webscraping(url) {
         );
         browser.close()
         dataObj = {
-            image: imgURL,
-            name: title,
+            // image: imgURL,
+            // name: title,
             price: price
         };
-        console.log(dataObj);
+        console.log(dataObj.price);
 
         return price;
     } catch (e) {
