@@ -54,11 +54,10 @@ const REMOVE_MUTATION = gql `
             setDisplayedPdts(data
                 .products
                 .filter(
-                    product => (product.userID === userData.user.id) && 
-                    (currCat === undefined ||
+                    (product) => 
+                    currCat === undefined ||
                     currCat === null || 
-                    currCat === product.category)
-
+                    currCat === product.category
                 )
             )
         }
