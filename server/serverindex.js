@@ -43,11 +43,11 @@ const typeDefs = `
     brand: String!
     price: Float!
     url: String!
-    minPrice: Int!
-    priceArray:  [Int]!
+    minPrice: Float!
+    priceArray:  [Float]!
     dateArray:  [String!]!
     userID: String!
-    date: Int
+    date: String
     isScraped: Boolean
   }
  
@@ -65,12 +65,25 @@ const typeDefs = `
         brand: String!, 
         price: Float!, 
         url: String!,
-        minPrice: Int!,
-        priceArray: [Int]!,
+        minPrice: Float!,
+        priceArray: [Float]!,
         dateArray: [String!]!,
         userID: String!,
-        date: Int,
+        date: String,
         isScraped: Boolean
+      ): Product
+
+      createTestProduct(
+        name: String!, 
+        category: String!, 
+        brand: String!, 
+        price: Float!, 
+        url: String!,
+        minPrice: Float!,
+        priceArray: [Float]!,
+        dateArray: [String!]!,
+        userID: String!,
+        date: String,
       ): Product
 
       updateProductPrice(
@@ -83,8 +96,8 @@ const typeDefs = `
         id: ID!,
         url: String!,
         date: String!,
-        price: Int!,
-        priceArray: [Int]!,
+        price: Float!,
+        priceArray: [Float]!,
         dateArray: [String!]!
       ): Boolean
 
@@ -132,6 +145,12 @@ const resolvers = {
         return product;
       },
 
+      createTestProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray, userID}) => {
+        const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray, userID});
+        await product.save();
+        return product;
+      },
+
       createCategory: async (_,{ name, userID }) => {
         const category = new Category({name, userID});
         await category.save();
@@ -146,7 +165,7 @@ const resolvers = {
       
       addPriceAndDate: async (_, {id, url, date, price, priceArray, dateArray}) => {
         console.log("Start");
-        price = parseInt(await (parser.checkPrice(url))*100);
+        price = parseFloat(await parser.checkPrice(url));
         console.log(price);
         priceArray.push(price);
         console.log("pushed into priceArray");
