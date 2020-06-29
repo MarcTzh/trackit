@@ -19,6 +19,7 @@ import PhoneAndroidTwoToneIcon from '@material-ui/icons/PhoneAndroidTwoTone';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import UpdateIcon from '@material-ui/icons/Update';
 // import InboxIcon from '@material-ui/icons/MoveToInbox';
 // import MailIcon from '@material-ui/icons/Mail';
 import { MenuList, MenuItem } from '@material-ui/core';
@@ -191,7 +192,7 @@ export default function PersistentDrawerLeft(props) {
                 Add Products
             </MenuItem>
             <MenuItem component={Link} to="/updateProduct">
-            <ListItemIcon><SettingsIcon /></ListItemIcon>
+            <ListItemIcon><UpdateIcon /></ListItemIcon>
                 Update Product
             </MenuItem>
             <MenuItem component={Link} to="/settings">

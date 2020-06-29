@@ -99,7 +99,7 @@ export default function ChangeAccountDetails(props) {
           // value = {name}
         />
         <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}>
-            Submit 
+            Save 
           </Button>
         {/* <TextField
           id="outlined-read-only-input"
