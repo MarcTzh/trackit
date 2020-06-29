@@ -36,7 +36,7 @@ const REMOVE_MUTATION = gql `
 `;
 
 const ADD_PRICE_AND_DATE_MUTATION = gql `
-    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Int!, $priceArray: [Int!]!, $dateArray: [String!]!) {
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float!, $priceArray: [Float!]!, $dateArray: [String!]!) {
         addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
     }
 `;
