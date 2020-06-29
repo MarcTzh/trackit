@@ -58,16 +58,16 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     // const [productPrices, setProductPrices] = useState([]);
 
     useEffect(() => {
-        if(data) {
+        if(data && userData && userData.user) {
             setDisplayedPdts(data
                 .products
                 .filter(
-                    (product) => product.userID == userData.user.id && currCat === undefined || currCat === null || currCat === product.category)
+                    (product) => product.userID === userData.user.id && currCat === undefined || currCat === null || currCat === product.category)
                 )
         }
     }, 
     //page is re-rendered whenever the currCat or data changes
-    [currCat, data]);
+    [currCat, data, userData]);
 
 
     //For dates
