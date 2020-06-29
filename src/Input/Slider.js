@@ -5,14 +5,20 @@ import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 500,
+    width: 700,
   },
   margin: {
     height: theme.spacing(3),
   },
 }));
 
+
+
 const marks = [
+  {
+    value: 0,
+    label: '0',
+  },
   {
     value: 4,
     label: '4 Hours',
@@ -26,6 +32,14 @@ const marks = [
     label: '12 Hours',
   },
   {
+    value: 16,
+    label: '16 Hours',
+  },
+  {
+    value: 20,
+    label: '20 Hours',
+  },
+  {
     value: 24,
     label: '24 Hours',
   },
@@ -35,19 +49,22 @@ function valuetext(value) {
   return `${value}`;
 }
 
-export default function DiscreteSlider() {
+export default function DiscreteSlider(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Typography id="discrete-slider-custom" gutterBottom>
-        Custom marks
+        Choose how often to recieve email notifications if there are price alerts
       </Typography>
       <Slider
         defaultValue={24}
         getAriaValueText={valuetext}
         aria-labelledby="discrete-slider-custom"
         step={4}
+        min={0}
+        max={24}
+        onChange={props.editSliderValue}
         valueLabelDisplay="auto"
         marks={marks}
       />

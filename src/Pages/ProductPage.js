@@ -75,7 +75,7 @@ const REMOVE_MUTATION = gql `
                 <CategoryOptions callBackFromParent={setCat}/>
                 {//data.products
                 displayedPdts //changes with useEffect
-                .filter((product) => product.userID == userData.user.id)
+                .filter((product) => product.userID === userData.user.id)
                 .map((product) => {
                 const labelId = `checkbox-list-label-${product.id}`;
                 const currPrice = '';
