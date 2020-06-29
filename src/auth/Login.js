@@ -53,6 +53,8 @@ export default function Login() {
         />
 
         <input type="submit" value="Log in" />
+
+        <input type="submit" value="Forget password" />
       </form>
     </div>
   );
