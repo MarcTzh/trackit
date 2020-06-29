@@ -52,6 +52,12 @@ function Profile() {
         //     }
         // ]
     });
+    
+    useEffect(() => {
+        if(userData !== undefined && userData.user !== undefined && data !== undefined) {
+            handleClick(data.products, userData.user)
+        }
+    }, [data, userData, categoryValue])
 
     const handleClick = (product, user) => {
         var dataset = [];
@@ -67,13 +73,14 @@ function Profile() {
                 });
             }
         }
-        console.log(dataset);
+        // console.log(dataset);
         return(setChartData({
             labels: ['January', 'February', 'March', 'April', 'May', 'June'],
             datasets: dataset
         }))
         
     }
+        
 
     // useEffect(() => {
     //     if (loading) return <p>Loading...</p>;
@@ -83,6 +90,8 @@ function Profile() {
     // //page is re-rendered whenever the currCat or data changes
     // [categoryValue]);
 
+    
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
 
@@ -90,12 +99,14 @@ function Profile() {
     return (
         <>
         {userData.user ? (
-            <Paper>
-            <div style={{ margin: 30 , padding: 30}}> 
-                <h1 align='center'>My Profile</h1>
+            <Paper style={{ margin: 30 , padding: 30}}>
+            <div style={{ marginTop: -30}}> 
+                <h1>My Profile</h1>
+                <h2>Please choose a category to display</h2>
                 <CategoryOptions callBackFromParent={setCategoryValue} />
                 <LineChart chartData={chartData} catValue = {categoryValue}/>
-                <Button onClick={()=> handleClick(data.products, userData.user) }>load</Button>
+                <p>Click on individual products to remove them from view</p>
+                {/* <Button onClick={()=> handleClick(data.products, userData.user) }>load</Button> */}
             </div>
             </Paper>
         ) : (
