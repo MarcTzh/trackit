@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -110,6 +110,7 @@ export default function PersistentDrawerLeft(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [showIconButton, setShowIconButton] = React.useState(false);
 
   const handleDrawerOpen = () => {
     console.log(props)
@@ -124,6 +125,14 @@ export default function PersistentDrawerLeft(props) {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if(props.user && (props.user.user !== undefined)) {
+      setShowIconButton(true);
+    } else {
+      setShowIconButton(false);
+    }
+  }, [props.user])
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -134,21 +143,24 @@ export default function PersistentDrawerLeft(props) {
         })}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
+          {showIconButton
+            ? <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+            : null }
           
           <img src={Trackit_logo} 
           alt="Trackit_logo"
           height='60' />
           <div id='header'>
-            <AuthOptions closeDrawer={handleDrawerClose}/>
+            <AuthOptions 
+            closeDrawer={handleDrawerClose}/>
           </div>
           
         </Toolbar>
