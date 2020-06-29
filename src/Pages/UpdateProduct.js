@@ -12,6 +12,8 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import CategoryOptions from '../Input/CategoryOptions'
 import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 // DATEARRAY NOT SHOWING
 
@@ -41,6 +43,17 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     }
 `;
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+      maxWidth: '36ch',
+      backgroundColor: theme.palette.background.paper,
+    },
+    inline: {
+      display: 'inline',
+    },
+  }));
+
  function UpdateProduct() {
 
     const { loading, error, data } = useQuery(PRODUCTS_QUERY);
@@ -54,6 +67,8 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     const [displayedPdts, setDisplayedPdts] = useState([]);
 
     const { userData } = useContext(UserContext);
+
+    const classes = useStyles();
 
     // const [productPrices, setProductPrices] = useState([]);
 
@@ -116,7 +131,20 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                             <ListItem >
                                 <ListItemText 
                                 id={labelId} 
-                                primary={`${product.name} ${product.category} ${product.dateArray}`} />
+                                primary={`${product.name}`} 
+                                secondary={
+                                    <React.Fragment>
+                                    <Typography
+                                        component="span"
+                                        variant="body2"
+                                        className={classes.inline}
+                                        color="textPrimary"
+                                    >
+                                        {`${product.category}`}
+                                    </Typography>
+                                    {`  S$${product.price}`}
+                                    </React.Fragment>
+                                }/>
                                     <ListItemSecondaryAction>
                                         <IconButton onClick={
                                             () => {handleUpdate(product)
@@ -142,6 +170,7 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                     )
                 }
             </List>
+            
         </Paper>
         ) :(
             <>

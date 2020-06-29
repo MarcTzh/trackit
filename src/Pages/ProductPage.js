@@ -95,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
                 const labelId = `checkbox-list-label-${product.id}`;
 
                 return (
+                    
                     <ListItem alignItems="flex-start">
                     {/* <ListItemText 
                     id={labelId} 
@@ -128,8 +129,8 @@ const useStyles = makeStyles((theme) => ({
                         <ClearIcon />
                         </IconButton>
                     </ListItemSecondaryAction>
-                    <Divider variant="inset" component="li" />
                     </ListItem>
+                    
                     
                     
                 );

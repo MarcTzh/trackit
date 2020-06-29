@@ -164,6 +164,7 @@ function handleUrlChange(e) {
 
 
       <div>
+      <h3>This is the product name that will be displayed</h3>
         <TextField
         //PRODUCT NAME
           id="outlined-full-width"
@@ -179,7 +180,7 @@ function handleUrlChange(e) {
           onChange ={handleNameChange}
           value = {name}
         />
-
+        <h3>Copy and paste the product url here</h3>
         <TextField
         //PRODUCT URL
           // style={{ margin: 8 }}
@@ -194,7 +195,7 @@ function handleUrlChange(e) {
           onChange ={handleUrlChange}
           value = {url}
         />
-
+{/* 
         <TextField
           id="outlined-margin-none"
           placeholder="Price"
@@ -203,8 +204,8 @@ function handleUrlChange(e) {
           variant="outlined"
           onChange ={handlePriceChange}
           value = {price}
-        />
-
+        /> */}
+        <h3>Price at which you want to be notified</h3>
         <TextField
           id="outlined-margin-none"
           placeholder="Price floor"
