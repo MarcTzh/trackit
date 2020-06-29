@@ -128,6 +128,7 @@ function handleUrlChange(e) {
                  setPrice('');
 
                  setUrl('');   
+                 alert("Your product is being processed! Please wait a moment for it to appear on your Products Page.");
 
     }
 }
