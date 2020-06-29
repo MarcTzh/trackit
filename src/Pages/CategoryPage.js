@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 import AddNewCategory from '../Input/AddNewCategory';
 import UserContext from '../context/UserContext';
+import { Link } from "react-router-dom";
 
 const CATEGORIES_QUERY = gql `
 {
@@ -42,7 +43,7 @@ const REMOVE_CATEGORIES_MUTATION = gql `
     }
 `;
 
-function CategoryPage() {
+function CategoryPage(props) {
     const { loading: productLoading, error: productError, data: productData } = useQuery(PRODUCTS_QUERY);
     
     const { loading, error, data } = useQuery(CATEGORIES_QUERY);
@@ -71,34 +72,43 @@ function CategoryPage() {
                         refetchQueries: [{ query: PRODUCTS_QUERY}] 
                     }
                 )
+        
             }
+            return null;
         } 
         )
     } 
-
-    const currUserID = String(userData.user.id);
-
+    
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
     if (productLoading) return <p>Products Loading...</p>;
     if (productError) return <p>Products Error! :(</p>;
     
+
+    let currUserID;
+    if(userData !== undefined && userData.user !== undefined) {
+        currUserID = String(userData.user.id);
+    }
+        
     return (
-        <Paper>   
-        <AddNewCategory/>
+        <>
+        {userData.user ?
+
+        (<Paper style={{ margin: 30 , padding: 30}}>   
+        
             <h1>My Categories</h1>
             <List>
                 {
                     data.categories.map(
                         (category) => {
-                            if(category.userID == currUserID) {
+                            if(category.userID === currUserID) {
                                 // number of products in each category
                                 var numOf = 0;
                                 productData.products.map((product) => product.category === category.name? numOf += 1: numOf += 0 );
 
                                 return (
                                     <ListItem>
-                                        <ListItemText primary={`${category.name} ${numOf}`} />
+                                        <ListItemText primary={`${category.name}`} secondary={`${numOf} Items`} />
                                         <ListItemSecondaryAction>
                                             <IconButton onClick = { () => removeCategoryAndProduct(category)}>
                                                 <ClearIcon />
@@ -106,13 +116,23 @@ function CategoryPage() {
                                         </ListItemSecondaryAction>
                                     </ListItem>
                                 );
-                            } 
+                            } else {
+                                return null;
+                            }
                         }
                     )
                 }
             </List>
+            <AddNewCategory/>
         </Paper>
-    );
+        ) : (
+            <>
+            <h2>You are not logged in</h2>
+            <Link to="/login">Log in</Link>
+            </>
+        )}
+        </>
+    )
 } 
 
 export default CategoryPage;

@@ -104,8 +104,8 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     return (
         <>
         {userData.user ? (
-            <Paper>   
-            <h1>Manual Update Products</h1>
+            <Paper style={{ margin: 30 , padding: 30}}>   
+            <h1>Product list</h1>
             <List>
                 <CategoryOptions callBackFromParent={setCat}/>
                 { displayedPdts //changes with useEffect

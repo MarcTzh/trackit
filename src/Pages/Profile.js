@@ -10,6 +10,7 @@ import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import UserContext from '../context/UserContext';
 import { Link } from "react-router-dom";
+import Paper from '@material-ui/core/Paper';
 
 
 
@@ -89,15 +90,17 @@ function Profile() {
     return (
         <>
         {userData.user ? (
-            <div> 
+            <Paper>
+            <div style={{ margin: 30 , padding: 30}}> 
                 <h1 align='center'>My Profile</h1>
                 <CategoryOptions callBackFromParent={setCategoryValue} />
                 <LineChart chartData={chartData} catValue = {categoryValue}/>
                 <Button onClick={()=> handleClick(data.products, userData.user) }>load</Button>
             </div>
+            </Paper>
         ) : (
             <>
-            <h2>You are not logged in</h2>
+            <h2 >You are not logged in</h2>
             <Link to="/login">Log in</Link>
             </>
         )

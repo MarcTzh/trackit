@@ -11,6 +11,9 @@ import ClearIcon from '@material-ui/icons/Clear';
 import CategoryOptions from '../Input/CategoryOptions'
 import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 
 const PRODUCTS_QUERY = gql `
 {
@@ -30,6 +33,16 @@ const REMOVE_MUTATION = gql `
     }
 `;
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+      maxWidth: '36ch',
+      backgroundColor: theme.palette.background.paper,
+    },
+    inline: {
+      display: 'inline',
+    },
+  }));
 
  function ProductPage() {
 
@@ -44,6 +57,8 @@ const REMOVE_MUTATION = gql `
     const { userData } = useContext(UserContext);
 
     // const [productPrices, setProductPrices] = useState([]);
+
+    const classes = useStyles();
 
 
     useEffect(() => {
@@ -69,7 +84,7 @@ const REMOVE_MUTATION = gql `
     return (
         <>
         {userData.user ? (
-            <Paper>   
+            <Paper style={{ margin: 30 , padding: 30}}>   
             <h1>My Products</h1>
             <List>
                 <CategoryOptions callBackFromParent={setCat}/>
@@ -78,13 +93,27 @@ const REMOVE_MUTATION = gql `
                 .filter((product) => product.userID === userData.user.id)
                 .map((product) => {
                 const labelId = `checkbox-list-label-${product.id}`;
-                const currPrice = '';
 
                 return (
-                    <ListItem >
-                    <ListItemText 
+                    <ListItem alignItems="flex-start">
+                    {/* <ListItemText 
                     id={labelId} 
-                    primary={`${product.name} ${product.category} ${currPrice}`} />
+                    primary={`${product.name}${product.category} ${product.price}`} /> */}
+                    <ListItemText
+                    primary={`${product.name}`}
+                    secondary={
+                        <React.Fragment>
+                        <Typography
+                            component="span"
+                            variant="body2"
+                            className={classes.inline}
+                            color="textPrimary"
+                        >
+                            {`${product.category}`}
+                        </Typography>
+                        {`  S$${product.price}`}
+                        </React.Fragment>
+                    }/>
                     <ListItemSecondaryAction>
                         <IconButton onClick={
                         () => {removeProduct(
@@ -99,7 +128,10 @@ const REMOVE_MUTATION = gql `
                         <ClearIcon />
                         </IconButton>
                     </ListItemSecondaryAction>
+                    <Divider variant="inset" component="li" />
                     </ListItem>
+                    
+                    
                 );
                 })}
             </List>
