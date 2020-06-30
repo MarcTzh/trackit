@@ -142,7 +142,7 @@ export default function PersistentDrawerLeft(props) {
           [classes.appBarShift]: open,
         })}
       >
-        <Toolbar>
+        <Toolbar id="header">
           {showIconButton
             ? <IconButton
               color="inherit"
@@ -154,11 +154,13 @@ export default function PersistentDrawerLeft(props) {
               <MenuIcon />
             </IconButton>
             : null }
-          
-          <img src={Trackit_logo} 
-          alt="Trackit_logo"
-          height='60' />
+          <div id='title'>
+            <img src={Trackit_logo} 
+            alt="Trackit_logo"
+            height='60' />
+          </div>
           <div id='header'>
+
             <AuthOptions 
             closeDrawer={handleDrawerClose}/>
           </div>
