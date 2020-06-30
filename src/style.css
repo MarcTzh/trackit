@@ -76,14 +76,14 @@ body {
 #header .auth-options button {
   padding: 0 1rem;
   align-self: right;
-  background-color: #3f51b5;
+  background-color: #00008B;
   color: #ffffff;
   font-size: 1.1rem;
   justify-content: right;
 
 }
 #header .auth-options button:hover {
-  background-color: #3f51b5;
+  background-color: #00008B;
 }
 
 /* form */

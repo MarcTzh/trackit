@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 
 const PRODUCTS_QUERY = gql `
 {
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
                 displayedPdts //changes with useEffect
                 .filter((product) => product.userID === userData.user.id)
                 .map((product) => {
-                const labelId = `checkbox-list-label-${product.id}`;
+                {/* const labelId = `checkbox-list-label-${product.id}`; */}
 
                 return (
                     
