@@ -189,39 +189,38 @@ router.post("/ResetPassword", (req, res) => {
 
 });
 
-// router.get('/ResetPassword/:token', (req, res, next) => {
-//   // token is inside req.params.token
-//   const { newPass } = req.body;
-//   const resetLink = req.params.token
-//   if(resetLink) {
-//     jwt.verify(resetLink, process.env.RESET_PASSWORD_KEY, (error, decodedData) => {
-//       if(error) {
-//         return res.status(401).json({ error: "Invalid or expired link" });
-//       }
-//       User.findOne({resetLink}, (err, user) => {
-//         if(err || !user) {
-//           return res.status(400).json({error: "User with this token does not exist"})
-//         }
+router.post("/EditUser", (req, res) => {
+  const {
+    id,
+    newEmail,
+    currPassword,
+    newPassword,
+    displayName,
+    notiSettings,
+  } = req.body;
+  User.findOne({id}, async (err, user) => {
 
-//         const obj = {
-//           password: newPass
-//         }
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(newPassword, salt);
 
-//         user = _.extend(user, obj);
-//         user.save((err, result) => {
-//           if(err) {
-//             return res.status(400).json({error: "reset password error"})
-//           } else {
-//             return res.status(200).json({message: "Your password has been changed"})
-//           }
-//         })
-//       })  
-//     })
-//   } else {
-//     return res.json(400).json({ msg: "Authentication error" });
-//   }
+    const obj = {
+      password: passwordHash,
+      resetLink: ''
+    }
 
-  
-// });
+    user = _.extend(user, obj);
+    user.save((err, result) => {
+      if(err) {
+        return res.status(400).json({error: "reset password error"})
+      } else {
+        return res.status(200).json({message: "Your details has been changed"})
+      }
+    })
+  })
+
+    // return res.json(400).json({ msg: "Authentication error" });
+
+
+});
 
 module.exports = router;
