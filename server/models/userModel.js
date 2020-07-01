@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     password: {type: String, required: true, minlength: 5},
     displayName: {type: String },
     // emailPreference: {type: Number}
-});
+    resetLink:{data: String, default:''}
+}, {timestamps: true});
 
 module.exports = mongoose.model("user", userSchema);

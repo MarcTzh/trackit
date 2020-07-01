@@ -40,6 +40,8 @@ import UpdateProduct from '../Pages/UpdateProduct';
 import Register from '../auth/Register';
 import AuthOptions from "../auth/AuthOptions";
 import Login from '../auth/Login';
+import ForgotPassword from '../auth/ForgotPassword';
+import ResetPassword from '../auth/ResetPassword';
 
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
@@ -242,6 +244,14 @@ export default function PersistentDrawerLeft(props) {
           </Route>
           <Route exact path="/Register" component={Register}>
           </Route>
+          <Route exact path="/ForgotPassword" component={ForgotPassword}>
+          </Route>
+          <Route exact path="/ResetPassword" component={ResetPassword}>
+          </Route>
+          <Route
+                  path="/ResetPassword/:token"
+                  component={ResetPassword}
+                />
         </Switch>
         
       </main>
