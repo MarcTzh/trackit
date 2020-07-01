@@ -1,12 +1,10 @@
-require('dotenv').config()
-const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+import Mailer from './Mailer'
 
 function notify(user, product) {
     
     try {
         if(product.priceNumber < product.minPrice) { //TODO: send to client
-            sendEmail(
+            Mailer.sendEmail(
                 //subject of email
                 'Price alert',
                 //body of email
@@ -22,25 +20,7 @@ function notify(user, product) {
     }
 }
 
-
-function sendEmail(subject, body, address) {
-    const email = {
-        to: address,
-        from: 'marcustanzh@gmail.com',
-        subject: subject,
-        text: body,
-        html: body
-    }
-
-    return sgMail.send(email).then(() => {
-        console.log('Message sent')
-    }).catch((error) => {
-        console.log(error.response.body)
-        // console.log(error.response.body.errors[0].message)
-    })
-}
-
-
+exports.notify = notify;
 //for testing
 // const user = {
 //     "address": "marcustanzh@gmail.com"
@@ -52,5 +32,3 @@ function sendEmail(subject, body, address) {
 //     "name": "test product"
 // }
 // notify(user, product);
-
-exports.notify = notify;

@@ -1,14 +1,17 @@
 import React, { useContext } from 'react';
 import DiscreteSlider from '../Input/Slider';
-import ChangeAccountDetails from '../Input/ChangeAccountDetails'
+// import ChangeAccountDetails from '../Input/ChangeAccountDetails'
 import Paper from '@material-ui/core/Paper';
 import UserContext from '../context/UserContext';
 import { Link } from "react-router-dom";
-
+// import { useHistory } from "react-router-dom";
+import ForgotPassword from '../auth/ForgotPassword'
 
 function Settings(props) {
+    // const history = useHistory();
     const { userData } = useContext(UserContext);
-
+    // const Forgot = () => history.push("/ForgotPassword");
+    
     function editNotificationPreference (value) {
         //add this to userModel
     }
@@ -21,12 +24,10 @@ function Settings(props) {
                     <h1>User settings</h1>
                     <h2>Edit notification settings</h2>
                     <DiscreteSlider editSliderValue={editNotificationPreference}/>
+            
+                {/* <ChangeAccountDetails /> */}
+                <ForgotPassword />
             </div>
-            <div style={{ marginTop: 30}}>
-                <h2>Edit account details</h2>
-                <ChangeAccountDetails />
-            </div>
-
         </div>
         </Paper>
         ) : (
