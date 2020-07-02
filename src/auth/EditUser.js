@@ -11,7 +11,7 @@ export default function EditUser() {
     const [newEmail, setNewEmail] = useState();
     const [currPassword, setCurrPassword] = useState();
     const [newPassword, setNewPassword] = useState();
-    const [displayName, setDisplayName] = useState();
+    const [newDisplayName, setNewDisplayName] = useState();
     const [notiSettings, setNotiSettings] = useState();
     const [error, setError] = useState();
   
@@ -20,6 +20,7 @@ export default function EditUser() {
     console.log(userData)
     const id = userData.user.id;
     const submit = async (e) => {
+        alert('123');
         e.preventDefault();
         try {
         const user = {
@@ -27,9 +28,9 @@ export default function EditUser() {
             newEmail,
             currPassword,
             newPassword,
-            displayName,
+            newDisplayName,
             notiSettings,
-          };
+        };
         const loginRes = await Axios.post(
             "http://localhost:5000/users/EditUser",
             user
@@ -71,7 +72,7 @@ export default function EditUser() {
             id="login-password"
             type="password"
             placeholder={userData.user.displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
+            onChange={(e) => setNewDisplayName(e.target.value)}
             />
 
             <label htmlFor="login-password">Password</label>

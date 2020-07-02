@@ -51,9 +51,9 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     // validate
-    if (!email || !password)
+    if (!email || !password) {
       return res.status(400).json({ msg: "Not all fields have been entered." });
-
+    }
     const user = await User.findOne({ email: email });
     if (!user)
       return res
@@ -189,38 +189,50 @@ router.post("/ResetPassword", (req, res) => {
 
 });
 
-router.post("/EditUser", (req, res) => {
+router.post("/EditUser", async (req, res) => {
   const {
     id,
     newEmail,
     currPassword,
     newPassword,
-    displayName,
+    newDisplayName,
     notiSettings,
   } = req.body;
-  User.findOne({id}, async (err, user) => {
 
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(newPassword, salt);
-
-    const obj = {
-      password: passwordHash,
-      resetLink: ''
-    }
-
-    user = _.extend(user, obj);
-    user.save((err, result) => {
-      if(err) {
-        return res.status(400).json({error: "reset password error"})
-      } else {
-        return res.status(200).json({message: "Your details has been changed"})
+  // validate
+  if (!currPassword) {
+    return res.status(400).json({ msg: "Password is required." });
+  }
+  if (id) {
+    User.findOne({id: id}, async (err, user) => {
+      if(err || !user) {
+        return res.status(400).json({error: "User with this token does not exist"})
       }
-    })
-  })
+      const isMatch = await bcrypt.compare(currPassword, user.password);
+      if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
 
-    // return res.json(400).json({ msg: "Authentication error" });
+      const salt = await bcrypt.genSalt();
+      const passwordHash = await bcrypt.hash(newPassword, salt);
 
+      const obj = {
+        email: newEmail,
+        password: passwordHash,
+        displayName: newDisplayName,
+        emailPreference: notiSettings,
+        resetLink: ''
+      }
 
+      user = _.extend(user, obj);
+      user.save((err, result) => {
+        if(err) {
+          return res.status(400).json({error: "edit user error"})
+        } else {
+          return res.status(200).json({message: "Your details has been changed"})
+        }
+      })
+    });
+    
+  }
 });
 
 module.exports = router;
