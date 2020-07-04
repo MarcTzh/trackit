@@ -2,65 +2,50 @@
 // require('dotenv').config()
 // const sgMail = require('@sendgrid/mail')
 // // sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-const Nightmare = require('nightmare')
-const nightmare = Nightmare({ show: true })
+const Nightmare = require('nightmare');
+const { checkPrice } = require('./AmazonParser');
+// const nightmare = Nightmare({ show: true })
+const nightmare = Nightmare()
 
-async function checkPrice(rawUrl) {
+async function checkArrayPrice(urls) {
     try {
-        const url = rawUrl.split('?')[0];
-        let priceString;
-        let priceblock_ourprice;
-        priceblock_ourprice = await nightmare
-        .goto(url)
-        .exists("#priceblock_ourprice")
-        if(priceblock_ourprice) {
-            priceblock_ourprice = await nightmare
-            .goto(url)
-            .wait("#priceblock_ourprice")
-            .evaluate(() => document.getElementById("priceblock_ourprice").innerText)
-            .end()
-            priceString = priceblock_ourprice
-        } else {
-            const priceblock_dealprice = await nightmare
-            .goto(url)
-            .exists("#priceblock_dealprice")
-
-            if(priceblock_dealprice) {
-                priceString = await nightmare
-                .goto(url)
-                .wait("#priceblock_dealprice")
-                .evaluate(() => document.getElementById("priceblock_dealprice").innerText)
-                .end()
-
-            } else {
-                //both also failed
-                priceString = "0"; //added to prevent error
-            }
-        }
-
-        const priceNumber = parseFloat(
-            priceString
-                //specific to Singapore version of website
-                .replace('S', '')
-                //general removal or dollar sign
-                .replace('$', '')
-                //for values above 1000
-                .replace(',', '')
-        )
-        console.log(priceNumber);
-
-        return priceNumber;
-        
+        // const urls = args;
+        return urls.reduce((accumulator, url) => {
+          return accumulator.then((results) => {
+            return nightmare.goto(url)
+              .wait("#priceblock_ourprice")
+              .evaluate(() => document.getElementById("priceblock_ourprice").innerText)
+              .then((result) => {
+                const price = parseFloat(
+                  result
+                      //specific to Singapore version of website
+                      .replace('S', '')
+                      //general removal or dollar sign
+                      .replace('$', '')
+                      //for values above 1000
+                      .replace(',', '')
+                )
+                results.push(price);
+                return results;
+              });
+          });
+      }, Promise.resolve([])).then((results) => {
+        console.log(results);
+        return nightmare.end()
+      });
     } catch (e) {
         //error is thrown in async function, causing problems when run
         console.error(e);
     }
 }
 
-checkPrice('https://www.amazon.sg/ASUS-MX34VQ-Curved-Monitor-Dark/dp/B076G3X26M?ref_=s9_apbd_simh_hd_bw_b6tKmeR&pf_rd_r=Q8JXJJGZ570KZ05BZK33&pf_rd_p=4176285e-21fd-5c35-ae64-d5444cdbee0e&pf_rd_s=merchandised-search-12&pf_rd_t=BROWSE&pf_rd_i=6314449051');
-
-checkPrice('https://www.amazon.com/dp/B07G7PMVR9/ref=dp_cerb_2')
+const url1 = 'https://www.amazon.sg/dp/B07W69L5KK/ref=s9_acsd_al_bw_c2_x_0_i?pf_rd_m=ACT6OAM3OSC9S&pf_rd_s=merchandised-search-2&pf_rd_r=1NCYYBRC0AM2ENQBD96Q&pf_rd_t=101&pf_rd_p=d56c4fcb-4dab-4cff-9d67-da43b03b809b&pf_rd_i=6436080051';
+const url2 = 'https://www.amazon.sg/Acer-XB271HU-Gaming-Monitor-Inches/dp/B06XYKBXRV?ref_=s9_apbd_orec_hd_bw_b6tKmeR&pf_rd_r=F856FMED8RHAQ5WV9ZYP&pf_rd_p=7372f16d-0efa-56c3-9ad0-f86ad456852e&pf_rd_s=merchandised-search-12&pf_rd_t=BROWSE&pf_rd_i=6314449051';
+const urlArray = [url1, url2];
+// const urlArray = [url1];
+checkArrayPrice(urlArray);
+// checkPrice('https://www.amazon.com/dp/B07G7PMVR9/ref=dp_cerb_2')
 // export default checkPrice;
-exports.checkPrice = checkPrice;
+exports.checkArrayPrice = checkArrayPrice;
 
 // export { checkPrice };
