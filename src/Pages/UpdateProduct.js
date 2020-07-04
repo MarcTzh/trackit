@@ -15,8 +15,6 @@ import UserContext from '../context/UserContext';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-// DATEARRAY NOT SHOWING
-
 const PRODUCTS_QUERY = gql `
 {
     products {

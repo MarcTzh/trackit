@@ -10,6 +10,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import UserContext from '../context/UserContext';
 import { Link } from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
+import ChartToggle from '../Input/ChartToggle.js';
 
 
 
@@ -34,24 +35,9 @@ function Profile() {
 
     const { userData } = useContext(UserContext);
     
-    const [chartData, setChartData] = useState({
-        // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        // datasets: [
-        //     {
-        //         label: 'Amazon',
-        //         backgroundColor: 'rgb(255, 99, 132)',
-        //         borderColor: 'rgb(255, 99, 132)',
-        //         fill: false,
-        //         data: [200, 210, 215, 212, 220, 230, 225]
-        //     }, {
-        //         label: 'Shopee',
-        //         backgroundColor: 'rgb(255, 165, 0)',
-        //         borderColor: 'rgb(255, 165, 0)',
-        //         fill: false,
-        //         data: [200, 200, 215, 202, 210, 220, 215]
-        //     }
-        // ]
-    });
+    const [chartData, setChartData] = useState({});
+
+    const [period, setPeriod] = useState('all');
     
     function resetDate(dateInMs) {
         var date = new Date(parseInt(dateInMs));
@@ -73,6 +59,17 @@ function Profile() {
             tempDateArray.push(new Date(parseInt(dateArray[i])));
         }
         return tempDateArray;
+    }
+
+    //modify array according to period selected
+    function periodModifier(period, array) {
+        if(period === 'week' && array.length > 7) {
+            return array.splice(-7);
+        } else if(period === 'month' && array.length > 31) {
+            return array.splice(-31);
+        } else {
+            return array;
+        }
     }
     
     //takes in dateArray and priceArray
@@ -139,25 +136,37 @@ function Profile() {
         var start;
         var end;
         if(completeDateArray.length === 0 && dateArray.length === 0) {
+            console.log("bump1");
+
             return [];
         } else if (dateArray.length === 0) {
+            console.log("bump2");
+
             return completeDateArray;
         }else if(completeDateArray.length === 0) {
+            console.log("bump3");
 
             start = dateArray[0];
             end = dateArray[dateArray.length - 1];
         } else {
-            if(parseInt(dateArray[0]) < parseInt(completeDateArray[0])) {
+            console.log("bump4");
+            console.log(parseInt(dateArray[dateArray.length - 1]));
+            console.log(completeDateArray);
+            console.log(parseInt(completeDateArray[completeDateArray.length - 1]));
+            if(parseInt(dateArray[0]) <= parseInt(completeDateArray[0])) {
                 start = dateArray[0];
             } else {
                 start = completeDateArray[0];
             }
 
-            if(parseInt(dateArray[dateArray.length - 1]) < parseInt(completeDateArray[completeDateArray.legnth - 1])) {
-                end = completeDateArray[completeDateArray.legnth - 1];
+            if(parseInt(dateArray[dateArray.length - 1]) <= parseInt(completeDateArray[completeDateArray.length - 1])) {
+                end = completeDateArray[completeDateArray.length - 1];
+                
             } else {
                 end = dateArray[dateArray.length - 1];
             }
+            console.log("start " + start);
+            console.log("end" + end);
         }
         return consecutiveDateArray(start, end);
     }
@@ -168,11 +177,7 @@ function Profile() {
         var j = 0;
         dateArray = MStoDate(dateArray);
         completeDateArray = MStoDate(completeDateArray);
-        console.log(dateArray);
-        console.log(completeDateArray);
-        console.log("start");
         for(var i = 0; i < completeDateArray.length; i++) {
-            console.log("priceArray" + priceArray);
 
             if(j < dateArray.length && 
             dateArray[j].getDate() === completeDateArray[i].getDate() &&
@@ -185,15 +190,15 @@ function Profile() {
             }
         }
 
-        console.log(newPriceArray);
         return newPriceArray;
     }
 
-    const handleClick = (product, user) => {
+    const handleClick = (product, user, period) => {
         var dataset = [];
         var finalPriceArrays = [];
         const val = ['#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#333333', '#808080', '#cccccc', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#FA28FF', '#000000', '#666666', '#B3B3B3', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E'];
 
+        //filter out products and stores them as objects in a new array
         var filteredProducts = [];
         for (var i = 0; i < product.length; i++) {
             if(product[i].userID === user.id && product[i].category === categoryValue) {
@@ -201,6 +206,7 @@ function Profile() {
             }
         }
 
+        //in each loop, extends the date array based on the current date array given
         var completeDateArray =[];
         for(var n = 0; n < filteredProducts.length; n++) {
             const pair = singleDayProccessor(filteredProducts[n].dateArray, filteredProducts[n].priceArray);
@@ -208,8 +214,12 @@ function Profile() {
             filteredProducts[n].priceArray = pair[1];
 
             completeDateArray = extendDateArray(filteredProducts[n].dateArray, completeDateArray);
-        }
+            console.log("last date in fro loop" + completeDateArray.length);
 
+        }
+        console.log("last date" + completeDateArray.length);
+
+        //fill the gaps of the price array in accordance to the longer completeDateArray
         for(var k = 0; k < filteredProducts.length; k++) {
             finalPriceArrays.push( 
                 addTheNull(
@@ -224,7 +234,7 @@ function Profile() {
         for(var m = 0; m < filteredProducts.length; m++) {
             dataset.push({
                     label: filteredProducts[m].name,
-                    data: finalPriceArrays[m],
+                    data: periodModifier(period, finalPriceArrays[m]),
                     fill: false,
                     borderColor: val[m],
                     backgroundColor: val[m],
@@ -234,12 +244,13 @@ function Profile() {
         var newCompleteDateArray = [];
         for (var i = 0; i < completeDateArray.length; i++) {
             const d = new Date(completeDateArray[i]);
-            newCompleteDateArray.push(d.getDate() + " " + d.getMonth() + " " + d.getFullYear());
+            newCompleteDateArray.push((d.getDate() + 1) + " " + (d.getMonth() + 1) + " " + d.getFullYear());
         }
 
-        console.log(newCompleteDateArray);
+        console.log(period);
+
         return(setChartData({
-            labels: newCompleteDateArray,
+            labels: periodModifier(period, newCompleteDateArray),
             datasets: dataset
         }))
         
@@ -247,9 +258,9 @@ function Profile() {
 
     useEffect(() => {
         if(userData !== undefined && userData.user !== undefined && data !== undefined) {
-            handleClick(data.products, userData.user)
+            handleClick(data.products, userData.user, period)
         }
-    }, [data, userData, categoryValue])
+    }, [data, userData, categoryValue, period])
         
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
@@ -262,6 +273,7 @@ function Profile() {
                 <h1>My Profile</h1>
                 <h2>Please choose a category to display</h2>
                 <CategoryOptions callBackFromParent={setCategoryValue} />
+                <ChartToggle callBackFromParent={setPeriod}/>
                 <LineChart chartData={chartData} catValue = {categoryValue}/>
                 <p>Click on individual products to remove them from view</p>
             </div>
