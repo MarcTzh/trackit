@@ -51,9 +51,9 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     // validate
-    if (!email || !password)
+    if (!email || !password) {
       return res.status(400).json({ msg: "Not all fields have been entered." });
-
+    }
     const user = await User.findOne({ email: email });
     if (!user)
       return res
@@ -189,39 +189,60 @@ router.post("/ResetPassword", (req, res) => {
 
 });
 
-// router.get('/ResetPassword/:token', (req, res, next) => {
-//   // token is inside req.params.token
-//   const { newPass } = req.body;
-//   const resetLink = req.params.token
-//   if(resetLink) {
-//     jwt.verify(resetLink, process.env.RESET_PASSWORD_KEY, (error, decodedData) => {
-//       if(error) {
-//         return res.status(401).json({ error: "Invalid or expired link" });
-//       }
-//       User.findOne({resetLink}, (err, user) => {
-//         if(err || !user) {
-//           return res.status(400).json({error: "User with this token does not exist"})
-//         }
+router.post("/EditUser", async (req, res) => {
+    const {
+      id,
+      newEmail,
+      currPassword,
+      newPassword,
+      newDisplayName,
+      notiSettings,
+    } = req.body;
+    // validate
+    if (!currPassword) {
+      return res.status(400).json({ msg: "Password is required." });
+    }
+    if (id) {
+      User.findOne({_id: id}, async (err, user) => {
+          if(err || !user) {
+            return res.status(400).json({error: "User with this id does not exist"})
+          }
+          const isMatch = await bcrypt.compare(currPassword, user.password);
+          if (!isMatch) return res.status(400).json({ msg: "Wrong password" });
+          let passwordHash = null;
+          if(newPassword) {
+            const salt = await bcrypt.genSalt();
+            passwordHash = await bcrypt.hash(newPassword, salt);
+          }
+          var obj = {
+            email: newEmail,
+            password: passwordHash,
+            displayName: newDisplayName,
+            emailPreference: notiSettings,
+            resetLink: ''
+          }
+          // return res.json(obj);
+          //remove fields that have not been modified
+          Object.keys(obj).forEach(key => {
+            if (obj[key] === null) {
+              delete obj[key];
+            }
+          });
 
-//         const obj = {
-//           password: newPass
-//         }
-
-//         user = _.extend(user, obj);
-//         user.save((err, result) => {
-//           if(err) {
-//             return res.status(400).json({error: "reset password error"})
-//           } else {
-//             return res.status(200).json({message: "Your password has been changed"})
-//           }
-//         })
-//       })  
-//     })
-//   } else {
-//     return res.json(400).json({ msg: "Authentication error" });
-//   }
-
-  
-// });
+          user = _.extend(user, obj);
+          user.save((err, result) => {
+            if(err) {
+              // return res.json(obj)
+              return res.status(400).json({error: "edit user error"})
+            } else {
+              // return res.json(obj)
+              return res.status(200).json({message: "Your details has been changed"})
+            }
+          })
+        });
+    } else {
+      return res.json(400).json({ msg: "Authentication error: no id" });
+    }
+});
 
 module.exports = router;

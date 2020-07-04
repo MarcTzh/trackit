@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Axios from "axios";
@@ -18,13 +18,13 @@ export default function ResetPassword(props) {
     e.preventDefault();
 
     try {
-      const newPW = {
+      const data = {
           newPass: password,
           resetLink: props.match.params.token
       };
-      await Axios.post("http://localhost:5000/users/ResetPassword", newPW);
+      await Axios.post("http://localhost:5000/users/ResetPassword", data,);
       const loginRes = await Axios.post("http://localhost:5000/users/ResetPassword", {
-        newPW,
+        data,
       });
       localStorage.setItem("auth-token", loginRes.data.token);
       alert('Your password has been reset, please login')
@@ -33,6 +33,16 @@ export default function ResetPassword(props) {
       err.response.data.msg && setError(err.response.data.msg);
     }
   };
+
+  useEffect(() => {
+        if(password && passwordCheck &&
+            (password !== passwordCheck)) {
+            setError('The two passwords are not the identical');
+        } else {
+            setError(undefined);
+        }
+
+  }, [password,passwordCheck])
 
   return (
     <div className="page">
