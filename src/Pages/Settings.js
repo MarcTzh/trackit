@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import UserContext from '../context/UserContext';
 import { Link } from "react-router-dom";
 // import { useHistory } from "react-router-dom";
-import ForgotPassword from '../auth/ForgotPassword'
+import EditUser from '../auth/EditUser'
 
 function Settings(props) {
     // const history = useHistory();
@@ -20,14 +20,11 @@ function Settings(props) {
         {userData.user ? (
         <Paper style={{ margin: 15 , padding: 30}}>   
         <div>
-            <div style={{ marginTop: -30}}>
-                    <h1>User settings</h1>
-                    <h2>Edit notification settings</h2>
-                    <DiscreteSlider editSliderValue={editNotificationPreference}/>
-            
-                {/* <ChangeAccountDetails /> */}
-                <ForgotPassword />
-            </div>
+            <h1>User settings</h1>
+            {/* <h2>Edit notification settings</h2>
+            <DiscreteSlider editSliderValue={editNotificationPreference}/> */}
+            {/* <ChangeAccountDetails /> */}
+            <EditUser />
         </div>
         </Paper>
         ) : (
