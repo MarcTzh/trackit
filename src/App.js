@@ -1,8 +1,6 @@
 import './index.css';
 import React from 'react';
 import Drawer from './Sidebar/Drawer'
-import Profile from './Pages/Profile';
-
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Axios from "axios";
@@ -50,16 +48,7 @@ function App() {
     <>
       <BrowserRouter>
         <UserContext.Provider value={{ userData, setUserData }}>
-          {/* <Header /> */}
           <Drawer user={userData} />
-          {/* <div className="container">
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route exact path="/Profile" component={Profile}></Route>
-            </Switch>
-          </div> */}
         </UserContext.Provider>
       </BrowserRouter>
     </>
