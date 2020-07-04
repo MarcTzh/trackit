@@ -190,49 +190,59 @@ router.post("/ResetPassword", (req, res) => {
 });
 
 router.post("/EditUser", async (req, res) => {
-  const {
-    id,
-    newEmail,
-    currPassword,
-    newPassword,
-    newDisplayName,
-    notiSettings,
-  } = req.body;
+    const {
+      id,
+      newEmail,
+      currPassword,
+      newPassword,
+      newDisplayName,
+      notiSettings,
+    } = req.body;
+    // validate
+    if (!currPassword) {
+      return res.status(400).json({ msg: "Password is required." });
+    }
+    if (id) {
+      User.findOne({_id: id}, async (err, user) => {
+          if(err || !user) {
+            return res.status(400).json({error: "User with this id does not exist"})
+          }
+          const isMatch = await bcrypt.compare(currPassword, user.password);
+          if (!isMatch) return res.status(400).json({ msg: "Wrong password" });
+          let passwordHash = null;
+          if(newPassword) {
+            const salt = await bcrypt.genSalt();
+            passwordHash = await bcrypt.hash(newPassword, salt);
+          }
+          var obj = {
+            email: newEmail,
+            password: passwordHash,
+            displayName: newDisplayName,
+            emailPreference: notiSettings,
+            resetLink: ''
+          }
+          // return res.json(obj);
+          //remove fields that have not been modified
+          Object.keys(obj).forEach(key => {
+            if (obj[key] === null) {
+              delete obj[key];
+            }
+          });
 
-  // validate
-  if (!currPassword) {
-    return res.status(400).json({ msg: "Password is required." });
-  }
-  if (id) {
-    User.findOne({id: id}, async (err, user) => {
-      if(err || !user) {
-        return res.status(400).json({error: "User with this token does not exist"})
-      }
-      const isMatch = await bcrypt.compare(currPassword, user.password);
-      if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
-
-      const salt = await bcrypt.genSalt();
-      const passwordHash = await bcrypt.hash(newPassword, salt);
-
-      const obj = {
-        email: newEmail,
-        password: passwordHash,
-        displayName: newDisplayName,
-        emailPreference: notiSettings,
-        resetLink: ''
-      }
-
-      user = _.extend(user, obj);
-      user.save((err, result) => {
-        if(err) {
-          return res.status(400).json({error: "edit user error"})
-        } else {
-          return res.status(200).json({message: "Your details has been changed"})
-        }
-      })
-    });
-    
-  }
+          user = _.extend(user, obj);
+          user.save((err, result) => {
+            if(err) {
+              // return res.json(obj)
+              return res.status(400).json({error: "edit user error"})
+            } else {
+              // return res.json(obj)
+              return res.status(200).json({message: "Your details has been changed"})
+            }
+          })
+        });
+    } else {
+      return res.json(400).json({ msg: "Authentication error: no id" });
+    }
 });
 
 module.exports = router;

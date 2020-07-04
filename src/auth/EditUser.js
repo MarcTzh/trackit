@@ -8,34 +8,35 @@ import Slider from '../Input/Slider';
 
 
 export default function EditUser() {
-    const [newEmail, setNewEmail] = useState();
-    const [currPassword, setCurrPassword] = useState();
-    const [newPassword, setNewPassword] = useState();
-    const [newDisplayName, setNewDisplayName] = useState();
-    const [notiSettings, setNotiSettings] = useState();
+    const [newEmail, setNewEmail] = useState(null);
+    const [currPassword, setCurrPassword] = useState(null);
+    const [newPassword, setNewPassword] = useState(null);
+    const [newDisplayName, setNewDisplayName] = useState(null);
+    const [notiSettings, setNotiSettings] = useState(null);
     const [error, setError] = useState();
   
     const { userData } = useContext(UserContext);
     // const history = useHistory();
-    console.log(userData)
+    // console.log(userData)
     const id = userData.user.id;
     const submit = async (e) => {
-        alert('123');
         e.preventDefault();
+        alert('Your details have been updated, please login again')
         try {
-        const user = {
-            id,
-            newEmail,
-            currPassword,
-            newPassword,
-            newDisplayName,
-            notiSettings,
-        };
-        const loginRes = await Axios.post(
-            "http://localhost:5000/users/EditUser",
-            user
-        );
-        localStorage.setItem("auth-token", loginRes.data.token);
+            const user = {
+                id,
+                newEmail,
+                currPassword,
+                newPassword,
+                newDisplayName,
+                notiSettings,
+            };
+            console.log(user);
+            const loginRes = await Axios.post(
+                "http://localhost:5000/users/EditUser",
+                user
+            );
+            localStorage.setItem("auth-token", loginRes.data.token);
         } catch (err) {
         err.response.data.msg && setError(err.response.data.msg);
         }
@@ -62,15 +63,13 @@ export default function EditUser() {
 
             <label htmlFor="login-password">New Password</label>
             <input
-            id="login-password"
-            type="password"
+            type="text"
             onChange={(e) => setNewPassword(e.target.value)}
             />
 
             <label htmlFor="login-password">Display Name</label>
             <input
-            id="login-password"
-            type="password"
+            type="text"
             placeholder={userData.user.displayName}
             onChange={(e) => setNewDisplayName(e.target.value)}
             />
