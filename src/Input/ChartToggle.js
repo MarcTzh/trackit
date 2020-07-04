@@ -29,13 +29,13 @@ export default function ChartToggle(props) {
       aria-label="period options"
     >
       <ToggleButton value="week" aria-label="week period">
-        <FormatAlignLeftIcon />
+        Week
       </ToggleButton>
       <ToggleButton value="month" aria-label="month period">
-        <FormatAlignCenterIcon />
+        Month
       </ToggleButton>
       <ToggleButton value="all" aria-label="all period">
-        <FormatAlignRightIcon />
+        All
       </ToggleButton>
     </ToggleButtonGroup>
   );
