@@ -1,7 +1,4 @@
-const router = require("express").Router();
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const _ = require("lodash");
 
 async function hash(input) {
     const salt = await bcrypt.genSalt();
