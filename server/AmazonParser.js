@@ -3,7 +3,7 @@
 // const sgMail = require('@sendgrid/mail')
 // // sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const nightmare = require("nightmare")();
-async function checkPrice(rawUrl) {
+async function checkAmazonPrice(rawUrl) {
     try {
         const url = rawUrl.split('?')[0];
         let priceString;
@@ -45,7 +45,7 @@ async function checkPrice(rawUrl) {
                 //for values above 1000
                 .replace(',', '')
         )
-        // console.log(priceNumber);
+        console.log(priceNumber);
 
         return priceNumber;
         
@@ -55,10 +55,10 @@ async function checkPrice(rawUrl) {
     }
 }
 
-// checkPrice('https://www.amazon.sg/ASUS-MX34VQ-Curved-Monitor-Dark/dp/B076G3X26M?ref_=s9_apbd_simh_hd_bw_b6tKmeR&pf_rd_r=Q8JXJJGZ570KZ05BZK33&pf_rd_p=4176285e-21fd-5c35-ae64-d5444cdbee0e&pf_rd_s=merchandised-search-12&pf_rd_t=BROWSE&pf_rd_i=6314449051');
+checkAmazonPrice('https://www.amazon.sg/ASUS-MX34VQ-Curved-Monitor-Dark/dp/B076G3X26M?ref_=s9_apbd_simh_hd_bw_b6tKmeR&pf_rd_r=Q8JXJJGZ570KZ05BZK33&pf_rd_p=4176285e-21fd-5c35-ae64-d5444cdbee0e&pf_rd_s=merchandised-search-12&pf_rd_t=BROWSE&pf_rd_i=6314449051');
 
 // checkPrice('https://www.amazon.com/dp/B07G7PMVR9/ref=dp_cerb_2')
 // export default checkPrice;
-exports.checkPrice = checkPrice;
+exports.checkAmazonPrice = checkAmazonPrice;
 
 // export { checkPrice };
