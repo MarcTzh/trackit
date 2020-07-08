@@ -34,6 +34,7 @@ const typeDefs = `
     hello(name: String): String! 
     products: [Product]
     categories: [Category]
+    userProducts(info: String): [Product]
   }
 
   type Product {
@@ -115,6 +116,11 @@ const typeDefs = `
         name: String!
       ): Boolean
 
+      updateProduct(
+        id: ID!,
+        name: String!
+      ): Boolean
+
       removeCategory(
         id: ID!
       ): Boolean
@@ -133,6 +139,7 @@ const resolvers = {
     hello: (_, { name }) => `Hello ${name || 'World'}`,
     products: () => Product.find(),
     categories: () => Category.find(),
+    userProducts: (_, { info }) => Product.find({userID: info}),
   },
   
   Mutation: { 
@@ -177,6 +184,11 @@ const resolvers = {
 
       updateCategory: async (_, {id, name}) => {
         await Category.findByIdAndUpdate(id, {name});
+        return true;
+      },
+
+      updateProduct: async (_, {id, name}) => {
+        await Product.findByIdAndUpdate(id, {name});
         return true;
       },
 

@@ -3,7 +3,7 @@
 // const sgMail = require('@sendgrid/mail')
 // // sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const Nightmare = require('nightmare')
-const nightmare = Nightmare({ show: true })
+const nightmare = Nightmare({ show: false })
 
 async function checkPrice(rawUrl) {
     try {
