@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, forwardRef, useRef } from 'react';
+import React, { useState, useEffect, useContext, forwardRef, useRef, Fragment } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
 import Paper from '@material-ui/core/Paper';
@@ -30,8 +30,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 // import Divider from '@material-ui/core/Divider';
-// import MaterialTable from 'material-table';
-import NewMaterialTable from '../Table/NewMaterialTable';
+import MaterialTable from 'material-table';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -86,6 +85,12 @@ const REMOVE_MUTATION = gql `
     }
 `;
 
+const UPDATE_PRODUCT_MUTATION = gql `
+mutation UpdateProduct($id: ID!, $name: String!) {
+    updateProduct(id: $id, name: $name)
+}
+`;
+
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
@@ -97,11 +102,13 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
- function ProductPage() {
+ export default function NewMaterialTable(props) {
 
-    // const { loading, error, data } = useQuery(PRODUCTS_QUERY);
+    const { loading, error, data } = useQuery(PRODUCTS_QUERY);
 
     const [removeProduct] = useMutation(REMOVE_MUTATION);
+
+    const [updateProduct] = useMutation(UPDATE_PRODUCT_MUTATION);
 
     const [currCat, setCat] = useState();
 
@@ -109,47 +116,28 @@ const useStyles = makeStyles((theme) => ({
 
     const { userData } = useContext(UserContext);
 
-    const [userProducts, {loading,error, data }] = useLazyQuery(USER_PRODUCTS_QUERY, {pollInterval: 500});
+    // const [userProducts, {loading,error, data }] = useLazyQuery(USER_PRODUCTS_QUERY, {fetchPolicy: "cache-and-network"});
 
-    // const { loading, error, data } = useQuery(USER_PRODUCTS_QUERY, { variables: { info: userData.user.id } });
+    // const { loading, error, data } = useQuery(USER_PRODUCTS_QUERY, { variables: { info: props.userID } });
 
     const classes = useStyles();
 
+    const [productData, setProductData] = useState(null);
 
-    // useEffect(() => {
-    //     if(data) {
-    //         setDisplayedPdts(data
-    //             .products
-    //             .filter(
-    //                 (product) => 
-    //                 currCat === undefined ||
-    //                 currCat === null || 
-    //                 currCat === product.category
-    //             )
-    //         )
-    //     }
-    // }, 
-    // //page is re-rendered whenever the currCat or data changes
-    // [currCat, data]);
+    useEffect(() => {
+        // if(userData.user) {
+        //     userProducts( { variables: { info: userData.user.id }, fetchPolicy: "cache-and-network" })
+        // }
 
-    const [productPrices, setProductPrices] = useState(null);
+        setProductData(data);
 
-    // useEffect(() => {
-    //     if(userData.user) {
-    //         userProducts( { variables: { info: userData.user.id }, onCompleted: true })
-    //         if(data) {
-    //             setProductPrices(data)
-    //         }
-    //     }
-        
-    // }, [data, userData])
+    }, [data, userData])
 
     // const tableRef = useRef();
 
 
     if (loading) return <p>Loading...</p>;
-    // if (error) return <p>Error! :(</p>;
-
+    if (error) return <p>Error! :(</p>;
 
     // if (data && data.products) {
     //     console.log("dataproducts in")
@@ -163,25 +151,45 @@ const useStyles = makeStyles((theme) => ({
     return (
         <>
             {
-                userData.user ? (
-                    <div>
-                    < NewMaterialTable userID = {userData.user.id}/>
-                        {/* <MaterialTable
-                            tableRef={tableRef}
+                data ? (
+                    <Fragment>
+                        <MaterialTable
+                            // tableRef={tableRef}
                             icons={tableIcons}
                             style={{ margin: 30 , padding: 30}}
                             title="My Products"
                             columns={[
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category' },
-                                { title: 'Price', field: 'price', type: 'currency' },
+                                { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'Brand', field: 'brand', },
                                 { title: 'ID', field: 'id', hidden: true},
                             ]}
-                            // data= {data.products.filter((product) => product.userID === userData.user.id)}
+                            data= {data.products.filter((product) => product.userID === userData.user.id)}
                             // data = {userProducts({ variables: { info: userData.user.id } })}
-                            data = {productPrices ? productPrices.products: null}
+                            // data = {data.products}
                             // data = {new Promise((resolve, reject) => resolve({data: data.products}))}
+                            editable={{  
+                                onRowUpdate: (newData, oldData) =>
+                                new Promise((resolve, reject) => {
+                                    setTimeout(() => {
+                                        const productID = oldData.id;
+                                        console.log(newData);
+                                        console.log(oldData);
+                                        updateProduct(
+                                            {
+                                                variables: 
+                                                {
+                                                    id: productID,
+                                                    name: newData.name
+                                                },
+                                                refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                                            }
+                                        )
+                                    resolve();
+                                    }, 1000)
+                                })
+                            }}
                             actions={[
                                 {
                                 icon: ClearIcon,
@@ -211,89 +219,22 @@ const useStyles = makeStyles((theme) => ({
                                     }
                                 },  
                             ]}
+                            
                             options={{
                                 actionsColumnIndex: -1
                             }}
-                        /> */}
-                        </div>
-                       
+                        />
+                    </Fragment>
+                        
                 ) : (
-                    <>
-                    <h2>You are not logged in</h2>
-                    <Link to="/login">Log in</Link>
-                    </>
+                    null
                 )
             }
          </>
 
     )
 
-    // return (
-    //     <>
-    //     {userData.user ? (
-    //         <Paper style={{ margin: 30 , padding: 30}}>   
-    //         <h1>My Products</h1>
-    //         <List>
-    //             <CategoryOptions callBackFromParent={setCat}/>
-    //             {//data.products
-    //             displayedPdts //changes with useEffect
-    //             .filter((product) => product.userID === userData.user.id)
-    //             .map((product) => {
-    //             {/* const labelId = `checkbox-list-label-${product.id}`; */}
-
-    //             return (
-                    
-    //                 <ListItem alignItems="flex-start">
-    //                 {/* <ListItemText 
-    //                 id={labelId} 
-    //                 primary={`${product.name}${product.category} ${product.price}`} /> */}
-    //                 <ListItemText
-    //                 primary={`${product.name}`}
-    //                 secondary={
-    //                     <React.Fragment>
-    //                     <Typography
-    //                         component="span"
-    //                         variant="body2"
-    //                         className={classes.inline}
-    //                         color="textPrimary"
-    //                     >
-    //                         {`${product.category}`}
-    //                     </Typography>
-    //                     {`  S$${product.price}`}
-    //                     </React.Fragment>
-    //                 }/>
-    //                 <ListItemSecondaryAction>
-    //                     <IconButton onClick={
-    //                     () => {removeProduct(
-    //                     {
-    //                         variables: 
-    //                         {
-    //                         id: product.id},
-    //                         refetchQueries: [{ query: PRODUCTS_QUERY}] 
-    //                     }
-    //                     )
-    //                     }}>
-    //                     <ClearIcon />
-    //                     </IconButton>
-    //                 </ListItemSecondaryAction>
-    //                 </ListItem>
-                    
-                    
-                    
-    //             );
-    //             })}
-    //         </List>
-    //     </Paper>
-    //     ) : (
-    //         <>
-    //         <h2>You are not logged in</h2>
-    //         <Link to="/login">Log in</Link>
-    //         </>
-    //     )}
-    //     </>
-    // )
 }
     
     
 
-export default ProductPage;

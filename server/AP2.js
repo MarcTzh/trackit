@@ -2,6 +2,7 @@
 // require('dotenv').config()
 // const sgMail = require('@sendgrid/mail')
 // // sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+
 const Nightmare = require('nightmare');
 const { checkPrice } = require('./AmazonParser');
 // const nightmare = Nightmare({ show: true })
