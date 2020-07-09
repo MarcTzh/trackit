@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-async function checkQ10Price(url) {
+async function checkAmazonPrice(url) {
         let browser = await puppeteer.launch(); 
         let page = await browser.newPage();
 
@@ -16,18 +16,12 @@ async function checkQ10Price(url) {
 
         let data = await page.evaluate(() => {
             //check if there are discounts
-            let price = document.querySelector("#discount_info dd strong")
+            let price = document.querySelector("#priceblock_dealprice")
             
-            if(!price) { //if not group buy promo
-                price = document.querySelector("#div_GroupBuyRegion .prc strong")
+            if(!price) { //regular price
+                price = document.querySelector("#priceblock_ourprice")
             }
-            if(!price) { //if no promos at all, regular price
-                price= document.querySelector('dl[class="detailsArea lsprice"]')
-            }
-            
-            //#dl_sell_price dd strong
 
-            
             if(price) {
                 price = parseFloat(
                     price.innerText
@@ -37,9 +31,6 @@ async function checkQ10Price(url) {
                         .replace('$', '')
                         //for values above 1000
                         .replace(',', '')
-                        //unwanted text in the results
-                        .replace('Q-Price', '')
-                        .replace('Group Buy Price', '')
                 )
             } else {
                 return null;
@@ -56,8 +47,8 @@ async function checkQ10Price(url) {
     }
 }
 
-// checkQ10Price('https://www.qoo10.sg/gmkt.inc/Goods/Goods.aspx?goodscode=489940996')
-// checkQ10Price('https://www.qoo10.sg/item/NINTENDO-SWITCH-READY-STOCK-NINTENDO-SWITCH-RING-FIT-ADVENTURE/6737187733')
-// checkQ10Price('https://www.qoo10.sg/item/NEW-ARRIVAL-MEMORY-FOAM-PILLOW-ERGONOMIC-DESIGN-RELIEF-FOR-NECK/679430267?sid=16375')
-// checkQ10Price('https://www.qoo10.sg/item/FLASH-DEAL-D24-DURIAN-PUFF-15PCS-BOX-4CM-EACH/651235357?sid=196626');
-exports.checkQ10Price = checkQ10Price;
+//regular price
+// checkAmazonPrice('https://www.amazon.sg/Acer-XB271HU-Gaming-Monitor-Inches/dp/B06XYKBXRV?ref_=s9_apbd_orec_hd_bw_b71Z65b&pf_rd_r=K5F4N7P3E80AYSQ864T7&pf_rd_p=2dc72da2-c92e-5045-b35c-42026e8a8793&pf_rd_s=merchandised-search-12&pf_rd_t=BROWSE&pf_rd_i=6436071051')
+//deal price
+// checkAmazonPrice('https://www.amazon.sg/Fisher-Price-Thomas-Friends-imaginative-characters/dp/B07N4PHKWP?ref_=Oct_DLandingS_PC_a0b7797c_0&smid=ARPIJN329XQ0D')
+exports.checkAmazonPrice = checkAmazonPrice;

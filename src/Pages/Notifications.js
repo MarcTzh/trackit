@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 // const { React, useEffect, useState } = require('react');
 // const { test } = require("../Parser/AutorunScript.js");
 // import test from "../Parser/AutorunScript.js";
+import Successbar from "../Snackbars/Successbar";
 
 function Notifications() {
     const { userData } = useContext(UserContext);
@@ -18,6 +19,7 @@ function Notifications() {
         <div>
             <div className="page">
                 <h1>Notifications </h1>
+                <Successbar/>
             </div>
         </div>
         </Paper>
