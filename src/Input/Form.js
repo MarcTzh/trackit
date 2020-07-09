@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -123,7 +124,9 @@ function handleUrlChange(e) {
   return (
     <div>
 
-      <CategoryOptions callBackFromParent={setCategoryValue}/>
+      <CategoryOptions callBackFromParent={setCategoryValue}
+        
+      />
 
       <div>
       {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>

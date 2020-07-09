@@ -1,6 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga');
 // const parser = require('./AmazonParser.js');
-const parser = require('./checkPrice.js');
+
+const parser = require('./checkPrice');
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://teamBogo:rainbow6siege@cluster0-vo9fe.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true});
