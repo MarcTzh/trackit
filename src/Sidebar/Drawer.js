@@ -44,7 +44,7 @@ import AuthOptions from "../auth/AuthOptions";
 import Login from '../auth/Login';
 import ForgotPassword from '../auth/ForgotPassword';
 import ResetPassword from '../auth/ResetPassword';
-import Notifications from '../Pages/Notifications'
+import NotificationPage from '../Pages/NotificationPage'
 import UserContext from "../context/UserContext";
 
 // import InfoIcon from '@material-ui/icons/Info';
@@ -221,7 +221,7 @@ export default function PersistentDrawerLeft(props) {
             <ListItemIcon><UpdateIcon /></ListItemIcon>
                 Update Product
             </MenuItem>
-            <MenuItem component={Link} to="/notifications">
+            <MenuItem component={Link} to="/notificationpage">
             
               <ListItemIcon>
               <Badge 
@@ -273,7 +273,7 @@ export default function PersistentDrawerLeft(props) {
           </Route>
           <Route exact path="/ResetPassword" component={ResetPassword}>
           </Route>
-          <Route exact path="/Notifications" component={Notifications}>
+          <Route exact path="/NotificationPage" component={NotificationPage}>
           </Route>
           <Route
                   path="/ResetPassword/:token"
