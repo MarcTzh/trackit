@@ -14,15 +14,15 @@ import UserContext from '../context/UserContext';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 // import Divider from '@material-ui/core/Divider';
-import { withStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
+// import { withStyles } from '@material-ui/core/styles';
+// import { green } from '@material-ui/core/colors';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import Favorite from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+// import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+// import CheckBoxIcon from '@material-ui/icons/CheckBox';
+// import Favorite from '@material-ui/icons/Favorite';
+// import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 
 const PRODUCTS_QUERY = gql `
@@ -80,22 +80,25 @@ const useStyles = makeStyles((theme) => ({
 
     useEffect(() => {
         if(data) {
+            // console.log(displayedPdts)
             setDisplayedPdts(data
                 .products
                 .filter(
                     (product) => 
                     (currCat === undefined ||
                     currCat === null || 
-                    currCat === product.category) &&
-                    (checked 
+                    currCat === product.category) 
+                    && (checked 
+                        // only want to see those products lower than minPrice
                         ? product.minPrice > product.price
+                        // can show all products
                         : true)
                 )
             )
         }
     }, 
     //page is re-rendered whenever the currCat or data changes
-    [currCat, data]);
+    [currCat, data, checked, userData]);
     
 
     if (loading) return <p>Loading...</p>;

@@ -75,7 +75,8 @@ const useStyles = makeStyles((theme) => ({
             setDisplayedPdts(data
                 .products
                 .filter(
-                    (product) => product.userID === userData.user.id && currCat === undefined || currCat === null || currCat === product.category)
+                    (product) => (product.userID === userData.user.id) 
+                        && (currCat === undefined || currCat === null || currCat === product.category))
                 )
         }
     }, 

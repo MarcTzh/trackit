@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const brandOptions = ['Amazon', 'Shopee', 'Lazada'];
+const brandOptions = ['Amazon', 'Lazada', 'Qoo10'];
 
 const useStyles = makeStyles((theme) => ({
   textField: {

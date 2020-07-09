@@ -17,9 +17,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Successbar() {
+export default function Successbar(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {
     setOpen(true);
@@ -40,7 +40,7 @@ export default function Successbar() {
       </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          This is a success message!
+          `${props.message}`
         </Alert>
       </Snackbar>
       {/* <Alert severity="error">This is an error message!</Alert>

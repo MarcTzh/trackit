@@ -22,8 +22,8 @@ export default function ChartToggle(props) {
     <ToggleButtonGroup
       value={period}
       exclusive
-	  size="small"
-	  style ={{position:"relative", left:'1000px'}}
+	  size="medium"
+	  style ={{position:"relative", display: 'flex', justifyContent: 'center', paddingTop: 30, paddingBottom: 15}}
 	//   orientation = "vertical"
       onChange={handlePeriodChange}
       aria-label="period options"
