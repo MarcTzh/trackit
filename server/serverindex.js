@@ -175,7 +175,10 @@ const resolvers = {
       addPriceAndDate: async (_, {id, url, date, price, priceArray, dateArray}) => {
         console.log("Start");
         price = parseFloat(await parser.checkPrice(url));
-        console.log(price);
+        console.log("price in serverindex " + price);
+        if(price == NaN) {
+          price = null;
+        }
         priceArray.push(price);
         console.log("pushed into priceArray");
         dateArray.push(date);

@@ -25,6 +25,6 @@ async function checkPrice(url) {
     }
 }
 
-checkPrice("https://www.amazon.com/dp/B07G7PMVR9/ref=dp_cerb_2")
+// checkPrice("https://www.amazon.com/dp/B07G7PMVR9/ref=dp_cerb_2")
 
 exports.checkPrice = checkPrice;
