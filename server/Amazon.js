@@ -38,7 +38,8 @@ async function checkAmazonPrice(url) {
             return price;
         })
 
-        console.log(data);
+        console.log("data1 " + data);
+        return data;
        
     } catch (err) {
         console.log(err);

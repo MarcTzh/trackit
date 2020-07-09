@@ -1,5 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga');
 // const parser = require('./AmazonParser.js');
+
 const parser = require('./checkPrice');
 
 const mongoose = require('mongoose');
@@ -146,6 +147,7 @@ const resolvers = {
   Mutation: { 
       createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray, userID}) => {
         price = await (parser.checkPrice(url));
+        console.log("price" + price);
         priceArray.push(price);
         const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray, userID});
         //saves in data base as it is a promise
@@ -174,7 +176,10 @@ const resolvers = {
       addPriceAndDate: async (_, {id, url, date, price, priceArray, dateArray}) => {
         console.log("Start");
         price = parseFloat(await parser.checkPrice(url));
-        console.log(price);
+        console.log("price in serverindex " + price);
+        if(price == NaN) {
+          price = null;
+        }
         priceArray.push(price);
         console.log("pushed into priceArray");
         dateArray.push(date);

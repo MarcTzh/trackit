@@ -34,6 +34,7 @@ async function checkLazadaPrice(url) {
         })
 
         console.log(data);
+        return data;
     } catch (err) {
         console.log(err);
     } finally {
@@ -41,6 +42,7 @@ async function checkLazadaPrice(url) {
     }
    
 }
+
 
 // checkLazadaPrice('https://www.lazada.sg/products/mono-dsign-aluminium-enhanced-stability-foldable-compact-laptop-stand-i743462379-s2398834345.html?spm=a2o42.searchlistcategory.list.1.45e937215jsTOp&search=1')
 // checkLazadaPrice('https://www.lazada.sg/products/dell-27-full-hd-monitor-freesync-75hz-se2719hr-i505970628-s1408408036.html?spm=a2o42.searchlistcategory.list.1.23e57d390hVXBm&search=1')

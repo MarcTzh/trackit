@@ -1,3 +1,4 @@
+
 const lazada = require('./Lazada');
 const q10 = require('./q10');
 const amazon = require('./Amazon');
@@ -24,6 +25,6 @@ async function checkPrice(url) {
     }
 }
 
-checkPrice("https://www.amazon.com/dp/B07G7PMVR9/ref=dp_cerb_2")
+// checkPrice("https://www.amazon.com/dp/B07G7PMVR9/ref=dp_cerb_2")
 
 exports.checkPrice = checkPrice;
