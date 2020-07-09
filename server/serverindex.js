@@ -146,6 +146,7 @@ const resolvers = {
   Mutation: { 
       createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray, userID}) => {
         price = await (parser.checkPrice(url));
+        console.log("price" + price);
         priceArray.push(price);
         const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray, userID});
         //saves in data base as it is a promise

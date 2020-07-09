@@ -34,7 +34,10 @@ async function checkQ10Price(url) {
             return price;
         })
 
-        console.log(data);
+
+        console.log("in q10, data: " + data);
+        return data;
+
        
     } catch (err) {
         console.log(err);

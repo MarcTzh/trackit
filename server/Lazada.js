@@ -34,6 +34,7 @@ async function checkLazadaPrice(url) {
         })
 
         console.log(data);
+        return data;
     } catch (err) {
         console.log(err);
     } finally {
