@@ -108,7 +108,6 @@ const useStyles = makeStyles((theme) => ({
                 }
             }
         )
-        
     }
 
     if (loading) return <p>Loading...</p>;

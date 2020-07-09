@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ReplayIcon from '@material-ui/icons/Replay';
 import { makeStyles } from '@material-ui/core/styles';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -62,22 +63,25 @@ const PRODUCTS_QUERY = gql `
         brand
         url
         userID
+        priceArray
+            dateArray
     }
 }`;
 
-const USER_PRODUCTS_QUERY = gql `
-    query UserProducts($info: String!) {
-        userProducts(info: $info) {
-            id
-            name
-            price
-            category
-            brand
-            url
-            userID
-        }
-    }
-`;
+// const USER_PRODUCTS_QUERY = gql `
+//     query UserProducts($info: String!) {
+//         userProducts(info: $info) {
+//             id
+//             name
+//             price
+//             category
+//             brand
+//             url
+//             userID
+            
+//         }
+//     }
+// `;
 
 const REMOVE_MUTATION = gql `
     mutation RemoveProduct($id: ID!) {
@@ -89,6 +93,12 @@ const UPDATE_PRODUCT_MUTATION = gql `
 mutation UpdateProduct($id: ID!, $name: String!) {
     updateProduct(id: $id, name: $name)
 }
+`;
+
+const ADD_PRICE_AND_DATE_MUTATION = gql `
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float!, $priceArray: [Float!]!, $dateArray: [String!]!) {
+        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
+    }
 `;
 
 const useStyles = makeStyles((theme) => ({
@@ -116,6 +126,8 @@ const useStyles = makeStyles((theme) => ({
 
     const { userData } = useContext(UserContext);
 
+    const [addPriceAndDate] = useMutation(ADD_PRICE_AND_DATE_MUTATION);
+
     // const [userProducts, {loading,error, data }] = useLazyQuery(USER_PRODUCTS_QUERY, {fetchPolicy: "cache-and-network"});
 
     // const { loading, error, data } = useQuery(USER_PRODUCTS_QUERY, { variables: { info: props.userID } });
@@ -123,6 +135,17 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
 
     const [productData, setProductData] = useState(null);
+
+    //For dates
+    const [today, setToday] = useState(new Date());  
+    useEffect(() => {
+      const interval = setInterval(() => {
+          setToday(new Date());
+      }, 1000);
+      return () => clearInterval(interval);
+    }, []);
+
+    const currDate = (today.getTime()).toString(10);
 
     useEffect(() => {
         // if(userData.user) {
@@ -134,6 +157,22 @@ const useStyles = makeStyles((theme) => ({
     }, [data, userData])
 
     // const tableRef = useRef();
+
+    function handleUpdate(productID, productUrl, productDateArray, productPriceArray) {
+        addPriceAndDate(
+            {
+                variables: 
+                {
+                    id: productID,
+                    url: productUrl,
+                    date: currDate,
+                    price: 0,  
+                    priceArray:productPriceArray, 
+                    dateArray:productDateArray,
+                }
+            }
+        )
+    }
 
 
     if (loading) return <p>Loading...</p>;
@@ -162,9 +201,13 @@ const useStyles = makeStyles((theme) => ({
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category' },
                                 { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
-                                { title: 'Brand', field: 'brand', },
+                                { title: 'Brand', field: 'brand', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
+                                { title: 'URL', field: 'url', hidden: true},
+                                { title: 'Price Array', field: 'priceArray', hidden: true},
+                                { title: 'Date Array', field: 'dateArray', hidden: true},
                             ]}
+
                             data= {data.products.filter((product) => product.userID === userData.user.id)}
                             // data = {userProducts({ variables: { info: userData.user.id } })}
                             // data = {data.products}
@@ -192,17 +235,11 @@ const useStyles = makeStyles((theme) => ({
                             }}
                             actions={[
                                 {
-                                icon: ClearIcon,
-                                tooltip: 'Delete Product',
-                                onClick: (event, rowData) => {removeProduct(
-                                        {
-                                            variables: 
-                                            {
-                                                id: rowData.id
-                                            },
-                                            refetchQueries: [{ query: PRODUCTS_QUERY}] 
-                                        }
-                                    )
+                                    icon: ReplayIcon,
+                                    tooltip: 'Update Product',
+                                    onClick: (event, rowData) => {
+                                        console.log(rowData);
+                                        handleUpdate(rowData.id, rowData.url, rowData.dateArray, rowData.priceArray)
                                     }
                                 },
                                 {
