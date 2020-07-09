@@ -42,5 +42,6 @@ async function checkLazadaPrice(url) {
    
 }
 
-// checkLazadaPrice('https://www.lzada.sg/products/mono-dsign-aluminium-enhanced-stability-foldable-compact-laptop-stand-i743462379-s2398834345.html?spm=a2o42.searchlistcategory.list.1.45e937215jsTOp&search=1')
+
+// checkLazadaPrice('https://www.lazada.sg/products/mono-dsign-aluminium-enhanced-stability-foldable-compact-laptop-stand-i743462379-s2398834345.html?spm=a2o42.searchlistcategory.list.1.45e937215jsTOp&search=1')
 exports.checkLazadaPrice = checkLazadaPrice;
