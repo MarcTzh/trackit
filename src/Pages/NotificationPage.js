@@ -24,6 +24,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 // import Favorite from '@material-ui/icons/Favorite';
 // import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
+import Successbar from "../Snackbars/Successbar";
+
+
 
 const PRODUCTS_QUERY = gql `
 {
@@ -87,9 +90,11 @@ const useStyles = makeStyles((theme) => ({
                     (product) => 
                     (currCat === undefined ||
                     currCat === null || 
+
                     currCat === product.category) 
                     && (checked 
                         // only want to see those products lower than minPrice
+
                         ? product.minPrice > product.price
                         // can show all products
                         : true)
@@ -98,8 +103,9 @@ const useStyles = makeStyles((theme) => ({
         }
     }, 
     //page is re-rendered whenever the currCat or data changes
+
     [currCat, data, checked, userData]);
-    
+
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;

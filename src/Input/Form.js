@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -169,6 +170,7 @@ function Alert(props) {
       </Snackbar>
 
       <CategoryOptions callBackFromParent={setCategoryValue}/>
+
 
       {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
       <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
