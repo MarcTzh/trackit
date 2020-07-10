@@ -8,6 +8,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import CategoryOptions from '../Input/CategoryOptions'
 import UserContext from '../context/UserContext';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const PRODUCTS_QUERY = gql`
 {
@@ -43,10 +45,16 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 
-const brandOptions = ['Amazon', 'Shopee', 'Lazada'];
+const brandOptions = ['Amazon', 'Lazada', 'Qoo10'];
 
 export default function Form() {
 
@@ -59,11 +67,24 @@ export default function Form() {
   // therefore below categoryValue will check for both undefined and null value
   const [categoryValue, setCategoryValue] = useState();
   const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
+  const [minPrice, setMinPrice] = useState(0)
   const [url, setUrl] = useState('');
+  const [open, setOpen] = React.useState(false);
 
   const { userData } = useContext(UserContext);
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
   
   //For dates
   const [today, setToday] = useState(new Date());  
@@ -73,6 +94,11 @@ export default function Form() {
       }, 1000);
       return () => clearInterval(interval);
     }, []);
+
+    //TODO: add in noti when new pdt is submitted
+    useEffect(() => {
+
+    }, [open])
   const dateAndTime = (today.getFullYear() - 2000)*100000000 + today.getMonth() * 1000000 + today.getDate() * 10000 + today.getHours()*100 + today.getMinutes();
 
 function handleNameChange(e) {
@@ -90,6 +116,18 @@ function handleUrlChange(e) {
   setUrl(newUrl);
 }
 
+function handleMinPriceChange(e) {
+  const newMinPrice = e.target.value;
+  if(newMinPrice !== null) {
+    setMinPrice(parseFloat(newMinPrice));  
+  }
+  
+}
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
   function handleSubmit() {
     const currDate = (new Date().getTime()).toString(10);
     if(brandValue !== null && categoryValue !== null && categoryValue !== undefined && name !== '' && url !== ''){
@@ -100,7 +138,7 @@ function handleUrlChange(e) {
                                   brand: brandValue, 
                                   price: 0, 
                                   url: url, 
-                                  minPrice: 0,
+                                  minPrice: minPrice,
                                   priceArray:[], 
                                   dateArray:[currDate],
                                   userID: userData.user.id
@@ -113,7 +151,8 @@ function handleUrlChange(e) {
                  setPrice('');
 
                  setUrl('');   
-                 alert("Your product is being processed! Please wait a moment for it to appear on your Products Page.");
+                
+                //  alert("Your product is being processed! Please wait a moment for it to appear on your Products Page.");
 
     }
 }
@@ -124,14 +163,18 @@ function handleUrlChange(e) {
   return (
     <div>
 
-      <CategoryOptions callBackFromParent={setCategoryValue}
-        
-      />
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+        Your product is being processed! Please wait a moment for it to appear on your Products Page
+        </Alert>
+      </Snackbar>
 
-      <div>
+      <CategoryOptions callBackFromParent={setCategoryValue}/>
+
+
       {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
       <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
-      <div className={classes.textField}>
+      <div className={classes.textField} style={{paddingTop: 20}}>
         <Autocomplete
           brandValue={brandValue}
           onChange={(event, newValue) => {
@@ -143,11 +186,11 @@ function handleUrlChange(e) {
           }}
           id="controllable-states-demo"
           options={brandOptions}
-          style={{ width: 300 }}
+          // style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="Brand" variant="outlined" />}
         />
       </div>
-    </div>
+
 
 
       <div>
@@ -197,7 +240,9 @@ function handleUrlChange(e) {
           id="outlined-margin-none"
           placeholder="Price floor"
           margin="normal"
+          fullWidth
           className={classes.textField}
+          onChange={handleMinPriceChange}
           variant="outlined"
         />
         
@@ -212,8 +257,9 @@ function handleUrlChange(e) {
           helperText="Must be a number"
           variant="outlined"
         /> */}
-        <div>
-          <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}>
+        <div style={{paddingTop: 10}}>
+          <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}
+            fullWidth={true} className={classes.textField}>
             Submit 
           </Button>
         </div>

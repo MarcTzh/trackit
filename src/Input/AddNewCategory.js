@@ -74,8 +74,9 @@ export default function AddNewCategory() {
           value = {name}
         />
 
-        <div>
-          <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}>
+        <div style={{paddingTop: 10}}>
+          <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit} 
+          fullWidth className={classes.textField}>
             Submit 
           </Button>
         </div>
