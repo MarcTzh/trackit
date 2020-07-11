@@ -181,6 +181,7 @@ const resolvers = {
         console.log("Start");
         price = parseFloat(await parser.checkPrice(url));
         console.log("price in serverindex " + price);
+
         if(Number.isNaN(price)) {
           price = null;
           await Product.findByIdAndUpdate(id, {url, date, priceArray, dateArray});
