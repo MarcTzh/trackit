@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useContext, forwardRef, useRef, Fragment } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
+import CategoryOptions from '../Input/CategoryOptions';
+
+
+
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,7 +12,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
-import CategoryOptions from '../Input/CategoryOptions'
 import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
 import Typography from '@material-ui/core/Typography';
@@ -30,8 +33,12 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import MoreIcon from '@material-ui/icons/More';
+import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 // import Divider from '@material-ui/core/Divider';
-import MaterialTable from 'material-table';
+import MaterialTable, { MTableToolbar } from 'material-table';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -90,13 +97,13 @@ const REMOVE_MUTATION = gql `
 `;
 
 const UPDATE_PRODUCT_MUTATION = gql `
-mutation UpdateProduct($id: ID!, $name: String!) {
-    updateProduct(id: $id, name: $name)
+mutation UpdateProduct($id: ID!, $name: String!, $url: String!) {
+    updateProduct(id: $id, name: $name, url: $url)
 }
 `;
 
 const ADD_PRICE_AND_DATE_MUTATION = gql `
-    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float!, $priceArray: [Float!]!, $dateArray: [String!]!) {
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float!, $priceArray: [Float]!, $dateArray: [String!]!) {
         addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
     }
 `;
@@ -121,6 +128,10 @@ const useStyles = makeStyles((theme) => ({
     const [updateProduct] = useMutation(UPDATE_PRODUCT_MUTATION);
 
     const [currCat, setCat] = useState();
+
+    const [groupingBoolean, setGroupingBoolean] = useState(false);
+
+    const [urlBoolean, setUrlBoolean] = useState(true);
 
     const [displayedPdts, setDisplayedPdts] = useState([]);
 
@@ -169,7 +180,9 @@ const useStyles = makeStyles((theme) => ({
                     price: 0,  
                     priceArray:productPriceArray, 
                     dateArray:productDateArray,
-                }
+                }, 
+                refetchQueries: [{ query: PRODUCTS_QUERY}] 
+
             }
         )
     }
@@ -199,11 +212,11 @@ const useStyles = makeStyles((theme) => ({
                             title="My Products"
                             columns={[
                                 { title: 'Name', field: 'name' },
-                                { title: 'Category', field: 'category' },
+                                { title: 'Category', field: 'category', editable: 'never'},
                                 { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'Brand', field: 'brand', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
-                                { title: 'URL', field: 'url', hidden: true},
+                                { title: 'URL', field: 'url', hidden: urlBoolean, editable: 'onUpdate'},
                                 { title: 'Price Array', field: 'priceArray', hidden: true},
                                 { title: 'Date Array', field: 'dateArray', hidden: true},
                             ]}
@@ -224,7 +237,8 @@ const useStyles = makeStyles((theme) => ({
                                                 variables: 
                                                 {
                                                     id: productID,
-                                                    name: newData.name
+                                                    name: newData.name,
+                                                    url: newData.url
                                                 },
                                                 refetchQueries: [{ query: PRODUCTS_QUERY}] 
                                             }
@@ -257,8 +271,27 @@ const useStyles = makeStyles((theme) => ({
                                 },  
                             ]}
                             
+                            components={{
+                                Toolbar: props => (
+                                <div>
+                                    <MTableToolbar {...props} />
+                                    <div style={{padding: '0px 10px'}}>
+                                        <ToggleButtonGroup size = "small" style ={{position:"relative"}}>
+                                            <ToggleButton value="Show URL" aria-label="Show URL">
+                                                <MoreIcon  onClick ={() => setUrlBoolean(!urlBoolean)}/>
+                                            </ToggleButton>
+                                            <ToggleButton value="Enable Sort" aria-label="Enable Sort">
+                                                <CompareArrowsIcon  onClick ={() => setGroupingBoolean(!groupingBoolean)}/>
+                                            </ToggleButton>
+                                        </ToggleButtonGroup>
+                                    </div>
+                                </div>
+                                ),
+                            }}
+                            
                             options={{
-                                actionsColumnIndex: -1
+                                actionsColumnIndex: -1,
+                                grouping: groupingBoolean,
                             }}
                         />
                     </Fragment>

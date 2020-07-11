@@ -244,7 +244,7 @@ function Profile() {
         var newCompleteDateArray = [];
         for (var i = 0; i < completeDateArray.length; i++) {
             const d = new Date(completeDateArray[i]);
-            newCompleteDateArray.push((d.getDate() + 1) + " " + (d.getMonth() + 1) + " " + d.getFullYear());
+            newCompleteDateArray.push((d.getDate()) + " " + (d.getMonth() + 1) + " " + d.getFullYear());
         }
 
         console.log(period);
