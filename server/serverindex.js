@@ -120,6 +120,7 @@ const typeDefs = `
       updateProduct(
         id: ID!,
         name: String!
+        url: String!
       ): Boolean
 
       removeCategory(
@@ -148,6 +149,9 @@ const resolvers = {
         price = await (parser.checkPrice(url));
         console.log("price" + price);
         priceArray.push(price);
+        if(Number.isNaN(price)) {
+          price = null;
+        }
         const product = new Product({name, category, brand, price, url, minPrice, priceArray, dateArray, userID});
         //saves in data base as it is a promise
         await product.save();
@@ -176,15 +180,19 @@ const resolvers = {
         console.log("Start");
         price = parseFloat(await parser.checkPrice(url));
         console.log("price in serverindex " + price);
-        if(price == NaN) {
+        if(Number.isNaN(price)) {
           price = null;
+          await Product.findByIdAndUpdate(id, {url, date, priceArray, dateArray});
+          return false;
+        } else {
+          priceArray.push(price);
+          console.log("pushed into priceArray");
+          dateArray.push(date);
+          console.log("pushed into dateArray");
+          await Product.findByIdAndUpdate(id, {url, date, price, priceArray, dateArray});
+          return true;
         }
-        priceArray.push(price);
-        console.log("pushed into priceArray");
-        dateArray.push(date);
-        console.log("pushed into dateArray");
-        await Product.findByIdAndUpdate(id, {url, date, price, priceArray, dateArray});
-        return true;
+        
       },
 
       updateCategory: async (_, {id, name}) => {
@@ -192,8 +200,8 @@ const resolvers = {
         return true;
       },
 
-      updateProduct: async (_, {id, name}) => {
-        await Product.findByIdAndUpdate(id, {name});
+      updateProduct: async (_, {id, name, url}) => {
+        await Product.findByIdAndUpdate(id, {name, url});
         return true;
       },
 
