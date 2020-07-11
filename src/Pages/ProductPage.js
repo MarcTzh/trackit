@@ -33,7 +33,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 // import MaterialTable from 'material-table';
 import NewMaterialTable from '../Table/NewMaterialTable';
 //Loading
-import Loading from '../Loading';
+import Loading from '../Loaders/Loading';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),

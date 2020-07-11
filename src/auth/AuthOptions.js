@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
-
+import { store } from 'react-notifications-component';
 
 export default function AuthOptions(props) {
   const { userData, setUserData } = useContext(UserContext);
@@ -18,6 +18,19 @@ export default function AuthOptions(props) {
     localStorage.setItem("auth-token", "");
     props.closeDrawer()
     history.push('/')
+    store.addNotification({
+      title: "Success:",
+      message: "You have logged out",
+      type: "success",
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+      dismiss: {
+        duration: 2000,
+        onScreen: true
+      }
+    });
   };
 
   return (

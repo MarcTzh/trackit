@@ -2,12 +2,11 @@ import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Axios from "axios";
-import ErrorNotice from "../misc/ErrorNotice";
+import { store } from 'react-notifications-component';
 
 export default function ResetPassword(props) {
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
-  const [error, setError] = useState();
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
@@ -20,6 +19,7 @@ export default function ResetPassword(props) {
     try {
       const data = {
           newPass: password,
+          confirmNewPass: passwordCheck,
           resetLink: props.match.params.token
       };
       await Axios.post("http://localhost:5000/users/ResetPassword", data,);
@@ -29,27 +29,41 @@ export default function ResetPassword(props) {
       localStorage.setItem("auth-token", loginRes.data.token);
       alert('Your password has been reset, please login')
       history.push("/login");
+      store.addNotification({
+        title: "Success:",
+        message: `Password has been reset`,
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 2000,
+          onScreen: true
+        }
+      });
     } catch (err) {
-      err.response.data.msg && setError(err.response.data.msg);
+      if(err.response.data.msg) {
+        store.addNotification({
+          title: "Error:",
+          message: `${err.response.data.msg}`,
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: {
+            duration: 2000,
+            onScreen: true
+          }
+        });
+      }
     }
   };
-
-  useEffect(() => {
-        if(password && passwordCheck &&
-            (password !== passwordCheck)) {
-            setError('The two passwords are not the identical');
-        } else {
-            setError(undefined);
-        }
-
-  }, [password,passwordCheck])
 
   return (
     <div className="page">
       <h2>Please enter your new password</h2>
-      {error && (
-        <ErrorNotice message={error} clearError={() => setError(undefined)} />
-      )}
       <form className="form" onSubmit={submit}>
 
         <label htmlFor="register-password">New password</label>

@@ -2,12 +2,12 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Axios from "axios";
-import ErrorNotice from "../misc/ErrorNotice";
+import { store } from 'react-notifications-component';
+
 
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState();
-  const [error, setError] = useState();
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
@@ -23,16 +23,39 @@ export default function ForgotPassword() {
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push("/");
     } catch (err) {
-      err.response.data.msg && setError(err.response.data.msg);
+      if(err.response.data.msg) {
+        store.addNotification({
+          title: "Error:",
+          message: `${err.response.data.msg}`,
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: {
+            duration: 2000,
+            onScreen: true
+          }
+        });
+      }
     }
-    alert('The reset link has been sent to you')
+    store.addNotification({
+      title: "Success:",
+      message: `Password reset link has been sent to you`,
+      type: "success",
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+      dismiss: {
+        duration: 2000,
+        onScreen: true
+      }
+    });
   };
   return (
     <div className="page">
       <h2>Reset Password</h2>
-      {error && (
-        <ErrorNotice message={error} clearError={() => setError(undefined)} />
-      )}
       <form className="form" onSubmit={submit}>
         <label htmlFor="login-email">Email</label>
         <input

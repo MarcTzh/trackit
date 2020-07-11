@@ -2,14 +2,13 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Axios from "axios";
-import ErrorNotice from "../misc/ErrorNotice";
+import { store } from 'react-notifications-component';
 
 export default function Register() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
   const [displayName, setDisplayName] = useState();
-  const [error, setError] = useState();
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
@@ -30,17 +29,41 @@ export default function Register() {
       });
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push("/");
+      store.addNotification({
+        title: "Registration successful:",
+        message: `Please log in`,
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 2000,
+          onScreen: true
+        }
+      });
     } catch (err) {
-      err.response.data.msg && setError(err.response.data.msg);
+      if(err.response.data.msg) {
+        store.addNotification({
+          title: "Error:",
+          message: `${err.response.data.msg}`,
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: {
+            duration: 2000,
+            onScreen: true
+          }
+        });
+      }
     }
   };
 
   return (
     <div className="page">
       <h2>Register</h2>
-      {error && (
-        <ErrorNotice message={error} clearError={() => setError(undefined)} />
-      )}
       <form className="form" onSubmit={submit}>
         <label htmlFor="register-email">Email</label>
         <input

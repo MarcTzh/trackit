@@ -12,9 +12,9 @@ function AddNew() {
         {userData.user ? (
             <Paper style={{ margin: 30 , padding: 30}}>   
             <div>
-                <h1>Add a new product to track!</h1>
-                <h2>Add new category</h2>
-                <AddNewCategory/>
+                {/* <h1>Add a new product to track!</h1> */}
+                {/* <h2>Add new category</h2>
+                <AddNewCategory/> */}
                 <h2>Add your new product below</h2>
                 <Form />
             </div>

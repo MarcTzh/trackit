@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import CategoryOptions from '../Input/CategoryOptions'
 import UserContext from '../context/UserContext';
 import { store } from 'react-notifications-component';
+import Loading2 from '../Loaders/Loading2';
+// import checkPrice from '../Parser/checkPrice';
 
 
 const PRODUCTS_QUERY = gql`
@@ -71,13 +73,6 @@ export default function Form() {
   const [minPrice, setMinPrice] = useState(0)
   const [url, setUrl] = useState('');
 
-  //For notifications
-  const [ noti, setNoti ] = useState({
-    open: '',
-    severity: '',
-    message: ''
-  });
-
   const { userData } = useContext(UserContext);
   
   //For dates
@@ -91,27 +86,63 @@ export default function Form() {
 
   const dateAndTime = (today.getFullYear() - 2000)*100000000 + today.getMonth() * 1000000 + today.getDate() * 10000 + today.getHours()*100 + today.getMinutes();
 
-function handleNameChange(e) {
-  const newName = e.target.value;
-  setName(newName);
-}
-
-function handlePriceChange(e) {
-  const newPrice = e.target.value;
-  setPrice(newPrice);
-}
-
-function handleUrlChange(e) {
-  const newUrl = e.target.value;
-  setUrl(newUrl);
-}
-
-function handleMinPriceChange(e) {
-  const newMinPrice = e.target.value;
-  if(newMinPrice !== null) {
-    setMinPrice(parseFloat(newMinPrice));  
+  function handleNameChange(e) {
+    const newName = e.target.value;
+    setName(newName);
   }
-  
+
+  function handlePriceChange(e) {
+    const newPrice = e.target.value;
+    setPrice(newPrice);
+  }
+
+  function handleUrlChange(e) {
+    const newUrl = e.target.value;
+    setUrl(newUrl);
+  }
+
+  function handleMinPriceChange(e) {
+    const newMinPrice = e.target.value;
+    if(newMinPrice !== null) {
+      setMinPrice(parseFloat(newMinPrice));  
+    }
+    
+  }
+
+  function crawl() {
+    if(url !== '') {
+      console.log(`${url}`)
+      store.addNotification({
+        title: "Hold on",
+        message: "Your product information is being retrieved",
+        type: "info",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 4000,
+          onScreen: true
+        }
+      });
+
+      //i am stuck here, cannot do this
+      // checkPrice(url);
+    } else {
+      store.addNotification({
+        title: "Error:",
+        message: "URL cannot be empty",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 2000,
+          onScreen: true
+        }
+      });
+    }
 }
 
 function handleSubmit() {
@@ -139,13 +170,6 @@ function handleSubmit() {
 
                  setUrl('');   
 
-                setNoti(
-                  {
-                    open: true,
-                    severity: "success",
-                    message: 'Your product is being processed! Please wait a moment for it to appear on your Products Page'
-                  }
-                );
                 store.addNotification({
                   title: "Success:",
                   message: "Your product is being processed! Please wait a moment for it to appear on your Products Page",
@@ -181,7 +205,29 @@ function handleSubmit() {
 
   return (
     <div>
+      <h3>Copy and paste the product url here</h3>
+        <TextField
+        //PRODUCT URL
+          // style={{ margin: 8 }}
+          placeholder="Product url"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={handleUrlChange}
+          value = {url}
+        />
+        <div style={{paddingTop: 10, paddingBottom: 50}}>
+          <Button variant="contained" color="primary" margin ="big" onClick={crawl}
+            fullWidth={true} className={classes.textField}>
+            Autocomplete
+          </Button>
+        </div>
 
+        {/* <Loading2 /> */}
 
       <CategoryOptions callBackFromParent={setCategoryValue}/>
 
@@ -224,21 +270,7 @@ function handleSubmit() {
           onChange ={handleNameChange}
           value = {name}
         />
-        <h3>Copy and paste the product url here</h3>
-        <TextField
-        //PRODUCT URL
-          // style={{ margin: 8 }}
-          placeholder="Product url"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-          onChange ={handleUrlChange}
-          value = {url}
-        />
+        
 {/* 
         <TextField
           id="outlined-margin-none"
@@ -261,7 +293,7 @@ function handleSubmit() {
         />
 
         <div style={{paddingTop: 10}}>
-          <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}
+          <Button variant="contained" color="primary" margin ="big" onClick={handleSubmit}
             fullWidth={true} className={classes.textField}>
             Submit 
           </Button>
