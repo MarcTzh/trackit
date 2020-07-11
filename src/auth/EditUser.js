@@ -2,13 +2,11 @@ import React, { useState, useContext } from "react";
 // import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Axios from "axios";
-import Successbar from '../Snackbars/Successbar';
 import Slider from '../Input/Slider';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// import Autocomplete from '@material-ui/lab/Autocomplete';
-
+import { store } from 'react-notifications-component';
 
 export default function EditUser() {
     const [newEmail, setNewEmail] = useState(null);
@@ -16,12 +14,6 @@ export default function EditUser() {
     const [newPassword, setNewPassword] = useState(null);
     const [newDisplayName, setNewDisplayName] = useState(null);
     const [notiSettings, setNotiSettings] = useState(null);
-    //For notifications
-    const [ noti, setNoti ] = useState({
-        open: '',
-        severity: '',
-        message:''
-    });
     const useStyles = makeStyles((theme) => ({
         textField: {
             marginLeft: theme.spacing(1),
@@ -38,8 +30,7 @@ export default function EditUser() {
     const classes = useStyles();
   
     const { userData } = useContext(UserContext);
-    // const history = useHistory();
-    // console.log(userData)
+
     const id = userData.user.id;
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -57,37 +48,42 @@ export default function EditUser() {
                 user
             );
             localStorage.setItem("auth-token", loginRes.data.token);
-            setNoti({
-                open: true,
-                severity: 'success',
-                message: 'Your details have been updated, please log in again'
+            store.addNotification({
+                title: "Success:",
+                message: "Your details have been updated, please log in again",
+                type: "success",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                  duration: 2000,
+                  onScreen: true
+                }
             });
+            
         } catch (err) {
             if(err.response.data.msg) {
-                setNoti({
-                    open: true,
-                    severity: 'error',
-                    message: `${err.response.data.msg}`
+                store.addNotification({
+                    title: "Error:",
+                    message: `${err.response.data.msg}`,
+                    type: "danger",
+                    insert: "top",
+                    container: "top-right",
+                    animationIn: ["animated", "fadeIn"],
+                    animationOut: ["animated", "fadeOut"],
+                    dismiss: {
+                      duration: 2000,
+                      onScreen: true
+                    }
                 });
             } 
         }
     };
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-        setNoti({...noti, open: false});
-    };
+
     return (
         <div className="page">
-        <Successbar 
-            open = {noti.open}
-            severity = {noti.severity}
-            message = {noti.message}
-            handleClose = {handleClose}
-        />
-
         <h2>Edit account information</h2>
         {/* {error && (
             <ErrorNotice message={error} clearError={() => setError(undefined)} />
@@ -168,34 +164,6 @@ export default function EditUser() {
           onChange ={(e) => setCurrPassword(e.target.value)}
         //   value = "new email"
         />
-        {/* <form className="form" onSubmit={submit}> */}
-            {/* <label htmlFor="login-email">New Email</label>
-            <input
-            id="login-email"
-            type="email"
-            onChange={(e) => setNewEmail(e.target.value)}
-            />
-
-            <label htmlFor="login-password">New Password</label>
-            <input
-            type="text"
-            onChange={(e) => setNewPassword(e.target.value)}
-            /> */}
-
-            {/* <label htmlFor="login-password">Display Name</label>
-            <input
-            type="text"
-            placeholder={userData.user.displayName}
-            onChange={(e) => setNewDisplayName(e.target.value)}
-            />
-
-            <label htmlFor="login-password">Password</label>
-                <input
-                id="login-password"
-                type="password"
-                placeholder="current password"
-                onChange={(e) => setCurrPassword(e.target.value)}
-            /> */}
             <div style={{paddingTop: 10}}>
             <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}
                 fullWidth={true} className={classes.textField}>

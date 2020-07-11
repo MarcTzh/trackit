@@ -10,6 +10,10 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import UserContext from "./context/UserContext";
 
+//Notifications
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
+
 import "./style.css";
 
 function App() {
@@ -46,6 +50,7 @@ function App() {
 
   return (
     <>
+    <ReactNotification />
       <BrowserRouter>
         <UserContext.Provider value={{ userData, setUserData }}>
           <Drawer user={userData} />
