@@ -154,7 +154,14 @@ router.post("/ForgotPassword", async (req, res) => {
 });
 
 router.post("/ResetPassword", (req, res) => {
-  const { resetLink, newPass } = req.body;
+  const { 
+    newPass,
+    confirmNewPass,
+    resetLink
+  } = req.body;
+  if(newPass !== confirmNewPass) {
+    return res.status(401).json({ error: "Passwords do not match" });
+  }
   if(resetLink) {
     jwt.verify(resetLink, process.env.RESET_PASSWORD_KEY, (error, decodedData) => {
       if(error) {
