@@ -8,9 +8,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import CategoryOptions from '../Input/CategoryOptions'
 import UserContext from '../context/UserContext';
-// import Snackbar from '@material-ui/core/Snackbar';
-// import MuiAlert from '@material-ui/lab/Alert';
-import Successbar from '../Snackbars/Successbar';
+import { store } from 'react-notifications-component';
+
 
 const PRODUCTS_QUERY = gql`
 {
@@ -139,8 +138,7 @@ function handleSubmit() {
                  setPrice('');
 
                  setUrl('');   
-                
-                //  alert("Your product is being processed! Please wait a moment for it to appear on your Products Page.");
+
                 setNoti(
                   {
                     open: true,
@@ -148,36 +146,42 @@ function handleSubmit() {
                     message: 'Your product is being processed! Please wait a moment for it to appear on your Products Page'
                   }
                 );
+                store.addNotification({
+                  title: "Success:",
+                  message: "Your product is being processed! Please wait a moment for it to appear on your Products Page",
+                  type: "success",
+                  insert: "top",
+                  container: "top-right",
+                  animationIn: ["animated", "fadeIn"],
+                  animationOut: ["animated", "fadeOut"],
+                  dismiss: {
+                    duration: 2000,
+                    onScreen: true
+                  }
+                });
     } else {
-      setNoti(
-        {
-          open: true,
-          severity: "error",
-          message: 'Not at required fields are entered'
+      store.addNotification({
+        title: "Error:",
+        message: "Not at required fields are entered",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+        dismiss: {
+          duration: 2000,
+          onScreen: true
         }
-      )
+        });
     }
 }
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setNoti({...noti, open: false});
-  };
-
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error! :(</p>;
 
   return (
     <div>
-      <Successbar 
-        message = {noti.message}
-        severity = {noti.severity}
-        open = {noti.open}
-        handleClose = {handleClose}
 
-      />
 
       <CategoryOptions callBackFromParent={setCategoryValue}/>
 
@@ -255,18 +259,7 @@ function handleSubmit() {
           onChange={handleMinPriceChange}
           variant="outlined"
         />
-        
-        {/* <TextField
-          id="outlined-margin-none"
-          placeholder="Price ceiling"
-          margin="normal"
-          className={classes.textField}
-          variant="outlined"
-          error
-          label="Error"
-          helperText="Must be a number"
-          variant="outlined"
-        /> */}
+
         <div style={{paddingTop: 10}}>
           <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}
             fullWidth={true} className={classes.textField}>
