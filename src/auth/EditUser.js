@@ -1,10 +1,13 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Axios from "axios";
-import ErrorNotice from "../misc/ErrorNotice";
-
+import Successbar from '../Snackbars/Successbar';
 import Slider from '../Input/Slider';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+// import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 export default function EditUser() {
@@ -13,15 +16,33 @@ export default function EditUser() {
     const [newPassword, setNewPassword] = useState(null);
     const [newDisplayName, setNewDisplayName] = useState(null);
     const [notiSettings, setNotiSettings] = useState(null);
-    const [error, setError] = useState();
+    //For notifications
+    const [ noti, setNoti ] = useState({
+        open: '',
+        severity: '',
+        message:''
+    });
+    const useStyles = makeStyles((theme) => ({
+        textField: {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(1),
+            marginBottom: theme.spacing(1),
+        },
+        root: {
+            width: '100%',
+            '& > * + *': {
+            marginTop: theme.spacing(2),
+            },
+        },
+    }));
+    const classes = useStyles();
   
     const { userData } = useContext(UserContext);
     // const history = useHistory();
     // console.log(userData)
     const id = userData.user.id;
-    const submit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('Your details have been updated, please login again')
         try {
             const user = {
                 id,
@@ -31,30 +52,124 @@ export default function EditUser() {
                 newDisplayName,
                 notiSettings,
             };
-            console.log(user);
             const loginRes = await Axios.post(
                 "http://localhost:5000/users/EditUser",
                 user
             );
             localStorage.setItem("auth-token", loginRes.data.token);
+            setNoti({
+                open: true,
+                severity: 'success',
+                message: 'Your details have been updated, please log in again'
+            });
         } catch (err) {
-        err.response.data.msg && setError(err.response.data.msg);
+            if(err.response.data.msg) {
+                setNoti({
+                    open: true,
+                    severity: 'error',
+                    message: `${err.response.data.msg}`
+                });
+            } 
         }
     };
 
-    function editSliderValue(value) {
-        setNotiSettings(value)
-    }
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setNoti({...noti, open: false});
+    };
     return (
         <div className="page">
-        <h2>Edit account information</h2>
-        {error && (
-            <ErrorNotice message={error} clearError={() => setError(undefined)} />
-        )}
+        <Successbar 
+            open = {noti.open}
+            severity = {noti.severity}
+            message = {noti.message}
+            handleClose = {handleClose}
+        />
 
-        <Slider editSliderValue={editSliderValue}/>
-        <form className="form" onSubmit={submit}>
-            <label htmlFor="login-email">New Email</label>
+        <h2>Edit account information</h2>
+        {/* {error && (
+            <ErrorNotice message={error} clearError={() => setError(undefined)} />
+        )} */}
+
+        <Slider editSliderValue={(value) => setNotiSettings(value)}/>
+        <TextField
+          id="outlined-full-width"
+          // style={{ margin: 8 }}
+          placeholder="New email"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setNewEmail(e.target.value)}
+        //   value = "new email"
+        />
+        <TextField
+          id="outlined-full-width"
+          // style={{ margin: 8 }}
+          placeholder="New email"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setNewEmail(e.target.value)}
+        //   value = "new email"
+        />
+
+        <TextField
+          id="outlined-full-width"
+          // style={{ margin: 8 }}
+          placeholder="New password"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setNewPassword(e.target.value)}
+        //   value = "new email"
+        />
+        
+        <TextField
+            id="outlined-full-width"
+            // style={{ margin: 8 }}
+            //   placeholder="New display name"
+            placeholder={userData.user.displayName}
+            fullWidth
+            margin="normal"
+            className={classes.textField}
+            InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setNewDisplayName(e.target.value)}
+        //   value = "new email"
+        />
+
+        <TextField
+          id="outlined-full-width"
+          // style={{ margin: 8 }}
+          placeholder="Current password"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setCurrPassword(e.target.value)}
+        //   value = "new email"
+        />
+        {/* <form className="form" onSubmit={submit}> */}
+            {/* <label htmlFor="login-email">New Email</label>
             <input
             id="login-email"
             type="email"
@@ -65,9 +180,9 @@ export default function EditUser() {
             <input
             type="text"
             onChange={(e) => setNewPassword(e.target.value)}
-            />
+            /> */}
 
-            <label htmlFor="login-password">Display Name</label>
+            {/* <label htmlFor="login-password">Display Name</label>
             <input
             type="text"
             placeholder={userData.user.displayName}
@@ -80,10 +195,13 @@ export default function EditUser() {
                 type="password"
                 placeholder="current password"
                 onChange={(e) => setCurrPassword(e.target.value)}
-            />
-
-            <input type="submit" value="Submit" />
-        </form>
+            /> */}
+            <div style={{paddingTop: 10}}>
+            <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}
+                fullWidth={true} className={classes.textField}>
+                Submit 
+            </Button>
+            </div>
         </div>
     );
 }

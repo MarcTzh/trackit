@@ -5,6 +5,8 @@ import { gql } from 'apollo-boost';
 import {useMutation } from '@apollo/react-hooks';
 import Button from '@material-ui/core/Button';
 import UserContext from '../context/UserContext';
+import Successbar from '../Snackbars/Successbar';
+
 
 const CATEGORIES_QUERY = gql `
 {
@@ -38,6 +40,13 @@ export default function AddNewCategory() {
   const [name, setName] = useState('');
   const { userData } = useContext(UserContext);
 
+  const [ noti, setNoti ] = useState({
+    open: '',
+    severity: '',
+    message: ''
+  });
+
+
   function handleNameChange(e) {
     const newName = e.target.value;
     setName(newName);
@@ -51,13 +60,40 @@ export default function AddNewCategory() {
                         refetchQueries: [{ query: CATEGORIES_QUERY}] 
                     }
                  )
-                 setName('');
-      
-    }
+      setName('');
+      setNoti(
+      {
+        open: true,
+        severity: "success",
+        message: 'Your product is being processed! Please wait a moment for it to appear on your Products Page'
+        }
+      );
+  } else {
+    setNoti(
+      {
+        open: true,
+        severity: "error",
+        message: 'Not all required fields are entered'
+      }
+    );
+  }
 }
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNoti({...noti, open: false});
+  };
+
 
   return (
       <div>
+        <Successbar 
+          message = {noti.message}
+          severity = {noti.severity}
+          open = {noti.open}
+          handleClose={handleClose}
+        />
         <TextField
         //Category NAME
           id="outlined-full-width"

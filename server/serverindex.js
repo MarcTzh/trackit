@@ -177,7 +177,7 @@ const resolvers = {
         console.log("Start");
         price = parseFloat(await parser.checkPrice(url));
         console.log("price in serverindex " + price);
-        if(price == NaN) {
+        if(price.isNaN) {
           price = null;
         }
         priceArray.push(price);

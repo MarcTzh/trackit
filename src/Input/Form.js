@@ -8,8 +8,9 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import CategoryOptions from '../Input/CategoryOptions'
 import UserContext from '../context/UserContext';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+// import Snackbar from '@material-ui/core/Snackbar';
+// import MuiAlert from '@material-ui/lab/Alert';
+import Successbar from '../Snackbars/Successbar';
 
 const PRODUCTS_QUERY = gql`
 {
@@ -70,21 +71,15 @@ export default function Form() {
   const [price, setPrice] = useState(0);
   const [minPrice, setMinPrice] = useState(0)
   const [url, setUrl] = useState('');
-  const [open, setOpen] = React.useState(false);
+
+  //For notifications
+  const [ noti, setNoti ] = useState({
+    open: '',
+    severity: '',
+    message: ''
+  });
 
   const { userData } = useContext(UserContext);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
   
   //For dates
   const [today, setToday] = useState(new Date());  
@@ -95,10 +90,6 @@ export default function Form() {
       return () => clearInterval(interval);
     }, []);
 
-    //TODO: add in noti when new pdt is submitted
-    useEffect(() => {
-
-    }, [open])
   const dateAndTime = (today.getFullYear() - 2000)*100000000 + today.getMonth() * 1000000 + today.getDate() * 10000 + today.getHours()*100 + today.getMinutes();
 
 function handleNameChange(e) {
@@ -124,11 +115,8 @@ function handleMinPriceChange(e) {
   
 }
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-  function handleSubmit() {
+function handleSubmit() {
+    
     const currDate = (new Date().getTime()).toString(10);
     if(brandValue !== null && categoryValue !== null && categoryValue !== undefined && name !== '' && url !== ''){
       createProduct( 
@@ -153,21 +141,43 @@ function Alert(props) {
                  setUrl('');   
                 
                 //  alert("Your product is being processed! Please wait a moment for it to appear on your Products Page.");
-
+                setNoti(
+                  {
+                    open: true,
+                    severity: "success",
+                    message: 'Your product is being processed! Please wait a moment for it to appear on your Products Page'
+                  }
+                );
+    } else {
+      setNoti(
+        {
+          open: true,
+          severity: "error",
+          message: 'Not at required fields are entered'
+        }
+      )
     }
 }
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNoti({...noti, open: false});
+  };
+
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error! :(</p>;
 
   return (
     <div>
+      <Successbar 
+        message = {noti.message}
+        severity = {noti.severity}
+        open = {noti.open}
+        handleClose = {handleClose}
 
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
-        Your product is being processed! Please wait a moment for it to appear on your Products Page
-        </Alert>
-      </Snackbar>
+      />
 
       <CategoryOptions callBackFromParent={setCategoryValue}/>
 
