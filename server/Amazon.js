@@ -15,8 +15,12 @@ async function checkAmazonPrice(url) {
         await page.goto(url, { waitUntil: 'networkidle2' });
 
         let data = await page.evaluate(() => {
-            //check if there are discounts
+            //check if dealprice
             let price = document.querySelector("#priceblock_dealprice")
+
+            if(!price) { //sale price
+                price = document.querySelector("#priceblock_saleprice")
+            }
             
             if(!price) { //regular price
                 price = document.querySelector("#priceblock_ourprice")
