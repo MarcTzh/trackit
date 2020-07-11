@@ -20,8 +20,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import UpdateIcon from '@material-ui/icons/Update';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
 // import InboxIcon from '@material-ui/icons/MoveToInbox';
 // import MailIcon from '@material-ui/icons/Mail';
 import { MenuList, MenuItem } from '@material-ui/core';
@@ -44,7 +42,6 @@ import AuthOptions from "../auth/AuthOptions";
 import Login from '../auth/Login';
 import ForgotPassword from '../auth/ForgotPassword';
 import ResetPassword from '../auth/ResetPassword';
-import NotificationPage from '../Pages/NotificationPage'
 import UserContext from "../context/UserContext";
 
 // import InfoIcon from '@material-ui/icons/Info';
@@ -117,13 +114,11 @@ export default function PersistentDrawerLeft(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [showIconButton, setShowIconButton] = React.useState(false);
-  const [noti, setNoti] = React.useState(1);
   const { userData } = useContext(UserContext);
   const handleDrawerOpen = () => {
     console.log(props)
     if(props.user && (props.user.user !== undefined)) {
       setOpen(true);
-      setNoti(0)
     } else {
       return <Redirect to='/login' />
     }
@@ -221,21 +216,6 @@ export default function PersistentDrawerLeft(props) {
             <ListItemIcon><UpdateIcon /></ListItemIcon>
                 Update Product
             </MenuItem>
-            <MenuItem component={Link} to="/notificationpage">
-            
-              <ListItemIcon>
-              <Badge 
-                badgeContent={noti}
-                color="primary"
-                overlap="circle"
-                variant="dot"
-              >
-                <NotificationsIcon />
-                </Badge>
-              </ListItemIcon>
-                Notifications
-            
-            </MenuItem>
             <MenuItem component={Link} to="/settings">
             <ListItemIcon><SettingsIcon /></ListItemIcon>
                 Settings
@@ -272,8 +252,6 @@ export default function PersistentDrawerLeft(props) {
           <Route exact path="/ForgotPassword" component={ForgotPassword}>
           </Route>
           <Route exact path="/ResetPassword" component={ResetPassword}>
-          </Route>
-          <Route exact path="/NotificationPage" component={NotificationPage}>
           </Route>
           <Route
                   path="/ResetPassword/:token"
