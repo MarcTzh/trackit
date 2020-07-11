@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useContext, forwardRef, useRef, Fragment } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
-import CategoryOptions from '../Input/CategoryOptions';
+// import CategoryOptions from '../Input/CategoryOptions';
 
 
 
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
-import ClearIcon from '@material-ui/icons/Clear';
-import { Link } from "react-router-dom";
+// import Paper from '@material-ui/core/Paper';
+// import List from '@material-ui/core/List';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import IconButton from '@material-ui/core/IconButton';
+// import ClearIcon from '@material-ui/icons/Clear';
+// import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
+import SortIcon from '@material-ui/icons/Sort';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ReplayIcon from '@material-ui/icons/Replay';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -108,16 +109,16 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     }
 `;
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
-      maxWidth: '36ch',
-      backgroundColor: theme.palette.background.paper,
-    },
-    inline: {
-      display: 'inline',
-    },
-  }));
+// const useStyles = makeStyles((theme) => ({
+//     root: {
+//       width: '100%',
+//       maxWidth: '36ch',
+//       backgroundColor: theme.palette.background.paper,
+//     },
+//     inline: {
+//       display: 'inline',
+//     },
+//   }));
 
  export default function NewMaterialTable(props) {
 
@@ -127,13 +128,13 @@ const useStyles = makeStyles((theme) => ({
 
     const [updateProduct] = useMutation(UPDATE_PRODUCT_MUTATION);
 
-    const [currCat, setCat] = useState();
+    // const [currCat, setCat] = useState();
 
     const [groupingBoolean, setGroupingBoolean] = useState(false);
 
     const [urlBoolean, setUrlBoolean] = useState(true);
 
-    const [displayedPdts, setDisplayedPdts] = useState([]);
+    // const [displayedPdts, setDisplayedPdts] = useState([]);
 
     const { userData } = useContext(UserContext);
 
@@ -143,9 +144,9 @@ const useStyles = makeStyles((theme) => ({
 
     // const { loading, error, data } = useQuery(USER_PRODUCTS_QUERY, { variables: { info: props.userID } });
 
-    const classes = useStyles();
+    // const classes = useStyles();
 
-    const [productData, setProductData] = useState(null);
+    // const [productData, setProductData] = useState(null);
 
     //For dates
     const [today, setToday] = useState(new Date());  
@@ -158,14 +159,14 @@ const useStyles = makeStyles((theme) => ({
 
     const currDate = (today.getTime()).toString(10);
 
-    useEffect(() => {
-        // if(userData.user) {
-        //     userProducts( { variables: { info: userData.user.id }, fetchPolicy: "cache-and-network" })
-        // }
+    // useEffect(() => {
+    //     // if(userData.user) {
+    //     //     userProducts( { variables: { info: userData.user.id }, fetchPolicy: "cache-and-network" })
+    //     // }
 
-        setProductData(data);
+    //     setProductData(data);
 
-    }, [data, userData])
+    // }, [data, userData])
 
     // const tableRef = useRef();
 
@@ -281,7 +282,7 @@ const useStyles = makeStyles((theme) => ({
                                                 <MoreIcon  onClick ={() => setUrlBoolean(!urlBoolean)}/>
                                             </ToggleButton>
                                             <ToggleButton value="Enable Sort" aria-label="Enable Sort">
-                                                <CompareArrowsIcon  onClick ={() => setGroupingBoolean(!groupingBoolean)}/>
+                                                <SortIcon  onClick ={() => setGroupingBoolean(!groupingBoolean)}/>
                                             </ToggleButton>
                                         </ToggleButtonGroup>
                                     </div>

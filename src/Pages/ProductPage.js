@@ -32,6 +32,8 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 // import Divider from '@material-ui/core/Divider';
 // import MaterialTable from 'material-table';
 import NewMaterialTable from '../Table/NewMaterialTable';
+//Loading
+import Loading from '../Loading';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -111,6 +113,8 @@ const useStyles = makeStyles((theme) => ({
 
     const [userProducts, {loading,error, data }] = useLazyQuery(USER_PRODUCTS_QUERY, {pollInterval: 500});
 
+    const [loader, setLoader] = useState(false);
+
     // const { loading, error, data } = useQuery(USER_PRODUCTS_QUERY, { variables: { info: userData.user.id } });
 
     const classes = useStyles();
@@ -132,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
     // //page is re-rendered whenever the currCat or data changes
     // [currCat, data]);
 
-    const [productPrices, setProductPrices] = useState(null);
+    // const [productPrices, setProductPrices] = useState(null);
 
     // useEffect(() => {
     //     if(userData.user) {
@@ -145,11 +149,16 @@ const useStyles = makeStyles((theme) => ({
     // }, [data, userData])
 
     // const tableRef = useRef();
-
+    useEffect(() => {
+        if(loading) {
+            setLoader(true);
+        } else {
+            setLoader(false);
+        }
+    }, [loading])
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error! :(</p>;
-
 
     // if (data && data.products) {
     //     console.log("dataproducts in")
@@ -165,6 +174,7 @@ const useStyles = makeStyles((theme) => ({
             {
                 userData.user ? (
                     <div>
+                    <Loading open={loader}/>
                     < NewMaterialTable userID = {userData.user.id}/>
                         {/* <MaterialTable
                             tableRef={tableRef}
