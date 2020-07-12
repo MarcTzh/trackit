@@ -104,20 +104,6 @@ export default function EditUser() {
           onChange ={(e) => setNewEmail(e.target.value)}
         //   value = "new email"
         />
-        <TextField
-          id="outlined-full-width"
-          // style={{ margin: 8 }}
-          placeholder="New email"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-          onChange ={(e) => setNewEmail(e.target.value)}
-        //   value = "new email"
-        />
 
         <TextField
           id="outlined-full-width"
@@ -165,7 +151,7 @@ export default function EditUser() {
         //   value = "new email"
         />
             <div style={{paddingTop: 10}}>
-            <Button variant="contained" color="secondary" margin ="big" onClick={handleSubmit}
+            <Button variant="contained" color="primary" margin ="big" onClick={handleSubmit}
                 fullWidth={true} className={classes.textField}>
                 Submit 
             </Button>
