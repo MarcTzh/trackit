@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import { store } from 'react-notifications-component';
+import GeneralButton from '../Input/GeneralButton';
 
 export default function AuthOptions(props) {
   const { userData, setUserData } = useContext(UserContext);
@@ -36,11 +37,23 @@ export default function AuthOptions(props) {
   return (
     <nav className="auth-options">
       {userData.user ? (
-        <button onClick={logout}>Log out</button>
+        <GeneralButton 
+            handleSubmit={logout}
+            fullWidth={false}
+            text="Log out"
+        />
       ) : (
         <>
-          <button onClick={register}>Register</button>
-          <button onClick={login}>Log in</button>
+          <GeneralButton 
+            handleSubmit={register}
+            fullWidth={false}
+            text="Register"
+          />
+          <GeneralButton 
+            handleSubmit={login}
+            fullWidth={false}
+            text="Log in"
+          />
         </>
       )}
     </nav>

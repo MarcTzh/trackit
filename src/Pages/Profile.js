@@ -11,7 +11,9 @@ import UserContext from '../context/UserContext';
 import { Link } from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
 import ChartToggle from '../Input/ChartToggle.js';
+import { makeStyles } from '@material-ui/core/styles';
 import Loading from '../Loaders/Loading';
+
 
 
 
@@ -28,6 +30,8 @@ const PRODUCTS_QUERY = gql `
     }
 }`;
 
+
+
 function Profile() {
 
     const [categoryValue, setCategoryValue] = useState();
@@ -39,6 +43,20 @@ function Profile() {
     const [chartData, setChartData] = useState({});
 
     const [period, setPeriod] = useState('all');
+
+    const useStyles = makeStyles((theme) => ({
+        root: {
+          flexGrow: 1,
+        },
+        paper: {
+          padding: theme.spacing(2),
+          textAlign: 'center',
+          // color: theme.palette.text.secondary,
+          background: "#27293d",
+        },
+      }));
+
+      const classes = useStyles();
     
     function resetDate(dateInMs) {
         var date = new Date(parseInt(dateInMs));
@@ -266,19 +284,21 @@ function Profile() {
     if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
 
+        
+
     return (
         <>
         {userData.user ? (
-            <Paper style={{ margin: 30 , padding: 30}}>
-            <div style={{ marginTop: -30}}> 
-                <h1>My Profile</h1>
-                <h2>Please choose a category to display</h2>
-                <CategoryOptions callBackFromParent={setCategoryValue} />
-                <ChartToggle callBackFromParent={setPeriod}/>
-                <LineChart chartData={chartData} catValue = {categoryValue}/>
-                <p>Click on individual products to remove them from view</p>
-            </div>
-            </Paper>
+            <paper className={classes.paper} style={{ margin: 30 , padding: 30}}>
+                <div style={{ marginTop: -30}}> 
+                    <h1>My Profile</h1>
+                    <h2>Please choose a category to display</h2>
+                    <CategoryOptions callBackFromParent={setCategoryValue} />
+                    <ChartToggle callBackFromParent={setPeriod}/>
+                    <LineChart chartData={chartData} catValue = {categoryValue}/>
+                    <p>Click on individual products to remove them from view</p>
+                </div>
+            </paper>
         ) : (
             <>
             <h2 >You are not logged in</h2>

@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
 import UserContext from "../context/UserContext";
 import Axios from "axios";
 import { store } from 'react-notifications-component';
+import GeneralButton from '../Input/GeneralButton';
+import TextField from '@material-ui/core/TextField';
 
 export default function ResetPassword(props) {
   const [password, setPassword] = useState();
@@ -10,6 +13,22 @@ export default function ResetPassword(props) {
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
+
+  const useStyles = makeStyles((theme) => ({
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+    root: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
+
+  const classes = useStyles();
 
 //   console.log(props);
 
@@ -64,22 +83,42 @@ export default function ResetPassword(props) {
   return (
     <div className="page">
       <h2>Please enter your new password</h2>
-      <form className="form" onSubmit={submit}>
-
-        <label htmlFor="register-password">New password</label>
-        <input
-          id="register-password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
+        <TextField
+        //PRODUCT URL
+          // style={{ margin: 8 }}
+          placeholder="Password"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setPassword(e.target.value)}
+          value = {password}
         />
-        <input
-          type="password"
+        <TextField
+        //PRODUCT URL
+          // style={{ margin: 8 }}
           placeholder="Re-type password"
-          onChange={(e) => setPasswordCheck(e.target.value)}
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setPasswordCheck(e.target.value)}
+          value = {password}
         />
 
-        <input type="submit" value="Submit" />
-      </form>
+        <div style={{marginTop: 15}}>
+          <GeneralButton 
+              handleSubmit={submit}
+              fullWidth={true}
+              text="Submit"
+          />
+        </div>
     </div>
   );
 }
