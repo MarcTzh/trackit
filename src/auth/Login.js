@@ -92,6 +92,7 @@ export default function Login() {
           variant="outlined"
           onChange ={(e) => setEmail(e.target.value)}
           value = {email}
+          type="email"
         />
       
       <TextField
@@ -105,6 +106,7 @@ export default function Login() {
           variant="outlined"
           onChange ={(e) => setPassword(e.target.value)}
           value = {password}
+          type="password"
         />
         <div style={{marginTop: 15}}> 
           <GeneralButton 
