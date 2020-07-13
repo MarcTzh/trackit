@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
 import ChartToggle from '../Input/ChartToggle.js';
 import { makeStyles } from '@material-ui/core/styles';
+import Loading from '../Loaders/Loading';
+
 
 
 
@@ -279,7 +281,7 @@ function Profile() {
         }
     }, [data, userData, categoryValue, period])
         
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
 
         

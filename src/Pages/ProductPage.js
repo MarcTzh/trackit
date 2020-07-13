@@ -157,7 +157,7 @@ const useStyles = makeStyles((theme) => ({
         }
     }, [loading])
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
 
     // if (data && data.products) {
