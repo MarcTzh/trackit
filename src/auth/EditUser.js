@@ -102,6 +102,7 @@ export default function EditUser() {
           }}
           variant="outlined"
           onChange ={(e) => setNewEmail(e.target.value)}
+          type="email"
         //   value = "new email"
         />
 
@@ -148,6 +149,7 @@ export default function EditUser() {
           }}
           variant="outlined"
           onChange ={(e) => setCurrPassword(e.target.value)}
+          type="password"
         //   value = "new email"
         />
             <div style={{paddingTop: 10}}>

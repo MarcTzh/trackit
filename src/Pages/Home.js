@@ -11,6 +11,7 @@ import Donut from '../Chart/Donut';
 import Chart from '../Chart/Chart';
 import BarChart from '../Chart/BarChart';
 import '../style.css'
+import GeneralButton from '../Input/GeneralButton';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -66,17 +67,17 @@ function Home() {
           </Paper>
           
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Paper className={classes.paper}>
               <Donut/>
           </Paper>
         </Grid>
-        <Grid item xs={4}>
+        {/* <Grid item xs={4}>
           <Paper className={classes.paper}>
             <Chart />
           </Paper>  
-        </Grid>
-        <Grid item xs={4}>
+        </Grid> */}
+        <Grid item xs={6}>
           <Paper className={classes.paper}>
             <BarChart />
           </Paper>
@@ -94,8 +95,15 @@ function Home() {
                     
         ) : (
             <>
-            <h2>You are not logged in</h2>
-            <Link to="/login">Log in</Link>
+            <h2 style={{textAlign:"center"}}>You are not logged in</h2>
+            
+            {/* <div style={{marginTop: 15}}>
+              <GeneralButton 
+                  handleSubmit={login}
+                  fullWidth={true}
+                  text="Log in"
+              />
+            </div> */}
             </>
         )}
         </>

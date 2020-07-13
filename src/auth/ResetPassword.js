@@ -95,7 +95,8 @@ export default function ResetPassword(props) {
           }}
           variant="outlined"
           onChange ={(e) => setPassword(e.target.value)}
-          value = {password}
+          // value = {password}
+          type="password"
         />
         <TextField
         //PRODUCT URL
@@ -109,7 +110,8 @@ export default function ResetPassword(props) {
           }}
           variant="outlined"
           onChange ={(e) => setPasswordCheck(e.target.value)}
-          value = {password}
+          // value = {password2}
+          type="password"
         />
 
         <div style={{marginTop: 15}}>
