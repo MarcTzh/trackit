@@ -67,17 +67,17 @@ function Home() {
           </Paper>
           
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <Paper className={classes.paper}>
               <Donut/>
           </Paper>
         </Grid>
-        <Grid item xs={4}>
+        {/* <Grid item xs={4}>
           <Paper className={classes.paper}>
             <Chart />
           </Paper>  
-        </Grid>
-        <Grid item xs={4}>
+        </Grid> */}
+        <Grid item xs={6}>
           <Paper className={classes.paper}>
             <BarChart />
           </Paper>
