@@ -17,7 +17,7 @@ import UserContext from '../context/UserContext';
 // import Typography from '@material-ui/core/Typography';
 import SortIcon from '@material-ui/icons/Sort';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ReplayIcon from '@material-ui/icons/Replay';
+import UpdateIcon from '@material-ui/icons/Replay';
 // import { makeStyles } from '@material-ui/core/styles';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -253,7 +253,7 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                             }}
                             actions={[
                                 {
-                                    icon: ReplayIcon,
+                                    icon: UpdateIcon,
                                     tooltip: 'Update Product',
                                     onClick: (event, rowData) => {
                                         console.log(rowData);
