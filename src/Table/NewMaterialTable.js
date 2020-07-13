@@ -41,6 +41,9 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 // import Divider from '@material-ui/core/Divider';
 import MaterialTable, { MTableToolbar } from 'material-table';
 
+import Loading from '../Loaders/Loading';
+
+
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -189,7 +192,7 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     }
 
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
 
     // if (data && data.products) {
