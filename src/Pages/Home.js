@@ -60,7 +60,7 @@ function Home() {
                 ) : null }
             </div>
 
-            <h2>This is this week's summary</h2>
+            <h2>This week's summary</h2>
             {/* <img src={Poster2} alt="Poster2" /> */}
             </div>
           </Paper>
