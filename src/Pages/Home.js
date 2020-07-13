@@ -70,7 +70,9 @@ function Home() {
                 ) : null }
             </div>
 
+
             <div className={classes.subtitle}>This is this week's summary</div>
+
             {/* <img src={Poster2} alt="Poster2" /> */}
             </div>
           </Paper>
