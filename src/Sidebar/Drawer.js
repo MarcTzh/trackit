@@ -205,10 +205,10 @@ export default function PersistentDrawerLeft(props) {
             <ListItemIcon><PersonIcon /></ListItemIcon>
                 Profile
             </MenuItem>
-            {/* <MenuItem component={Link} to="/products">
+            <MenuItem component={Link} to="/products">
             <ListItemIcon><PhoneAndroidIcon /></ListItemIcon>
                 Products
-            </MenuItem> */}
+            </MenuItem>
             <MenuItem component={Link} to="/categories">
             <ListItemIcon><PhoneAndroidTwoToneIcon /></ListItemIcon>
                 Categories
@@ -217,10 +217,10 @@ export default function PersistentDrawerLeft(props) {
             <ListItemIcon><AddIcon /></ListItemIcon>
                 Add Products
             </MenuItem>
-            <MenuItem component={Link} to="/updateProduct">
+            {/* <MenuItem component={Link} to="/updateProduct">
             <ListItemIcon><UpdateIcon /></ListItemIcon>
                 Update Product
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem component={Link} to="/settings">
             <ListItemIcon><SettingsIcon /></ListItemIcon>
                 Settings

@@ -17,7 +17,7 @@ import UserContext from '../context/UserContext';
 // import Typography from '@material-ui/core/Typography';
 import SortIcon from '@material-ui/icons/Sort';
 import DeleteIcon from '@material-ui/icons/Delete';
-import UpdateIcon from '@material-ui/icons/Replay';
+import UpdateIcon from '@material-ui/icons/Update';
 // import { makeStyles } from '@material-ui/core/styles';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
