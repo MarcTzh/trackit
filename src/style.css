@@ -43,6 +43,10 @@ li {
   color: #ffffff;
 }
 
+.title {
+  font-size: 32px;
+}
+
 /* general */
 
 body {
@@ -65,7 +69,7 @@ body {
   display: flex;
   justify-content: space-between;
   float: right;
-  background-color: #1e1f2e;
+  background-color: #21202a;
 }
 #header .title {
   margin: 0;
@@ -79,7 +83,7 @@ body {
 #header .auth-options button {
   padding: 0 1rem;
   align-self: right;
-  background-color: #2e84f8;
+  background-color: #0a6efa;
   color: #ffffff;
   font-size: 1.1rem;
   justify-content: right;

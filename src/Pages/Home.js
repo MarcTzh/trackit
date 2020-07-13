@@ -10,7 +10,7 @@ import Cards from '../Dashboard/Cards';
 import Donut from '../Chart/Donut';
 import Chart from '../Chart/Chart';
 import BarChart from '../Chart/BarChart';
-import '../style.css'
+import * as styles from '../style.css'
 import GeneralButton from '../Input/GeneralButton';
 
 
@@ -22,10 +22,19 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2),
       textAlign: 'center',
       // color: theme.palette.text.secondary,
-      backgroundColor: "#27293d",
-      // backgroundColor: 'translucent',
-      opacity: 0.95,
+      backgroundColor: "#212029",
+      // opacity: 0.95,
     },
+    title: {
+      fontSize:60,
+      color: "white",
+      fontWeight:700,
+    },
+    subtitle: {
+      fontSize:32,
+      color: "white",
+      fontWeight:400,
+    }
   }));
 
 function Home() {
@@ -57,11 +66,11 @@ function Home() {
             {/* <h2>{date} {time}</h2> */}
             <div className="page">
                 {userData.user ? (
-                    <h1>Welcome {userData.user.displayName}</h1>
+                    <div className={classes.title}>Welcome {userData.user.displayName}</div>
                 ) : null }
             </div>
 
-            <h2>This is this week's summary</h2>
+            <div className={classes.subtitle}>This is this week's summary</div>
             {/* <img src={Poster2} alt="Poster2" /> */}
             </div>
           </Paper>
@@ -85,9 +94,9 @@ function Home() {
         <Grid item xs={12}>
           <Paper className={classes.paper}>Test</Paper>
         </Grid>
+        {/* <ComplexGrid/>
         <ComplexGrid/>
-        <ComplexGrid/>
-        <ComplexGrid/>
+        <ComplexGrid/> */}
       </Grid>
     </div>
         </Paper>

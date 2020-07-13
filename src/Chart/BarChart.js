@@ -6,19 +6,21 @@ export default function BarChart() {
 
     const chart = () => {
         setChartData({
-            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            labels: ['Electronics', 'Food', 'Furniture', 'Clothing'
+            , 'Lifestyle', 'Cars'],
             datasets: [
                 {
                     label: 'Amazon',
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
                     data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-                }, {
-                    label: 'Shopee',
-                    backgroundColor: 'rgb(255, 165, 0)',
-                    borderColor: 'rgb(255, 165, 0)',
-                    data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-                }
+                }, 
+                // {
+                //     label: 'Shopee',
+                //     backgroundColor: 'rgb(255, 165, 0)',
+                //     borderColor: 'rgb(255, 165, 0)',
+                //     data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+                // }
             ]
         })
     }
@@ -33,14 +35,14 @@ export default function BarChart() {
             <div class="canvas-container">
                 <Bar data={chartData} options={{
                     responsive: true,
-                    title: {text:'Sony Wireless Headphones', display: true},
+                    title: {text:'Sony Wireless Headphones', display: false},
                     scales: {
                         yAxes: [
                             {
                                 ticks: {
                                     // autoskip: true,
                                     // maxTicksLimit: 10,
-                                    // beginAtZero: true
+                                    beginAtZero: true
                                 },
                                 gridLines: {
                                     display: false

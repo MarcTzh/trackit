@@ -57,7 +57,7 @@ function App() {
     <div className="background-gray" 
       // style={{backgroundImage:`url(${galaxy})`}}>
       // style={{backgroundImage:`url(${purplebg})`}}>
-      style={{backgroundColor:"#4d6d80"}}>
+      style={{backgroundColor:"#1D1C24"}}>
 
       <BrowserRouter>
         <UserContext.Provider value={{ userData, setUserData }}>
