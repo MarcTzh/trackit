@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     return (
         <>
         {userData.user ? (
-            <Paper style={{ margin: 30 , padding: 30}}>   
+            <Paper style={{ backgroundColor: '#27293d', margin: 30 , padding: 30}}>   
             <h1>Product list</h1>
             <List>
                 <CategoryOptions callBackFromParent={setCat}/>

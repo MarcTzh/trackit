@@ -10,6 +10,7 @@ import Cards from '../Dashboard/Cards';
 import Donut from '../Chart/Donut';
 import Chart from '../Chart/Chart';
 import BarChart from '../Chart/BarChart';
+import '../style.css'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +20,10 @@ const useStyles = makeStyles((theme) => ({
     paper: {
       padding: theme.spacing(2),
       textAlign: 'center',
-      color: theme.palette.text.secondary,
+      // color: theme.palette.text.secondary,
+      backgroundColor: "#27293d",
+      // backgroundColor: 'translucent',
+      opacity: 0.95,
     },
   }));
 
@@ -41,8 +45,9 @@ function Home() {
     return (
         <>
         {userData.user ? (
-        <Paper style={{ margin: 30 , padding: 30}}>   
-        <div className={classes.root}>
+        <Paper className={classes.paper} style={{ margin: 30 , padding: 30 }}>   
+        {/* <div className={classes.root}> */}
+        <div className="background-darkblue">
     
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -85,6 +90,7 @@ function Home() {
       </Grid>
     </div>
         </Paper>
+        
                     
         ) : (
             <>

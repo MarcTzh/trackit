@@ -3,7 +3,9 @@ import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Axios from "axios";
 import { store } from 'react-notifications-component';
-
+import GeneralButton from '../Input/GeneralButton';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
 
 export default function ForgotPassword() {
@@ -12,6 +14,21 @@ export default function ForgotPassword() {
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
 
+  const useStyles = makeStyles((theme) => ({
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+    root: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
+
+  const classes = useStyles();
   const submit = async (e) => {
     e.preventDefault();
     try {
@@ -56,16 +73,25 @@ export default function ForgotPassword() {
   return (
     <div className="page">
       <h2>Reset Password</h2>
-      <form className="form" onSubmit={submit}>
-        <label htmlFor="login-email">Email</label>
-        <input
-          id="login-email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
+      <TextField
+          placeholder="Email"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setEmail(e.target.value)}
+          value = {email}
         />
-
-        <input type="submit" value="Submit" />
-      </form>
+        <div style={{marginTop: 15}}> 
+          <GeneralButton 
+              handleSubmit={submit}
+              fullWidth={true}
+              text="Send reset link"
+          />  
+        </div>
     </div>
   );
 }

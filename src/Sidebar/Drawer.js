@@ -29,6 +29,9 @@ import {
   Switch, Route, Link, Redirect
 } from "react-router-dom";
 
+import galaxy from '../Images/galaxy.jpg';
+// import graybg from '../Images/graybg.jpg';
+
 //Routing
 import Home from '../Pages/Home';
 import Profile from '../Pages/Profile';
@@ -82,6 +85,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    // backgroundImage: `url(${graybg})`
+    backgroundColor: "#2e84f8"
   },
   drawerHeader: {
     display: 'flex',
@@ -200,10 +205,10 @@ export default function PersistentDrawerLeft(props) {
             <ListItemIcon><PersonIcon /></ListItemIcon>
                 Profile
             </MenuItem>
-            <MenuItem component={Link} to="/products">
+            {/* <MenuItem component={Link} to="/products">
             <ListItemIcon><PhoneAndroidIcon /></ListItemIcon>
                 Products
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem component={Link} to="/categories">
             <ListItemIcon><PhoneAndroidTwoToneIcon /></ListItemIcon>
                 Categories

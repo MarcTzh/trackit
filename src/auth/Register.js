@@ -3,6 +3,9 @@ import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Axios from "axios";
 import { store } from 'react-notifications-component';
+import GeneralButton from '../Input/GeneralButton';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
 export default function Register() {
   const [email, setEmail] = useState();
@@ -12,6 +15,22 @@ export default function Register() {
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
+
+  const useStyles = makeStyles((theme) => ({
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+    root: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
+
+  const classes = useStyles();
 
   const submit = async (e) => {
     e.preventDefault();
@@ -64,35 +83,64 @@ export default function Register() {
   return (
     <div className="page">
       <h2>Register</h2>
-      <form className="form" onSubmit={submit}>
-        <label htmlFor="register-email">Email</label>
-        <input
-          id="register-email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
+        <TextField
+        //PRODUCT URL
+          // style={{ margin: 8 }}
+          placeholder="Email"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setEmail(e.target.value)}
+          value = {email}
         />
-
-        <label htmlFor="register-password">Password</label>
-        <input
-          id="register-password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
+        <TextField
+          placeholder="Password"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setPassword(e.target.value)}
+          value = {password}
         />
-        <input
-          type="password"
+        <TextField
           placeholder="Verify password"
-          onChange={(e) => setPasswordCheck(e.target.value)}
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setPasswordCheck(e.target.value)}
+          value = {password}
+        />
+        <TextField
+          placeholder="Display name"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setDisplayName(e.target.value)}
+          // value = {name}
         />
 
-        <label htmlFor="register-display-name">Display name</label>
-        <input
-          id="register-display-name"
-          type="text"
-          onChange={(e) => setDisplayName(e.target.value)}
-        />
-
-        <input type="submit" value="Register" />
-      </form>
+        <div style={{marginTop: 15}}> 
+          <GeneralButton 
+              handleSubmit={submit}
+              fullWidth={true}
+              text="Submit"
+          />
+        </div>
     </div>
   );
 }

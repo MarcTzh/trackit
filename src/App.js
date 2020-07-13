@@ -9,6 +9,9 @@ import Home from "./Pages/Home";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import UserContext from "./context/UserContext";
+// import galaxy from "./Images/galaxy.jpg";
+// import graybg from "./Images/graybg.jpg";
+// import purplebg from "./Images/purplebg.png";
 
 //Notifications
 import ReactNotification from 'react-notifications-component'
@@ -51,11 +54,17 @@ function App() {
   return (
     <>
     <ReactNotification />
+    <div className="background-gray" 
+      // style={{backgroundImage:`url(${galaxy})`}}>
+      // style={{backgroundImage:`url(${purplebg})`}}>
+      style={{backgroundColor:"#4d6d80"}}>
+
       <BrowserRouter>
         <UserContext.Provider value={{ userData, setUserData }}>
           <Drawer user={userData} />
         </UserContext.Provider>
       </BrowserRouter>
+      </div>
     </>
   );
 }

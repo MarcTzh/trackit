@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     margin: 'auto',
     maxWidth: 500,
+    background: "#27293d"
   },
   image: {
     width: 128,
@@ -56,7 +57,7 @@ export default function ComplexGrid() {
               </Grid>
               <Grid item>
                 <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                <Button variant="contained" color="primary" margin ="big" 
+                <Button variant="contained" color="#2e84f8" margin ="big" 
                 // onClick={}
                     fullWidth={false} className={classes.textField}>
                     Visit site

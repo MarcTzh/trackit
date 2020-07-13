@@ -3,7 +3,9 @@ import { useHistory } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Axios from "axios";
 import { store } from 'react-notifications-component';
-
+import GeneralButton from '../Input/GeneralButton';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
 export default function Login() {
   const [email, setEmail] = useState();
@@ -12,6 +14,22 @@ export default function Login() {
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
   const Forgot = () => history.push("/ForgotPassword");
+
+  const useStyles = makeStyles((theme) => ({
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+    },
+    root: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
+
+  const classes = useStyles();
 
   const submit = async (e) => {
     e.preventDefault();
@@ -61,25 +79,47 @@ export default function Login() {
   return (
     <div className="page">
       <h2>Log in</h2>
-
-      <form className="form" onSubmit={submit}>
-        <label htmlFor="login-email">Email</label>
-        <input
-          id="login-email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
+      <TextField
+        //PRODUCT URL
+          // style={{ margin: 8 }}
+          placeholder="Email"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setEmail(e.target.value)}
+          value = {email}
         />
-
-        <label htmlFor="login-password">Password</label>
-        <input
-          id="login-password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
+      
+      <TextField
+          placeholder="Password"
+          fullWidth
+          margin="normal"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          variant="outlined"
+          onChange ={(e) => setPassword(e.target.value)}
+          value = {password}
         />
-
-        <input type="submit" value="Log in" />
-        <button onClick={Forgot}>Forgot Password</button>
-      </form>
+        <div style={{marginTop: 15}}> 
+          <GeneralButton 
+              handleSubmit={submit}
+              fullWidth={true}
+              text="Log in"
+          />  
+        </div>
+        <div style={{marginTop: 15}}> 
+          <GeneralButton 
+              handleSubmit={Forgot}
+              fullWidth={true}
+              text="Forgot password"
+          />  
+        </div>
     </div>
   );
 }

@@ -2,6 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,12 +15,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
+const theme1 = createMuiTheme({
+  slider: {
+    trackColor: "yellow",
+    selectionColor: "green"
+  }
+})
 
 const marks = [
   {
     value: 0,
-    label: '0',
+    label: 'Off',
   },
   {
     value: 4,
@@ -43,6 +51,7 @@ const marks = [
     value: 24,
     label: '24 Hours',
   },
+
 ];
 
 function valuetext(value) {
@@ -57,17 +66,19 @@ export default function DiscreteSlider(props) {
       <Typography id="discrete-slider-custom" gutterBottom>
         Choose how often to recieve email notifications if there are price alerts
       </Typography>
-      <Slider
-        defaultValue={24}
-        getAriaValueText={valuetext}
-        aria-labelledby="discrete-slider-custom"
-        step={4}
-        min={0}
-        max={24}
-        onChange={props.editSliderValue}
-        valueLabelDisplay="auto"
-        marks={marks}
-      />
+      <ThemeProvider theme={theme1}>
+        <Slider
+          defaultValue={24}
+          getAriaValueText={valuetext}
+          aria-labelledby="discrete-slider-custom"
+          step={4}
+          min={0}
+          max={24}
+          onChange={props.editSliderValue}
+          valueLabelDisplay="auto"
+          marks={marks}
+        />
+      </ThemeProvider>
     </div>
   );
 }

@@ -16,13 +16,13 @@ function Settings(props) {
         <>
         {userData.user ? (
             
-        <Paper style={{ margin: 15 , padding: 30}}>   
+        <Paper style={{ backgroundColor: '#27293d', margin: 15 , padding: 30}}>   
         <div>
             <h1>User settings</h1>
 
             <EditUser />
         </div>
-        </Paper>
+        </Paper >
         ) : (
             <>
             <h2>You are not logged in</h2>
