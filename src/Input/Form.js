@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Button from '@material-ui/core/Button';
+import GeneralButton from "../Input/GeneralButton";
 import CategoryOptions from '../Input/CategoryOptions'
 import UserContext from '../context/UserContext';
 import { store } from 'react-notifications-component';
@@ -222,10 +222,8 @@ function handleSubmit() {
           value = {url}
         />
         <div style={{paddingTop: 10, paddingBottom: 50}}>
-          <Button variant="contained" color="primary" margin ="big" onClick={crawl}
-            fullWidth={true} className={classes.textField}>
-            Autocomplete
-          </Button>
+          <GeneralButton onClick={crawl}
+            fullWidth={true} className={classes.textField} text="Autocomplete" />
         </div>
 
         {/* <Loading2 /> */}
@@ -294,10 +292,12 @@ function handleSubmit() {
         />
 
         <div style={{paddingTop: 10}}>
-          <Button variant="contained" color="primary" margin ="big" onClick={handleSubmit}
-            fullWidth={true} className={classes.textField}>
-            Submit 
-          </Button>
+          <GeneralButton 
+            onClick={handleSubmit}
+            fullWidth={true}
+            text="Submit"
+          />
+
         </div>
 
       </div>

@@ -54,10 +54,7 @@ function App() {
   return (
     <>
     <ReactNotification />
-    <div className="background-gray" 
-      // style={{backgroundImage:`url(${galaxy})`}}>
-      // style={{backgroundImage:`url(${purplebg})`}}>
-      style={{backgroundColor:"#1D1C24"}}>
+    <div className="background">
 
       <BrowserRouter>
         <UserContext.Provider value={{ userData, setUserData }}>

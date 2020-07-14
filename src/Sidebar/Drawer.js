@@ -75,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    // color: "#2e84f8"
   },
   hide: {
     display: 'none',
@@ -87,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     // backgroundImage: `url(${graybg})`
     backgroundColor: "#21202a",
-    // borderColor: "#000000",
+    // borderColor: "#2e84f8",
     // borderWidth: 2
     boxShadow: "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)"
   },
@@ -160,7 +161,7 @@ export default function PersistentDrawerLeft(props) {
         <Toolbar id="header">
           {showIconButton
             ? <IconButton
-              color="inherit"
+              color="primary"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
               edge="start"
@@ -201,23 +202,23 @@ export default function PersistentDrawerLeft(props) {
         <List>
         <MenuList>
             <MenuItem component={Link} to="/">
-            <ListItemIcon><HomeIcon /></ListItemIcon>
+            <ListItemIcon><HomeIcon color="primary"/></ListItemIcon>
                 Home
             </MenuItem>
             <MenuItem component={Link} to="/profile">
-            <ListItemIcon><PersonIcon /></ListItemIcon>
+            <ListItemIcon><PersonIcon color="primary"/></ListItemIcon>
                 Profile
             </MenuItem>
             <MenuItem component={Link} to="/products">
-            <ListItemIcon><PhoneAndroidIcon /></ListItemIcon>
+            <ListItemIcon><PhoneAndroidIcon color="primary"/></ListItemIcon>
                 Products
             </MenuItem>
             <MenuItem component={Link} to="/categories">
-            <ListItemIcon><PhoneAndroidTwoToneIcon /></ListItemIcon>
+            <ListItemIcon><PhoneAndroidTwoToneIcon color="primary"/></ListItemIcon>
                 Categories
             </MenuItem>
             <MenuItem component={Link} to="/addnew">
-            <ListItemIcon><AddIcon /></ListItemIcon>
+            <ListItemIcon><AddIcon color="primary"/></ListItemIcon>
                 Add Products
             </MenuItem>
             {/* <MenuItem component={Link} to="/updateProduct">
@@ -225,7 +226,7 @@ export default function PersistentDrawerLeft(props) {
                 Update Product
             </MenuItem> */}
             <MenuItem component={Link} to="/settings">
-            <ListItemIcon><SettingsIcon /></ListItemIcon>
+            <ListItemIcon><SettingsIcon color="primary"/></ListItemIcon>
                 Settings
             </MenuItem>
         </MenuList>

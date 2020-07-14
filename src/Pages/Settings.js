@@ -16,7 +16,7 @@ function Settings(props) {
         <>
         {userData.user ? (
             
-        <Paper style={{ backgroundColor: '#27293d', margin: 15 , padding: 30}}>   
+        <Paper style={{ backgroundColor: '#212029', margin: 15 , padding: 30}}>   
         <div>
             <h1>User settings</h1>
 

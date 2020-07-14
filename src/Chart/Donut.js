@@ -34,8 +34,8 @@ export default function Donut() {
             {/* //options */}
             <div class="canvas-container">
                 <Doughnut data={chartData} options={{
-                    responsive: true,
-                    maintainAspectRatio: true,
+                    // responsive: true,
+                    // maintainAspectRatio: true,
                     title: {text:'Product categories', display: false}
                 }}/>
             </div>

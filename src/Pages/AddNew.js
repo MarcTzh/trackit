@@ -10,7 +10,7 @@ function AddNew() {
     return (
         <>
         {userData.user ? (
-            <Paper style={{ backgroundColor: '#27293d', margin: 30 , padding: 30}}>   
+            <Paper style={{ backgroundColor: '#212029', margin: 30 , padding: 30}}>   
             <div>
                 {/* <h1>Add a new product to track!</h1> */}
                 {/* <h2>Add new category</h2>

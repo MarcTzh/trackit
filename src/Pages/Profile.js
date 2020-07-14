@@ -49,7 +49,7 @@ function Profile() {
           flexGrow: 1,
         },
         paper: {
-          padding: theme.spacing(2),
+          padding: theme.spacing(1),
           textAlign: 'center',
           // color: theme.palette.text.secondary,
           background: "#212029",
@@ -289,7 +289,7 @@ function Profile() {
     return (
         <>
         {userData.user ? (
-            <div className={classes.paper} style={{ margin: 30 , padding: 30}}>
+            <div className={classes.paper} style={{ margin: 15 , padding: 30}}>
                 <div style={{ marginTop: -30}}> 
                     <h1>My Profile</h1>
                     <h2>Please choose a category to display</h2>
