@@ -59,7 +59,6 @@ function Home() {
         {/* <div className={classes.root}> */}
         <div className="background-darkblue">
     
-<<<<<<< HEAD
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <div>
@@ -90,31 +89,6 @@ function Home() {
           {/* <ComplexGrid/>
           <ComplexGrid/>
           <ComplexGrid/> */}
-=======
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-          <div>
-            {/* <h2>{date} {time}</h2> */}
-            <div className="page">
-                {userData.user ? (
-                    <div className={classes.title}>Welcome {userData.user.displayName}</div>
-                ) : null }
-            </div>
-
-
-            <div className={classes.subtitle}>This is this week's summary</div>
-
-            {/* <img src={Poster2} alt="Poster2" /> */}
-            </div>
-          </Paper>
-          
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-              <Donut/>
-          </Paper>
->>>>>>> c9071acadc16de2d6a2477ba7093062d2e4f45f0
         </Grid>
       </div>
           </Paper>

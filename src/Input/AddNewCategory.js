@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { gql } from 'apollo-boost';
 import {useMutation } from '@apollo/react-hooks';
-import Button from '@material-ui/core/Button';
+import GeneralTextField from '../Input/GeneralTextField';
+import GeneralButton from '../Input/GeneralButton';
 import UserContext from '../context/UserContext';
 import { store } from 'react-notifications-component';
 
@@ -88,27 +89,17 @@ export default function AddNewCategory() {
 
   return (
       <div>
-        <TextField
+        <GeneralTextField
         //Category NAME
-          id="outlined-full-width"
-          // style={{ margin: 8 }}
           placeholder="Add New Category"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={handleNameChange}
           value = {name}
         />
-
         <div style={{paddingTop: 10}}>
-          <Button variant="contained" color="primary" margin ="big" onClick={handleSubmit} 
-          fullWidth className={classes.textField}>
-            Submit 
-          </Button>
+          <GeneralButton 
+          onClick={handleSubmit} 
+          fullWidth 
+          text="Submit" />
         </div>
 
       </div>

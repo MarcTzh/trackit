@@ -6,6 +6,7 @@ import Slider from '../Input/Slider';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import GeneralButton from '../Input/GeneralButton';
+import GeneralTextField from '../Input/GeneralTextField';
 import { store } from 'react-notifications-component';
 
 export default function EditUser() {
@@ -90,63 +91,28 @@ export default function EditUser() {
         )} */}
 
         <Slider editSliderValue={(value) => setNotiSettings(value)}/>
-        <TextField
-          id="outlined-full-width"
-          // style={{ margin: 8 }}
+        <GeneralTextField
           placeholder="New email"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setNewEmail(e.target.value)}
           type="email"
         //   value = "new email"
         />
 
-        <TextField
-          id="outlined-full-width"
-          // style={{ margin: 8 }}
+        <GeneralTextField
           placeholder="New password"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setNewPassword(e.target.value)}
         //   value = "new email"
         />
         
-        <TextField
-            id="outlined-full-width"
-            // style={{ margin: 8 }}
-            //   placeholder="New display name"
-            placeholder={userData.user.displayName}
-            fullWidth
-            margin="normal"
-            className={classes.textField}
-            InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
+        <GeneralTextField
+          placeholder={userData.user.displayName}
           onChange ={(e) => setNewDisplayName(e.target.value)}
+          type="email"
         //   value = "new email"
         />
 
-        <TextField
-          id="outlined-full-width"
-          // style={{ margin: 8 }}
+        <GeneralTextField
           placeholder="Current password"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
           variant="outlined"
           onChange ={(e) => setCurrPassword(e.target.value)}
           type="password"

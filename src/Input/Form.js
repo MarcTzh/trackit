@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, {useState, useEffect, useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import GeneralTextField from '../Input/GeneralTextField';
 import TextField from '@material-ui/core/TextField';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -206,20 +207,10 @@ function handleSubmit() {
 
   return (
     <div>
-      <h3>Copy and paste the product url here</h3>
-        <TextField
-        //PRODUCT URL
-          // style={{ margin: 8 }}
-          placeholder="Product url"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
+        <GeneralTextField
           onChange ={handleUrlChange}
           value = {url}
+          placeholder ="Product url"
         />
         <div style={{paddingTop: 10, paddingBottom: 50}}>
           <GeneralButton onClick={crawl}
@@ -253,8 +244,7 @@ function handleSubmit() {
 
 
       <div>
-      <h3>This is the product name that will be displayed</h3>
-        <TextField
+        <GeneralTextField
         //PRODUCT NAME
           id="outlined-full-width"
           // style={{ margin: 8 }}
@@ -280,15 +270,11 @@ function handleSubmit() {
           onChange ={handlePriceChange}
           value = {price}
         /> */}
-        <h3>Price at which you want to be notified</h3>
-        <TextField
+        <GeneralTextField
           id="outlined-margin-none"
           placeholder="Price floor"
-          margin="normal"
-          fullWidth
           className={classes.textField}
           onChange={handleMinPriceChange}
-          variant="outlined"
         />
 
         <div style={{paddingTop: 10}}>
