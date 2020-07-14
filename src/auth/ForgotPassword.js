@@ -4,7 +4,7 @@ import UserContext from "../context/UserContext";
 import Axios from "axios";
 import { store } from 'react-notifications-component';
 import GeneralButton from '../Input/GeneralButton';
-import TextField from '@material-ui/core/TextField';
+import GeneralTextField from '../Input/GeneralTextField';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -73,15 +73,8 @@ export default function ForgotPassword() {
   return (
     <div className="page">
       <h2>Reset Password</h2>
-      <TextField
+      <GeneralTextField
           placeholder="Email"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setEmail(e.target.value)}
           value = {email}
         />

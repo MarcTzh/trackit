@@ -4,7 +4,7 @@ import UserContext from "../context/UserContext";
 import Axios from "axios";
 import { store } from 'react-notifications-component';
 import GeneralButton from '../Input/GeneralButton';
-import TextField from '@material-ui/core/TextField';
+import GeneralTextField from '../Input/GeneralTextField';
 import { makeStyles } from '@material-ui/core/styles';
 
 export default function Login() {
@@ -79,31 +79,15 @@ export default function Login() {
   return (
     <div className="page">
       <h2>Log in</h2>
-      <TextField
-        //PRODUCT URL
-          // style={{ margin: 8 }}
+      <GeneralTextField
           placeholder="Email"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setEmail(e.target.value)}
           value = {email}
           type="email"
         />
       
-      <TextField
+      <GeneralTextField
           placeholder="Password"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setPassword(e.target.value)}
           value = {password}
           type="password"
@@ -115,12 +99,18 @@ export default function Login() {
               text="Log in"
           />  
         </div>
-        <div style={{marginTop: 15}}> 
+        {/* <div style={{marginTop: 15}}> 
           <GeneralButton 
               handleSubmit={Forgot}
               fullWidth={true}
               text="Forgot password"
           />  
+        </div> */}
+        <div style={{marginTop: 15}}> 
+              {/* handleSubmit={Forgot}
+              fullWidth={true}
+              text="Forgot password" */}
+              <h4 style={{textAlign:"center", color: "#4d6d80"}}>Forgot password</h4>
         </div>
     </div>
   );

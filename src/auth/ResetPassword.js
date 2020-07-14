@@ -5,7 +5,7 @@ import UserContext from "../context/UserContext";
 import Axios from "axios";
 import { store } from 'react-notifications-component';
 import GeneralButton from '../Input/GeneralButton';
-import TextField from '@material-ui/core/TextField';
+import GeneralTextField from '../Input/GeneralTextField';
 
 export default function ResetPassword(props) {
   const [password, setPassword] = useState();
@@ -83,34 +83,14 @@ export default function ResetPassword(props) {
   return (
     <div className="page">
       <h2>Please enter your new password</h2>
-        <TextField
-        //PRODUCT URL
-          // style={{ margin: 8 }}
+        <GeneralTextField
           placeholder="Password"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setPassword(e.target.value)}
-          // value = {password}
           type="password"
         />
-        <TextField
-        //PRODUCT URL
-          // style={{ margin: 8 }}
+        <GeneralTextField
           placeholder="Re-type password"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setPasswordCheck(e.target.value)}
-          // value = {password2}
           type="password"
         />
 
