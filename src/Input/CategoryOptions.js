@@ -58,7 +58,7 @@ export default function CategoryOptions(props) {
                 }}
                 id = "controllable-states-demo"
                 options = {categoryOptions}
-                // style = {{ width: 300 }}
+                style = {{ color: "#fff" }}
                 renderInput = {(params) => <TextField {...params} label="Category" variant="outlined" />}
             />
         </div>

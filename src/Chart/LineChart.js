@@ -13,13 +13,18 @@ function LineChart(props) {
                         display: true,
                         text: props.catValue,
                         responsive: true,
+                        fontColor: "#fff"
                     },
                     legend: {
                         // display: this.props.displayLegend,
                         // position: this.props.legendPosition
                         display: true,
                         position: 'bottom'
+                    },
+                    Axes: {
+                        color:  '#000'
                     }
+
                 }}
 
             />
