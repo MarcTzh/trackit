@@ -10,7 +10,7 @@ import Cards from '../Dashboard/Cards';
 import Donut from '../Chart/Donut';
 import Chart from '../Chart/Chart';
 import BarChart from '../Chart/BarChart';
-import '../style.css'
+import * as styles from '../style.css'
 import GeneralButton from '../Input/GeneralButton';
 
 
@@ -19,13 +19,22 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
     },
     paper: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
       textAlign: 'center',
       // color: theme.palette.text.secondary,
-      backgroundColor: "#27293d",
-      // backgroundColor: 'translucent',
-      opacity: 0.95,
+      backgroundColor: "#212029",
+      // opacity: 0.95,
     },
+    title: {
+      fontSize:60,
+      color: "white",
+      fontWeight:700,
+    },
+    subtitle: {
+      fontSize:28,
+      color: "white",
+      fontWeight:500,
+    }
   }));
 
 function Home() {
@@ -50,6 +59,38 @@ function Home() {
         {/* <div className={classes.root}> */}
         <div className="background-darkblue">
     
+<<<<<<< HEAD
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <div>
+              {/* <h2>{date} {time}</h2> */}
+              <div className="page">
+                  {userData.user ? (
+                      <div className={classes.title}>Welcome {userData.user.displayName}</div>
+                  ) : null }
+              </div>
+              <div className={classes.subtitle}>This is this week's summary</div>
+              {/* <img src={Poster2} alt="Poster2" /> */}
+              </div>
+            
+          </Grid>
+          <Grid item xs={6} style={{border: "1px solid gray"}}>
+            <Paper className={classes.paper}>
+                <Donut/>
+            </Paper>
+          </Grid>
+          <Grid item xs={6} style={{border: "1px solid gray"}}>
+            <Paper className={classes.paper}>
+              <BarChart />
+            </Paper>
+          </Grid>
+          {/* <Grid item xs={12}>
+            <Paper className={classes.paper}>Test</Paper>
+          </Grid> */}
+          {/* <ComplexGrid/>
+          <ComplexGrid/>
+          <ComplexGrid/> */}
+=======
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
@@ -57,11 +98,13 @@ function Home() {
             {/* <h2>{date} {time}</h2> */}
             <div className="page">
                 {userData.user ? (
-                    <h1>Welcome {userData.user.displayName}</h1>
+                    <div className={classes.title}>Welcome {userData.user.displayName}</div>
                 ) : null }
             </div>
 
-            <h2>This week's summary</h2>
+
+            <div className={classes.subtitle}>This is this week's summary</div>
+
             {/* <img src={Poster2} alt="Poster2" /> */}
             </div>
           </Paper>
@@ -71,26 +114,10 @@ function Home() {
           <Paper className={classes.paper}>
               <Donut/>
           </Paper>
+>>>>>>> c9071acadc16de2d6a2477ba7093062d2e4f45f0
         </Grid>
-        {/* <Grid item xs={4}>
-          <Paper className={classes.paper}>
-            <Chart />
-          </Paper>  
-        </Grid> */}
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <BarChart />
+      </div>
           </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>Test</Paper>
-        </Grid>
-        <ComplexGrid/>
-        <ComplexGrid/>
-        <ComplexGrid/>
-      </Grid>
-    </div>
-        </Paper>
         
                     
         ) : (

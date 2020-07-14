@@ -94,7 +94,7 @@ function CategoryPage(props) {
         <>
         {userData.user ?
 
-        (<Paper style={{ backgroundColor: '#27293d', margin: 30 , padding: 30}}>   
+        (<Paper style={{ backgroundColor: '#212029', margin: 30 , padding: 30}}>   
         
             <h1>My Categories</h1>
             <List>

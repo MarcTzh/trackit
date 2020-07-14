@@ -15,6 +15,8 @@ function LineChart(props) {
                         responsive: true,
                         fontColor: "#fff"
                     },
+                    // responsive: true,
+                    // maintainAspectRatio: true,
                     legend: {
                         // display: this.props.displayLegend,
                         // position: this.props.legendPosition

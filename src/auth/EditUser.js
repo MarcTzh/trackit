@@ -5,7 +5,7 @@ import Axios from "axios";
 import Slider from '../Input/Slider';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import GeneralButton from '../Input/GeneralButton';
 import { store } from 'react-notifications-component';
 
 export default function EditUser() {
@@ -153,10 +153,8 @@ export default function EditUser() {
         //   value = "new email"
         />
             <div style={{paddingTop: 10}}>
-            <Button variant="contained" color="primary" margin ="big" onClick={handleSubmit}
-                fullWidth={true} className={classes.textField}>
-                Submit 
-            </Button>
+            <GeneralButton onClick={handleSubmit}
+                fullWidth={true} text="Submit" />
             </div>
         </div>
     );

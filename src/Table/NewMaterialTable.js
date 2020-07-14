@@ -212,7 +212,7 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                         <MaterialTable
                             // tableRef={tableRef}
                             icons={tableIcons}
-                            style={{ backgroundColor: '#27293d',margin: 30 , padding: 30}}
+                            style={{ backgroundColor: '#212029',margin: 30 , padding: 30}}
                             title="My Products"
                             columns={[
                                 { title: 'Name', field: 'name' },

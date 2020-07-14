@@ -8,13 +8,15 @@ export default function GeneralButton(props) {
             marginLeft: theme.spacing(1),
             marginRight: theme.spacing(1),
             marginBottom: theme.spacing(1),
+            // backgroundColor: "#2e84f8"
+            backgroundColor: "#3f51b5",
+            
         },
     }));
     const classes = useStyles();
 
     return (
         <Button variant="contained" 
-                color="#2e84f8" 
                 margin ="big" 
                 onClick= {props.handleSubmit}
                 fullWidth={props.fullWidth} 

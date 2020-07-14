@@ -7,24 +7,19 @@ export default function Donut() {
 
     const chart = () => {
         setChartData({
-            labels: ['1', '2', '3', '4', '5', '6'],
+            labels: ['Electronics', 'Food', 'Furniture', 'Clothing'
+            , 'Lifestyle', 'Cars'],
             datasets: [
                 {
                     label: 'Amazon',
-                    backgroundColor: [
-                        '#CCC',
-                        '#36A2EB',
-                        '#FFCE56',
-                        '#36A2EB',
-                        '#FFCE56'
-                    ],
+                    backgroundColor: ['#159dfb', '#c83955', '#edc011', '#17d993'],
                     // hoverBackgroundColor: [
                     //     '#FF6384',
                     //     '#36A2EB',
                     //     '#FFCE56'
                     // ],
                     // borderColor: 'rgb(255, 99, 132)',
-                    data: [10,15,20,3,5,7]
+                    data: [10,15,2,3,5,7]
                 }
             ],
         })
@@ -39,9 +34,9 @@ export default function Donut() {
             {/* //options */}
             <div class="canvas-container">
                 <Doughnut data={chartData} options={{
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    title: {text:'Product categories', display: true}
+                    // responsive: true,
+                    // maintainAspectRatio: true,
+                    title: {text:'Product categories', display: false}
                 }}/>
             </div>
         </div>
