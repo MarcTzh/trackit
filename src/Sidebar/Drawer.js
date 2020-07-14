@@ -19,7 +19,7 @@ import PhoneAndroidTwoToneIcon from '@material-ui/icons/PhoneAndroidTwoTone';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import UpdateIcon from '@material-ui/icons/Update';
+// import UpdateIcon from '@material-ui/icons/Update';
 // import InboxIcon from '@material-ui/icons/MoveToInbox';
 // import MailIcon from '@material-ui/icons/Mail';
 import { MenuList, MenuItem } from '@material-ui/core';
@@ -29,7 +29,7 @@ import {
   Switch, Route, Link, Redirect
 } from "react-router-dom";
 
-import galaxy from '../Images/galaxy.jpg';
+// import galaxy from '../Images/galaxy.jpg';
 // import graybg from '../Images/graybg.jpg';
 
 //Routing

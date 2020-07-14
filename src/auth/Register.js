@@ -4,7 +4,7 @@ import UserContext from "../context/UserContext";
 import Axios from "axios";
 import { store } from 'react-notifications-component';
 import GeneralButton from '../Input/GeneralButton';
-import TextField from '@material-ui/core/TextField';
+import GeneralTextField from '../Input/GeneralTextField';
 import { makeStyles } from '@material-ui/core/styles';
 
 export default function Register() {
@@ -83,55 +83,25 @@ export default function Register() {
   return (
     <div className="page">
       <h2>Register</h2>
-        <TextField
-        //PRODUCT URL
-          // style={{ margin: 8 }}
+        <GeneralTextField
           placeholder="Email"
           fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setEmail(e.target.value)}
           value = {email}
         />
-        <TextField
+        <GeneralTextField
           placeholder="Password"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setPassword(e.target.value)}
           value = {password}
         />
-        <TextField
+        <GeneralTextField
           placeholder="Verify password"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setPasswordCheck(e.target.value)}
           value = {password}
         />
-        <TextField
+        <GeneralTextField
           placeholder="Display name"
-          fullWidth
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
           onChange ={(e) => setDisplayName(e.target.value)}
-          // value = {name}
         />
 
         <div style={{marginTop: 15}}> 
