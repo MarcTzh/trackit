@@ -249,7 +249,7 @@ function handleSubmit() {
           id="outlined-full-width"
           // style={{ margin: 8 }}
           placeholder="Product name"
-          fullWidth
+          fullWidth={true}
           margin="normal"
           className={classes.textField}
           InputLabelProps={{

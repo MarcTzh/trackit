@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
     },
+
   }));
 
 export default function CategoryOptions(props) {
@@ -41,7 +42,7 @@ export default function CategoryOptions(props) {
   return (
     <>
       {userData.user ? (
-        <div className={classes.inputRoot}>
+        <div>
             <Autocomplete
                 categoryValue = {categoryValue}
                 onChange = {(event, newValue) => {
@@ -56,9 +57,9 @@ export default function CategoryOptions(props) {
                 onInputChange = {(event, newInputValue) => {
                   setInputCategoryValue(newInputValue);
                 }}
-                id = "controllable-states-demo"
+                // id = "controllable-states-demo"
                 options = {categoryOptions}
-                style = {{ color: "#212029" }}
+                // style = {{ color: "#212029" }}
                 renderInput = {(params) => <TextField {...params} label="Category" variant="outlined" />}
             />
         </div>

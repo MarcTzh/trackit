@@ -9,18 +9,13 @@ import { ThemeProvider } from '@material-ui/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 700,
+    margin: theme.spacing(3),
   },
   margin: {
     height: theme.spacing(3),
   },
 }));
 
-const theme1 = createMuiTheme({
-  slider: {
-    trackColor: "yellow",
-    selectionColor: "green"
-  }
-})
 
 const marks = [
   {
@@ -66,7 +61,6 @@ export default function DiscreteSlider(props) {
       <Typography id="discrete-slider-custom" gutterBottom>
         Choose how often to recieve email notifications if there are price alerts
       </Typography>
-      <ThemeProvider theme={theme1}>
         <Slider
           defaultValue={24}
           getAriaValueText={valuetext}
@@ -78,7 +72,6 @@ export default function DiscreteSlider(props) {
           valueLabelDisplay="auto"
           marks={marks}
         />
-      </ThemeProvider>
     </div>
   );
 }

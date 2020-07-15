@@ -21,8 +21,7 @@ export default function BrandbrandOptions() {
     <div>
       {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
       <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
-      <br />
-      <div className={classes.textField}>
+      {/* <div className={classes.inputRoot}> */}
         <Autocomplete
           brandValue={brandValue}
           onChange={(event, newValue) => {
@@ -32,12 +31,12 @@ export default function BrandbrandOptions() {
           onInputChange={(event, newInputValue) => {
             setInputBrandValue(newInputValue);
           }}
-          id="controllable-states-demo"
+          // id="controllable-states-demo"
           options={brandOptions}
-          style={{ width: 300 }}
+          // style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="Brand" variant="outlined" />}
         />
-      </div>
+      {/* </div> */}
     </div>
   );
 }
