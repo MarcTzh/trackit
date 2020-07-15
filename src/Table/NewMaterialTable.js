@@ -217,6 +217,7 @@ const useStyles = makeStyles((theme) => ({
     // const load = () => {
     //     userProducts({ variables: { info: userData.user.id } })
     // }
+    const title = <div>My Products</div>;
 
     return (
         <>
@@ -228,12 +229,12 @@ const useStyles = makeStyles((theme) => ({
                             // tableRef={tableRef}
                             icons={tableIcons}
                             style={{ backgroundColor: '#212029',margin: 30 , padding: 30}}
-                            title="My Products"
+                            title= {title}
                             columns={[
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category', editable: 'never'},
-                                { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'Brand', field: 'brand', editable: 'never' },
+                                { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
                                 { title: 'URL', field: 'url', hidden: urlBoolean, editable: 'onUpdate'},
                                 { title: 'Price Array', field: 'priceArray', hidden: true},
@@ -313,9 +314,7 @@ const useStyles = makeStyles((theme) => ({
                                 grouping: groupingBoolean,
                                 headerStyle: {
                                     backgroundColor: '#212029',
-                                    border: '1px solid gray',
-
-                                }
+                                },
                             }}
                         />
                     </ThemeProvider>
