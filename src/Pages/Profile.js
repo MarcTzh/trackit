@@ -155,23 +155,24 @@ function Profile() {
         var start;
         var end;
         if(completeDateArray.length === 0 && dateArray.length === 0) {
-            console.log("bump1");
 
             return [];
         } else if (dateArray.length === 0) {
-            console.log("bump2");
 
             return completeDateArray;
         }else if(completeDateArray.length === 0) {
-            console.log("bump3");
 
             start = dateArray[0];
             end = dateArray[dateArray.length - 1];
         } else {
             console.log("bump4");
-            console.log(parseInt(dateArray[dateArray.length - 1]));
+            console.log(dateArray)
+            console.log("firstdate " + parseInt(dateArray[0]));
+            console.log("lastdate " + parseInt(dateArray[dateArray.length - 1]));
             console.log(completeDateArray);
-            console.log(parseInt(completeDateArray[completeDateArray.length - 1]));
+            console.log("complete first date " + parseInt(completeDateArray[0]));
+            console.log("complete last date " + parseInt(completeDateArray[completeDateArray.length - 1]));
+
             if(parseInt(dateArray[0]) <= parseInt(completeDateArray[0])) {
                 start = dateArray[0];
             } else {
@@ -213,6 +214,7 @@ function Profile() {
     }
 
     const handleClick = (product, user, period) => {
+        console.log(userData.user.id)
         var dataset = [];
         var finalPriceArrays = [];
         const val = ['#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#333333', '#808080', '#cccccc', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#FA28FF', '#000000', '#666666', '#B3B3B3', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E'];
@@ -233,7 +235,6 @@ function Profile() {
             filteredProducts[n].priceArray = pair[1];
 
             completeDateArray = extendDateArray(filteredProducts[n].dateArray, completeDateArray);
-            console.log("last date in fro loop" + completeDateArray.length);
 
         }
         console.log("last date" + completeDateArray.length);
