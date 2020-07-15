@@ -54,7 +54,7 @@ export default function Login() {
         animationIn: ["animated", "fadeIn"],
         animationOut: ["animated", "fadeOut"],
         dismiss: {
-          duration: 2000,
+          duration: 1000,
           onScreen: true
         }
       });
@@ -69,7 +69,7 @@ export default function Login() {
           animationIn: ["animated", "fadeIn"],
           animationOut: ["animated", "fadeOut"],
           dismiss: {
-            duration: 2000,
+            duration: 1000,
             onScreen: true
           }
       });
@@ -77,7 +77,7 @@ export default function Login() {
     }
   };
   return (
-    <div className="page">
+    <div>
       <h2>Log in</h2>
       <GeneralTextField
           placeholder="Email"
@@ -106,11 +106,20 @@ export default function Login() {
               text="Forgot password"
           />  
         </div> */}
-        <div style={{marginTop: 15}}> 
+        <div 
+        style={{
+          display: 'flex',
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          color: "#4d6d80",
+          marginTop: 15,
+          marginLeft: 15
+        }}> 
               {/* handleSubmit={Forgot}
               fullWidth={true}
               text="Forgot password" */}
-              <h4 style={{textAlign:"center", color: "#4d6d80"}}>Forgot password</h4>
+              <button align="center" onClick={Forgot}>Forgot Password</button>
         </div>
     </div>
   );
