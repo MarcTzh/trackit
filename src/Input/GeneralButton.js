@@ -4,13 +4,17 @@ import Button from '@material-ui/core/Button';
 
 export default function GeneralButton(props) {
     const useStyles = makeStyles((theme) => ({
-        textField: {
+        button: {
             marginLeft: theme.spacing(1),
             marginRight: theme.spacing(1),
             marginBottom: theme.spacing(1),
-            // backgroundColor: "#2e84f8"
             backgroundColor: "#3f51b5",
-            
+            // backgroundColor: "#3f51b5",
+            color: "white",
+            '&:hover': {
+                backgroundColor: '#32408f',
+                color: '#FFF'
+            }
         },
     }));
     const classes = useStyles();
@@ -20,7 +24,7 @@ export default function GeneralButton(props) {
                 margin ="big" 
                 onClick= {props.handleSubmit}
                 fullWidth={props.fullWidth} 
-                className={classes.textField}>
+                className={classes.button}>
             {props.text}
         </Button>
     );

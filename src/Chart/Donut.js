@@ -7,19 +7,19 @@ export default function Donut() {
 
     const chart = () => {
         setChartData({
-            labels: ['Electronics', 'Food', 'Furniture', 'Clothing'
-            , 'Lifestyle', 'Cars'],
+            labels: ['Electronics', 'Food', 'Chairs', 'Clothing'
+            , 'Lifestyle', 'Cars', 'Houses', 'Watches', 'Tables', 'Gaming'],
             datasets: [
                 {
                     label: 'Amazon',
-                    backgroundColor: ['#159dfb', '#c83955', '#edc011', '#17d993'],
+                    backgroundColor: ['#159dfb', '#c83955', '#FFD166', '#17d993', '#9CFFFA', '#2BD9FE', '#623CEA', '#DFB2F4', '#D36135', '#EF476F '],
                     // hoverBackgroundColor: [
                     //     '#FF6384',
                     //     '#36A2EB',
                     //     '#FFCE56'
                     // ],
                     // borderColor: 'rgb(255, 99, 132)',
-                    data: [10,15,2,3,5,7]
+                    data: [3,2,2,3,5,7,3,4,2,5]
                 }
             ],
         })

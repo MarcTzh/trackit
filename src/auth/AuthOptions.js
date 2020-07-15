@@ -28,14 +28,14 @@ export default function AuthOptions(props) {
       animationIn: ["animated", "fadeIn"],
       animationOut: ["animated", "fadeOut"],
       dismiss: {
-        duration: 2000,
+        duration: 1000,
         onScreen: true
       }
     });
   };
 
   return (
-    <nav className="auth-options">
+    <div style={{marginTop: 5}}>
       {userData.user ? (
         <GeneralButton 
             handleSubmit={logout}
@@ -56,6 +56,6 @@ export default function AuthOptions(props) {
           />
         </>
       )}
-    </nav>
+    </div>
   );
 }
