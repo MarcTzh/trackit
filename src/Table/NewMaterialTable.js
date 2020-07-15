@@ -1,24 +1,12 @@
 import React, { useState, useEffect, useContext, forwardRef, useRef, Fragment } from 'react';
+// import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { gql } from 'apollo-boost';
 import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
-// import CategoryOptions from '../Input/CategoryOptions';
-
-
-
-// import Paper from '@material-ui/core/Paper';
-// import List from '@material-ui/core/List';
-// import ListItem from '@material-ui/core/ListItem';
-// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-// import ListItemText from '@material-ui/core/ListItemText';
-// import IconButton from '@material-ui/core/IconButton';
-// import ClearIcon from '@material-ui/icons/Clear';
-// import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
-// import Typography from '@material-ui/core/Typography';
 import SortIcon from '@material-ui/icons/Sort';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
-// import { makeStyles } from '@material-ui/core/styles';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -39,8 +27,9 @@ import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 // import Divider from '@material-ui/core/Divider';
+import { makeStyles, withTheme } from '@material-ui/core/styles';
 import MaterialTable, { MTableToolbar } from 'material-table';
-
+import { TablePagination } from "@material-ui/core";
 import Loading from '../Loaders/Loading';
 
 
@@ -112,16 +101,34 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     }
 `;
 
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//       width: '100%',
-//       maxWidth: '36ch',
-//       backgroundColor: theme.palette.background.paper,
-//     },
-//     inline: {
-//       display: 'inline',
-//     },
-//   }));
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+      maxWidth: '36ch',
+      color: '#fff',
+      backgroundColor: theme.palette.background.paper,
+    },
+    inline: {
+      display: 'inline',
+    },   
+    toolbar: {
+        backgroundColor: "white"
+    },
+    caption: {
+        color: "red",
+        fontSize: "20px"
+    },
+    selectIcon: {
+        color: "green"
+    },
+    select: {
+        color: "green",
+        fontSize: "20px"
+    },
+    actions: {
+        color: "blue"
+    }
+  }));
 
  export default function NewMaterialTable(props) {
 
@@ -147,12 +154,13 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
 
     // const { loading, error, data } = useQuery(USER_PRODUCTS_QUERY, { variables: { info: props.userID } });
 
-    // const classes = useStyles();
+    const classes = useStyles();
 
     // const [productData, setProductData] = useState(null);
 
     //For dates
     const [today, setToday] = useState(new Date());  
+
     useEffect(() => {
       const interval = setInterval(() => {
           setToday(new Date());
@@ -191,6 +199,12 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
         )
     }
 
+    const theme = createMuiTheme({
+        palette: {
+            type: 'dark',
+          },
+      });
+
 
     if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
@@ -208,7 +222,8 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
         <>
             {
                 data ? (
-                    <Fragment>
+
+                    <ThemeProvider theme={theme}>
                         <MaterialTable
                             // tableRef={tableRef}
                             icons={tableIcons}
@@ -280,8 +295,8 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 <div>
                                     <MTableToolbar {...props} />
                                     <div style={{padding: '0px 10px'}}>
-                                        <ToggleButtonGroup size = "small" style ={{position:"relative"}}>
-                                            <ToggleButton value="Show URL" aria-label="Show URL">
+                                        <ToggleButtonGroup size = "small" style ={{position:"relative",margin: 5 , padding: 5 }}>
+                                            <ToggleButton style ={{ colour :"#fff"}} value="Show URL" aria-label="Show URL">
                                                 <MoreIcon  onClick ={() => setUrlBoolean(!urlBoolean)}/>
                                             </ToggleButton>
                                             <ToggleButton value="Enable Sort" aria-label="Enable Sort">
@@ -290,15 +305,20 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                         </ToggleButtonGroup>
                                     </div>
                                 </div>
-                                ),
+                                ),            
                             }}
                             
                             options={{
                                 actionsColumnIndex: -1,
                                 grouping: groupingBoolean,
+                                headerStyle: {
+                                    backgroundColor: '#212029',
+                                    border: '1px solid gray',
+
+                                }
                             }}
                         />
-                    </Fragment>
+                    </ThemeProvider>
                         
                 ) : (
                     null

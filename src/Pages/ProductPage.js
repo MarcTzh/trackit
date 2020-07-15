@@ -98,6 +98,13 @@ const useStyles = makeStyles((theme) => ({
     inline: {
       display: 'inline',
     },
+    paper: {
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        // color: theme.palette.text.secondary,
+        backgroundColor: "#212029",
+        // opacity: 0.95,
+      },
   }));
 
  function ProductPage() {
@@ -113,8 +120,6 @@ const useStyles = makeStyles((theme) => ({
     const { userData } = useContext(UserContext);
 
     const [userProducts, {loading,error, data }] = useLazyQuery(USER_PRODUCTS_QUERY, {pollInterval: 500});
-
-    const [loader, setLoader] = useState(false);
 
     // const { loading, error, data } = useQuery(USER_PRODUCTS_QUERY, { variables: { info: userData.user.id } });
 
@@ -150,13 +155,6 @@ const useStyles = makeStyles((theme) => ({
     // }, [data, userData])
 
     // const tableRef = useRef();
-    useEffect(() => {
-        if(loading) {
-            setLoader(true);
-        } else {
-            setLoader(false);
-        }
-    }, [loading])
 
     if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
@@ -175,57 +173,7 @@ const useStyles = makeStyles((theme) => ({
             {
                 userData.user ? (
                     <div>
-                    <Loading open={loader}/>
                     < NewMaterialTable userID = {userData.user.id}/>
-                        {/* <MaterialTable
-                            tableRef={tableRef}
-                            icons={tableIcons}
-                            style={{ margin: 30 , padding: 30}}
-                            title="My Products"
-                            columns={[
-                                { title: 'Name', field: 'name' },
-                                { title: 'Category', field: 'category' },
-                                { title: 'Price', field: 'price', type: 'currency' },
-                                { title: 'Brand', field: 'brand', },
-                                { title: 'ID', field: 'id', hidden: true},
-                            ]}
-                            // data= {data.products.filter((product) => product.userID === userData.user.id)}
-                            // data = {userProducts({ variables: { info: userData.user.id } })}
-                            data = {productPrices ? productPrices.products: null}
-                            // data = {new Promise((resolve, reject) => resolve({data: data.products}))}
-                            actions={[
-                                {
-                                icon: ClearIcon,
-                                tooltip: 'Delete Product',
-                                onClick: (event, rowData) => {removeProduct(
-                                        {
-                                            variables: 
-                                            {
-                                                id: rowData.id
-                                            },
-                                            refetchQueries: [{ query: PRODUCTS_QUERY}] 
-                                        }
-                                    )
-                                    }
-                                },
-                                {
-                                icon: DeleteIcon,
-                                tooltip: 'Delete Product',
-                                onClick: (event, rowData) => {removeProduct(
-                                        {
-                                            variables: 
-                                            {
-                                            id: rowData.id},
-                                            refetchQueries: [{ query: PRODUCTS_QUERY}] 
-                                        }
-                                    )
-                                    }
-                                },  
-                            ]}
-                            options={{
-                                actionsColumnIndex: -1
-                            }}
-                        /> */}
                         </div>
                        
                 ) : (

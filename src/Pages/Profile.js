@@ -11,7 +11,7 @@ import UserContext from '../context/UserContext';
 import { Link } from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
 import ChartToggle from '../Input/ChartToggle.js';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Loading from '../Loaders/Loading';
 
 
@@ -280,6 +280,12 @@ function Profile() {
             handleClick(data.products, userData.user, period)
         }
     }, [data, userData, categoryValue, period])
+
+    const theme = createMuiTheme({
+        palette: {
+            type: 'dark',
+        },
+    });
         
     if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
@@ -289,14 +295,16 @@ function Profile() {
     return (
         <>
         {userData.user ? (
-            <div className={classes.paper} style={{ margin: 15 , padding: 30}}>
+            <div className={classes.paper} style={{ margin: 30 , padding: 30}}>
                 <div style={{ marginTop: -30}}> 
-                    <h1>My Profile</h1>
+                <ThemeProvider theme={theme}>
+                    <h2>My Profile</h2>
                     <h2>Please choose a category to display</h2>
                     <CategoryOptions callBackFromParent={setCategoryValue} />
                     <ChartToggle callBackFromParent={setPeriod}/>
                     <LineChart chartData={chartData} catValue = {categoryValue}/>
                     <p>Click on individual products to remove them from view</p>
+                </ThemeProvider>
                 </div>
             </div>
         ) : (
