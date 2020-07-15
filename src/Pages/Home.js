@@ -68,7 +68,7 @@ function Home() {
                       <div className={classes.title}>Welcome {userData.user.displayName}</div>
                   ) : null }
               </div>
-              <div className={classes.subtitle}>This is this week's summary</div>
+              <div className={classes.subtitle}>This week's summary</div>
               {/* <img src={Poster2} alt="Poster2" /> */}
               </div>
             
