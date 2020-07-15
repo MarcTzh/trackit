@@ -9,6 +9,7 @@ import Home from "./Pages/Home";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import UserContext from "./context/UserContext";
+import {ThemeProvider, createMuiTheme, createPalette } from '@material-ui/core/styles';
 // import galaxy from "./Images/galaxy.jpg";
 // import graybg from "./Images/graybg.jpg";
 // import purplebg from "./Images/purplebg.png";
@@ -19,7 +20,27 @@ import 'react-notifications-component/dist/theme.css'
 
 import "./style.css";
 
-function App() {
+const theme = createMuiTheme({
+  palette: {
+    type: "dark",
+    primary: {
+      light: '#fff',
+      main: '#fff',
+      dark: '#fff'
+    },
+    secondary: {
+      light: '#ffffff',
+      main: '#ffffff',
+      dark: '#ffffff'
+    },
+    background: {
+      default: "#1D1C24"
+    }
+  }
+});
+
+
+function App(props) {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
@@ -51,16 +72,19 @@ function App() {
     checkLoggedIn();
   }, []);
 
+
   return (
     <>
     <ReactNotification />
-    <div className="background">
-
+    {/* <div className="background"> */}
+    <div>
+      <ThemeProvider theme={theme}>
       <BrowserRouter>
         <UserContext.Provider value={{ userData, setUserData }}>
           <Drawer user={userData} />
         </UserContext.Provider>
       </BrowserRouter>
+      </ThemeProvider>
       </div>
     </>
   );

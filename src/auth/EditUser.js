@@ -4,10 +4,11 @@ import UserContext from "../context/UserContext";
 import Axios from "axios";
 import Slider from '../Input/Slider';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import GeneralButton from '../Input/GeneralButton';
 import GeneralTextField from '../Input/GeneralTextField';
 import { store } from 'react-notifications-component';
+// import App from '../App';
 
 export default function EditUser() {
     const [newEmail, setNewEmail] = useState(null);
@@ -28,7 +29,7 @@ export default function EditUser() {
             },
         },
     }));
-    const classes = useStyles();
+    // const classes = useStyles();
   
     const { userData } = useContext(UserContext);
 
@@ -91,6 +92,7 @@ export default function EditUser() {
         )} */}
 
         <Slider editSliderValue={(value) => setNotiSettings(value)}/>
+        
         <GeneralTextField
           placeholder="New email"
           onChange ={(e) => setNewEmail(e.target.value)}
