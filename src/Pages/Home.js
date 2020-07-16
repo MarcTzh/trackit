@@ -1,4 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
+import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks';
+import Loading from '../Loaders/Loading';
 // import Poster2 from "../Images/Poster2.jpg";
 import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
@@ -12,6 +15,7 @@ import Chart from '../Chart/Chart';
 import BarChart from '../Chart/BarChart';
 import * as styles from '../style.css'
 import GeneralButton from '../Input/GeneralButton';
+import { castArray } from 'lodash';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,21 +41,74 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
+  const CATEGORIES_QUERY = gql `
+{
+    categories {
+        id
+        name
+        userID
+    }
+}`;
+
+const PRODUCTS_QUERY = gql `
+{
+    products {
+        id
+        name
+        price
+        category
+        userID
+    }
+}`;
+
 function Home() {
-    // const [today, setToday] = useState(new Date());
+
+    const [donutChartData, setDonutChartData] = useState({})
+
     const { userData } = useContext(UserContext);
+
     const classes = useStyles();
+
+    const { loading: productLoading, error: productError, data: productData } = useQuery(PRODUCTS_QUERY);
     
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setToday(new Date());
-    //     }, 1000);
-    //     return () => clearInterval(interval);
-    //   }, []);
-      
-    // const date = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
-    // const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    
+    const { loading, error, data } = useQuery(CATEGORIES_QUERY);
+
+    if (loading) return <Loading open={true}/>;
+    if (error) return <p>Error! :( Please reload the page or try again later.</p>;
+    if (productLoading) return <Loading open={true}/>;
+    if (productError) return <p>Error! :( Please reload the page or try again later.</p>;
+
+
+      let catArray =[];
+      let pdtCountArray =[];
+
+    let currUserID;
+    if(userData !== undefined && userData.user !== undefined) {
+        currUserID = String(userData.user.id);
+        
+         catArray =[];
+         pdtCountArray =[];
+
+        for(let i = 0; i < data.categories.length; i++) {
+          if(currUserID === data.categories[i].userID) {
+            catArray.push(data.categories[i].name)
+          }
+        }
+
+        for(let m= 0; m < catArray.length; m ++){
+          pdtCountArray.push(0);
+        }
+
+        for(let j = 0; j<productData.products.length; j++) {
+          for(let k= 0; k < catArray.length; k ++){
+            if(currUserID === productData.products[j].userID && productData.products[j].category === catArray[k]) {
+                pdtCountArray[k] = pdtCountArray[k] + 1
+            }
+          }
+        }
+              
+    }
+
     return (
         <>
         {userData.user ? (
@@ -74,8 +131,11 @@ function Home() {
             
           </Grid>
           <Grid item xs={6} style={{border: "1px solid gray"}}>
-            <Paper className={classes.paper}>
-                <Donut/>
+            <Paper className={classes.paper}>{
+              data?
+                (<Donut  label={catArray} data ={pdtCountArray} title = "Product's categories"/>)
+                : (null)
+            }
             </Paper>
           </Grid>
           <Grid item xs={6} style={{border: "1px solid gray"}}>
