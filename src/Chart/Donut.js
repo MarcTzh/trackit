@@ -1,25 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import {Doughnut} from 'react-chartjs-2'; //there is also pie and bar
 
-export default function Donut() {
+export default function Donut(props) {
     const [chartData, setChartData] = useState({})
     
-
+    console.log(props);
     const chart = () => {
         setChartData({
-            labels: ['Electronics', 'Food', 'Chairs', 'Clothing'
-            , 'Lifestyle', 'Cars', 'Houses', 'Watches', 'Tables', 'Gaming'],
+            labels: props.label,
             datasets: [
                 {
-                    label: 'Amazon',
                     backgroundColor: ['#159dfb', '#c83955', '#FFD166', '#17d993', '#9CFFFA', '#2BD9FE', '#623CEA', '#DFB2F4', '#D36135', '#EF476F '],
-                    // hoverBackgroundColor: [
-                    //     '#FF6384',
-                    //     '#36A2EB',
-                    //     '#FFCE56'
-                    // ],
-                    // borderColor: 'rgb(255, 99, 132)',
-                    data: [3,2,2,3,5,7,3,4,2,5]
+                    data: props.data
                 }
             ],
         })
@@ -30,13 +22,13 @@ export default function Donut() {
 
     return (
         <div>
-            <h1 align='center'>Categories</h1>
+            <h1 align='center'>{props.title}</h1>
             {/* //options */}
             <div class="canvas-container">
                 <Doughnut data={chartData} options={{
                     // responsive: true,
                     // maintainAspectRatio: true,
-                    title: {text:'Product categories', display: false}
+                    title: {text:props.title, display: false}
                 }}/>
             </div>
         </div>
