@@ -171,9 +171,12 @@ export default function PersistentDrawerLeft(props) {
             </IconButton>
             : null }
           <div id='title'>
-            <img src={Trackit_logo} 
-            alt="Trackit_logo"
-            height='60' />
+            <Link to="/">
+              <img src={Trackit_logo}
+              alt="Trackit_logo"
+              height='60'
+              style={{marginTop: 10}}/>
+            </Link>
           </div>
           <div id='header'>
 
