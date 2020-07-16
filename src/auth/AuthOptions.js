@@ -40,7 +40,7 @@ export default function AuthOptions(props) {
         <GeneralButton 
             handleSubmit={logout}
             fullWidth={false}
-            text="Log out"
+            text="Logout"
         />
       ) : (
         <>
@@ -52,7 +52,7 @@ export default function AuthOptions(props) {
           <GeneralButton 
             handleSubmit={login}
             fullWidth={false}
-            text="Log in"
+            text="Login"
           />
         </>
       )}
