@@ -22,7 +22,7 @@ export default function GeneralButton(props) {
     return (
         <Button variant="contained" 
                 margin ="big" 
-                onClick= {props.handleSubmit}
+                onClick= {props.onClick}
                 fullWidth={props.fullWidth} 
                 className={classes.button}>
             {props.text}

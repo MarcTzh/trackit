@@ -50,6 +50,7 @@ export default function EditUser() {
                 user
             );
             localStorage.setItem("auth-token", loginRes.data.token);
+            console.log("err")
             store.addNotification({
                 title: "Success:",
                 message: "Your details have been updated, please log in again",
@@ -66,6 +67,7 @@ export default function EditUser() {
             
         } catch (err) {
             if(err.response.data.msg) {
+                console.log("err")
                 store.addNotification({
                     title: "Error:",
                     message: `${err.response.data.msg}`,
