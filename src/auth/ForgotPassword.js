@@ -80,7 +80,7 @@ export default function ForgotPassword() {
         />
         <div style={{marginTop: 15}}> 
           <GeneralButton 
-              handleSubmit={submit}
+              onClick={submit}
               fullWidth={true}
               text="Send reset link"
           />  

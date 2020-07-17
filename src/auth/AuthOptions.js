@@ -38,19 +38,19 @@ export default function AuthOptions(props) {
     <div style={{marginTop: 5}}>
       {userData.user ? (
         <GeneralButton 
-            handleSubmit={logout}
+            onClick={logout}
             fullWidth={false}
             text="Logout"
         />
       ) : (
         <>
           <GeneralButton 
-            handleSubmit={register}
+            onClick={register}
             fullWidth={false}
             text="Register"
           />
           <GeneralButton 
-            handleSubmit={login}
+            onClick={login}
             fullWidth={false}
             text="Login"
           />

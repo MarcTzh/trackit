@@ -3,7 +3,6 @@
   "jest": {
     "verbose": true
   },
-  "homepage": "http://MarcTzh.github.io/trackit",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -48,9 +47,7 @@
     "test": "jest",
     "eject": "react-scripts eject",
     "backend": "(cd server && node serverindex) & (cd server && node index)",
-    "all": "(npm run start) & (npm run backend)",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "all": "(npm run start) & (npm run backend)"
   },
   "eslintConfig": {
     "extends": "react-app"

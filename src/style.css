@@ -174,3 +174,20 @@ html, body, body > div, .app {
 .paper-color {
   background-color: #27293d;
 }
+
+/* BigNumber */
+.bigNumber {
+  background: blue;
+  border: 0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0; 
+}
+
+.bigNumber::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
