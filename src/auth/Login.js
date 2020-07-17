@@ -94,7 +94,7 @@ export default function Login() {
         />
         <div style={{marginTop: 15}}> 
           <GeneralButton 
-              handleSubmit={submit}
+              onClick={submit}
               fullWidth={true}
               text="Log in"
           />  

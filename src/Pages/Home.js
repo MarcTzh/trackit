@@ -11,16 +11,27 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Cards from '../Dashboard/Cards';
 import Donut from '../Chart/Donut';
-import Chart from '../Chart/Chart';
-import BarChart from '../Chart/BarChart';
+import Pie from '../Chart/Pie';
+import BigNumber from '../Chart/BigNumber';
+// import Chart from '../Chart/Chart';
+// import BarChart from '../Chart/BarChart';
 import * as styles from '../style.css'
-import GeneralButton from '../Input/GeneralButton';
+// import GeneralButton from '../Input/GeneralButton';
 import { castArray } from 'lodash';
+// import Cards from '../Dashboard/Cards';
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
+    },
+    card: {
+      padding: theme.spacing(1),
+      textAlign: 'center',
+      // color: theme.palette.text.secondary,
+      backgroundColor: "#212029",
+      // opacity: 0.95,
+      border: "1px solid gray"
     },
     paper: {
       padding: theme.spacing(1),
@@ -83,6 +94,9 @@ function Home() {
       let pdtCountArray =[];
 
     let currUserID;
+    let pdtCounter = 0;
+    let catCounter = 0;
+    let notifications = 0;
     if(userData !== undefined && userData.user !== undefined) {
         currUserID = String(userData.user.id);
         
@@ -92,6 +106,7 @@ function Home() {
         for(let i = 0; i < data.categories.length; i++) {
           if(currUserID === data.categories[i].userID) {
             catArray.push(data.categories[i].name)
+            catCounter++;
           }
         }
 
@@ -100,6 +115,7 @@ function Home() {
         }
 
         for(let j = 0; j<productData.products.length; j++) {
+          pdtCounter++;
           for(let k= 0; k < catArray.length; k ++){
             if(currUserID === productData.products[j].userID && productData.products[j].category === catArray[k]) {
                 pdtCountArray[k] = pdtCountArray[k] + 1
@@ -125,30 +141,43 @@ function Home() {
                       <div className={classes.title}>Welcome {userData.user.displayName}</div>
                   ) : null }
               </div>
-              <div className={classes.subtitle}>This week's summary</div>
+              <div style={{paddingBottom: 10}}className={classes.subtitle}>This week's summary</div>
               {/* <img src={Poster2} alt="Poster2" /> */}
               </div>
             
           </Grid>
-          <Grid item xs={6} style={{border: "1px solid gray"}}>
-            <Paper className={classes.paper}>{
+          <Grid item xs={4}>
+            <Paper className={classes.card}>
+              <Cards counter={pdtCounter} text={"Products"}/>
+            </Paper>
+          </Grid>
+          <Grid item xs={4}>
+            <Paper className={classes.card}>
+              <Cards counter={catCounter} text={"Categories"}/>
+            </Paper>
+          </Grid>
+          <Grid item xs={4}>
+            <Paper className={classes.card}>
+              <Cards counter={notifications} text={"Notifications"}/>
+            </Paper>
+          </Grid>
+          <Grid item xs={6} >
+            <Paper className={classes.card}>{
               data?
-                (<Donut  label={catArray} data ={pdtCountArray} title = "Product's categories"/>)
+                (<Donut label={catArray} data ={pdtCountArray} title = "Product's categories"/>)
                 : (null)
             }
             </Paper>
           </Grid>
-          <Grid item xs={6} style={{border: "1px solid gray"}}>
-            <Paper className={classes.paper}>
-              <BarChart />
+          <Grid item xs={6}>
+            <Paper className={classes.card}>
+              {/* <BarChart /> */}
+              {data?
+                (<Pie label={catArray} data ={pdtCountArray} title = "Brands"/>)
+                : (null)}
             </Paper>
           </Grid>
-          {/* <Grid item xs={12}>
-            <Paper className={classes.paper}>Test</Paper>
-          </Grid> */}
-          {/* <ComplexGrid/>
-          <ComplexGrid/>
-          <ComplexGrid/> */}
+
         </Grid>
       </div>
           </Paper>

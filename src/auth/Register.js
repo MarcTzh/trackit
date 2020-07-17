@@ -106,7 +106,7 @@ export default function Register() {
 
         <div style={{marginTop: 15}}> 
           <GeneralButton 
-              handleSubmit={submit}
+              onClick={submit}
               fullWidth={true}
               text="Submit"
           />

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Doughnut} from 'react-chartjs-2'; //there is also pie and bar
 
-export default function Donut(props) {
+export default function Pie(props) {
     const [chartData, setChartData] = useState({})
     
     console.log(props);
@@ -30,7 +30,7 @@ export default function Donut(props) {
                     // maintainAspectRatio: true,
                     title: {text:props.title, display: false},
                     animation: true,
-                    animationSteps: 60,
+                    cutoutPercentage: 0,
                     legend: {
                         display: true,
                         position: "right",

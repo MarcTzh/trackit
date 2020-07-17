@@ -1,17 +1,53 @@
 import React from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
-import {Button} from "reactstrap";
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
-export default function Cards() {
-    return (
-        <Card style={{width: '20rem'}}>
-            <CardImg top src="img-src" alt="..."/>
-            <CardBody>
-                <CardTitle>Card title</CardTitle>
-                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                <Button color="secondary">Go somewhere</Button>
-            </CardBody>
-        </Card>
-    );
+export default function Cards(props) {
+  const classes = useStyles();
+  const bull = <span className={classes.bullet}>•</span>;
+
+  return (
+    <div>
+      <CardContent>
+        <Typography className={classes.title} color="textSecondary" gutterBottom>
+          
+        </Typography>
+        <Typography variant="h2" component="h2">
+          {props.counter}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          
+        </Typography>
+        <Typography variant="h5" component="h2">
+        {props.text}
+        </Typography>
+      </CardContent>
+        {/* <div>
+          <CardActions>
+            <Button size="large">Learn More</Button>
+          </CardActions>
+        </div> */}
+    </div>
+  );
 }
