@@ -30,6 +30,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { makeStyles, withTheme } from '@material-ui/core/styles';
 import MaterialTable, { MTableToolbar } from 'material-table';
 import { TablePagination } from "@material-ui/core";
+import { store } from 'react-notifications-component';
 import Loading from '../Loaders/Loading';
 
 
@@ -273,6 +274,19 @@ const useStyles = makeStyles((theme) => ({
                                     tooltip: 'Update Product',
                                     onClick: (event, rowData) => {
                                         console.log(rowData);
+                                        store.addNotification({
+                                            title: "Success:",
+                                            message: "Your products have been updated",
+                                            type: "success",
+                                            insert: "top",
+                                            container: "top-right",
+                                            animationIn: ["animated", "fadeIn"],
+                                            animationOut: ["animated", "fadeOut"],
+                                            dismiss: {
+                                            duration: 2000,
+                                            onScreen: true
+                                            }
+                                        });
                                         handleUpdate(rowData.id, rowData.url, rowData.dateArray, rowData.priceArray)
                                     }
                                 },
@@ -287,6 +301,19 @@ const useStyles = makeStyles((theme) => ({
                                             refetchQueries: [{ query: PRODUCTS_QUERY}] 
                                         }
                                     )
+                                    store.addNotification({
+                                            title: "Success:",
+                                            message: "Your product has been deleted",
+                                            type: "success",
+                                            insert: "top",
+                                            container: "top-right",
+                                            animationIn: ["animated", "fadeIn"],
+                                            animationOut: ["animated", "fadeOut"],
+                                            dismiss: {
+                                            duration: 2000,
+                                            onScreen: true
+                                            }
+                                        });
                                     }
                                 },  
                             ]}
