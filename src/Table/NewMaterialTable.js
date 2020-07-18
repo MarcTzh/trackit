@@ -102,34 +102,6 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     }
 `;
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
-      maxWidth: '36ch',
-      color: '#fff',
-      backgroundColor: theme.palette.background.paper,
-    },
-    inline: {
-      display: 'inline',
-    },   
-    toolbar: {
-        backgroundColor: "white"
-    },
-    caption: {
-        color: "red",
-        fontSize: "20px"
-    },
-    selectIcon: {
-        color: "green"
-    },
-    select: {
-        color: "green",
-        fontSize: "20px"
-    },
-    actions: {
-        color: "blue"
-    }
-  }));
 
  export default function NewMaterialTable(props) {
 
@@ -155,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
 
     // const { loading, error, data } = useQuery(USER_PRODUCTS_QUERY, { variables: { info: props.userID } });
 
-    const classes = useStyles();
+    // const classes = useStyles();
 
     // const [productData, setProductData] = useState(null);
 
@@ -235,6 +207,7 @@ const useStyles = makeStyles((theme) => ({
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category', editable: 'never'},
                                 { title: 'Brand', field: 'brand', editable: 'never' },
+                                { title: 'Url status', field: 'brand', editable: 'never' },
                                 { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
                                 { title: 'URL', field: 'url', hidden: urlBoolean, editable: 'onUpdate'},
@@ -288,6 +261,19 @@ const useStyles = makeStyles((theme) => ({
                                             }
                                         });
                                         handleUpdate(rowData.id, rowData.url, rowData.dateArray, rowData.priceArray)
+                                        store.addNotification({
+                                            title: "Success:",
+                                            message: "Your product details have been updated",
+                                            type: "success",
+                                            insert: "top",
+                                            container: "top-right",
+                                            animationIn: ["animated", "fadeIn"],
+                                            animationOut: ["animated", "fadeOut"],
+                                            dismiss: {
+                                            duration: 2000,
+                                            onScreen: true
+                                            }
+                                        });
                                     }
                                 },
                                 {

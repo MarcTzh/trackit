@@ -33,9 +33,9 @@ export default function Donut(props) {
                     animationSteps: 60,
                     legend: {
                         display: true,
-                        position: "right",
+                        position: "bottom",
                         align: "center",
-                        onClick: null,
+                        // onClick: null,
                         fontSize: 30,
                         fullWidth:true,
                         labels: {

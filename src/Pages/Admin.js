@@ -2,8 +2,6 @@ import React, {useState, useEffect, useContext} from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import Loading from '../Loaders/Loading';
-// import Poster2 from "../Images/Poster2.jpg";
-import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
 import Paper from '@material-ui/core/Paper';
 import ComplexGrid from '../Dashboard/ComplexGrid';
@@ -16,9 +14,10 @@ import BigNumber from '../Chart/BigNumber';
 // import Chart from '../Chart/Chart';
 import BarChart from '../Chart/BarChart';
 import * as styles from '../style.css'
-// import GeneralButton from '../Input/GeneralButton';
+import GeneralButton from '../Input/GeneralButton';
 import { castArray } from 'lodash';
 // import Cards from '../Dashboard/Cards';
+import { store } from 'react-notifications-component';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,9 +71,7 @@ const PRODUCTS_QUERY = gql `
     }
 }`;
 
-function Home() {
-
-    const [donutChartData, setDonutChartData] = useState({})
+function Admin() {
 
     const { userData } = useContext(UserContext);
 
@@ -95,9 +92,51 @@ function Home() {
       let pdtCounter=0;
       let catCounter=0;
       let notifications=0;
+
+    //TODO: JIYU
+    function refreshProducts() {
+        if(userData !== undefined && userData.user !== undefined) {
+            for(let j = 0; j<productData.products.length; j++) {
+                pdtCounter++;
+                for(let k= 0; k < catArray.length; k ++){
+                    if(currUserID === productData.products[j].userID && productData.products[j].category === catArray[k]) {
+                        pdtCountArray[k] = pdtCountArray[k] + 1
+                    }
+                }
+            }
+            store.addNotification({
+                title: "Please wait",
+                message: "Products are being updated",
+                type: "success",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                  duration: 2000,
+                  onScreen: true
+                }
+              });
+        } else {
+            store.addNotification({
+                title: "Error:",
+                message: "You are logged out",
+                type: "warning",
+                insert: "top",
+                container: "top-right",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                  duration: 1000,
+                  onScreen: true
+                }
+              });
+        }
+    }
     if(userData !== undefined && userData.user !== undefined) {
-      currUserID = String(userData.user.id);
-      
+        console.log(productData); //products
+        console.log(data); //categories
+        currUserID = String(userData.user.id);
         catArray =[];
         pdtCountArray =[];
 
@@ -136,13 +175,22 @@ function Home() {
             {/* <h2>{date} {time}</h2> */}
             <div className="page">
                 {userData.user ? (
-                    <div className={classes.title}>Welcome {userData.user.displayName}</div>
+                    <div className={classes.title}>Admin dashboard</div>
                 ) : null }
             </div>
-            <div style={{paddingBottom: 10}} className={classes.subtitle}>Your product summary</div>
+            <div style={{paddingBottom: 10}} className={classes.subtitle}>Database functions</div>
             {/* <img src={Poster2} alt="Poster2" /> */}
           </div>
           
+        </Grid>
+        <Grid item xs={12}>
+            <div style={{marginTop: 15}}>
+                <GeneralButton 
+                    onClick={refreshProducts}
+                    fullWidth={true}
+                    text="Refresh all products in database"
+                />
+            </div>
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.card}>
@@ -201,4 +249,4 @@ function Home() {
   )
 }
 
-export default Home;
+export default Admin;

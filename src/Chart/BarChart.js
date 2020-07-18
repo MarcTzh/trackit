@@ -1,27 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {Bar} from 'react-chartjs-2'; //there is also pie and bar
 
-export default function BarChart() {
+export default function BarChart(props) {
     const [chartData, setChartData] = useState({})
-
+    
+    console.log(props);
     const chart = () => {
         setChartData({
-            labels: ['Electronics', 'Food', 'Furniture', 'Clothing'
-            , 'Lifestyle', 'Cars'],
+            labels: props.label,
             datasets: [
                 {
-                    label: 'Amazon',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-                }, 
-                // {
-                //     label: 'Shopee',
-                //     backgroundColor: 'rgb(255, 165, 0)',
-                //     borderColor: 'rgb(255, 165, 0)',
-                //     data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-                // }
-            ]
+                    backgroundColor: ['#159dfb', '#c83955', '#FFD166', '#17d993', '#9CFFFA', '#2BD9FE', '#623CEA', '#DFB2F4', '#D36135', '#EF476F '],
+                    data: props.data
+                }
+            ],
         })
     }
     useEffect(() => {
@@ -30,36 +22,30 @@ export default function BarChart() {
 
     return (
         <div>
-            <h1 align='center'>Price drops this week</h1>
+            <h1 align='center'>{props.title}</h1>
             {/* //options */}
             <div class="canvas-container">
                 <Bar data={chartData} options={{
-                    responsive: true,
-                    title: {text:'Sony Wireless Headphones', display: false},
-                    scales: {
-                        yAxes: [
-                            {
-                                ticks: {
-                                    // autoskip: true,
-                                    // maxTicksLimit: 10,
-                                    beginAtZero: true
-                                },
-                                gridLines: {
-                                    display: false
-                                }
-                            }
-                        ],
-                        xAxes: [
-                            {
-                                gridLines : {
-                                    display: false
-                                }
-                            }
-                        ]
-                    }
+                    // responsive: true,
+                    // maintainAspectRatio: true,
+                    title: {text:props.title, display: false},
+                    animation: true,
+                    animationSteps: 60,
+                    legend: {
+                        display: true,
+                        position: "bottom",
+                        align: "center",
+                        // onClick: null,
+                        fontSize: 30,
+                        fullWidth:true,
+                        labels: {
+                            fontColor: '#fff',
+                            fontSize:16,
+                            padding:15,
+                        }
+                    },
                 }}/>
             </div>
         </div>
     )
 }
-
