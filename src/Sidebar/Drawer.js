@@ -46,6 +46,7 @@ import Login from '../auth/Login';
 import ForgotPassword from '../auth/ForgotPassword';
 import ResetPassword from '../auth/ResetPassword';
 import UserContext from "../context/UserContext";
+import Admin from '../Pages/Admin';
 
 // import InfoIcon from '@material-ui/icons/Info';
 //for menu logo
@@ -232,6 +233,10 @@ export default function PersistentDrawerLeft(props) {
             <ListItemIcon><SettingsIcon color="primary"/></ListItemIcon>
                 Settings
             </MenuItem>
+            <MenuItem component={Link} to="/admin">
+            <ListItemIcon><SettingsIcon color="primary"/></ListItemIcon>
+                Admin
+            </MenuItem>
         </MenuList>
 
         </List>
@@ -266,9 +271,10 @@ export default function PersistentDrawerLeft(props) {
           <Route exact path="/ResetPassword" component={ResetPassword}>
           </Route>
           <Route
-                  path="/ResetPassword/:token"
-                  component={ResetPassword}
-                />
+            path="/ResetPassword/:token"
+            component={ResetPassword}
+          />
+          <Route exact path="/Admin" component={Admin}></Route>
         </Switch>
         
       </main>
