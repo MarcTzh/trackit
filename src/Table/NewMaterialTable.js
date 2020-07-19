@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, forwardRef, useRef, Fragment } from 'react';
 // import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+// import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { gql } from 'apollo-boost';
 import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
 import UserContext from '../context/UserContext';
@@ -33,6 +33,12 @@ import MaterialTable, { MTableToolbar } from 'material-table';
 import { TablePagination } from "@material-ui/core";
 import { store } from 'react-notifications-component';
 import Loading from '../Loaders/Loading';
+import { Redirect } from 'react-router';
+
+//url status
+import ErrorIcon from '@material-ui/icons/Error';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,7 +85,8 @@ const PRODUCTS_QUERY = gql `
         url
         userID
         priceArray
-            dateArray
+        dateArray
+        minPrice
     }
 }`;
 
@@ -186,12 +193,6 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
         )
     }
 
-    const theme = createMuiTheme({
-        palette: {
-            type: 'dark',
-          },
-      });
-
 
     if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
@@ -204,7 +205,8 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     // const load = () => {
     //     userProducts({ variables: { info: userData.user.id } })
     // }
-    const title = <div className={classes.title} style={{textAlign: "center"}}>My Products</div>;
+    const title = <div><div className={classes.title} style={{textAlign: "center"}}>My Products</div>
+                    <div className={classes.subtitle}>Click to visit link</div></div>;
 
     return (
         <>
@@ -219,14 +221,21 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category', editable: 'never'},
                                 { title: 'Brand', field: 'brand', editable: 'never' },
-                                { title: 'Url status', field: 'brand', editable: 'never' },
+                                { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
+                                    (rowData.price == null || rowData.price === 0)
+                                    ? <div style={{paddingLeft: 7}}><ErrorIcon htmlColor="#dc3646"/></div>
+                                    : (rowData.price < rowData.minPrice)
+                                        ?<div style={{paddingLeft: 7}}><NotificationsActiveIcon htmlColor="#2e7cff"/></div>
+                                        : <div style={{paddingLeft: 7}}><CheckCircleIcon htmlColor="#34aa4a"/></div>
+                                },
                                 { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
                                 { title: 'URL', field: 'url', hidden: urlBoolean, editable: 'onUpdate'},
                                 { title: 'Price Array', field: 'priceArray', hidden: true},
                                 { title: 'Date Array', field: 'dateArray', hidden: true},
                             ]}
-
+                            //visit link maybe
+                            onRowClick={((evt, selectedRow) => (selectedRow.price == null || selectedRow.price <= 0) ? window.location.assign(selectedRow.url) : console.log(selectedRow.price))}
                             data= {data.products.filter((product) => product.userID === userData.user.id)}
                             // data = {userProducts({ variables: { info: userData.user.id } })}
                             // data = {data.products}
@@ -236,8 +245,8 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 new Promise((resolve, reject) => {
                                     setTimeout(() => {
                                         const productID = oldData.id;
-                                        console.log(newData);
-                                        console.log(oldData);
+                                        // console.log(newData);
+                                        // console.log(oldData);
                                         updateProduct(
                                             {
                                                 variables: 
@@ -327,18 +336,25 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 headerStyle: {
                                     backgroundColor: '#212029',
                                 },
+                                //to highlight entire row based on url status
+                                // rowStyle: rowData => ({
+                                //     //if valid link then do nothing
+                                //     backgroundColor: (rowData.price == null || rowData.price == 0) ?
+                                //         //invalid link
+                                //         "#FF0000"
+                                //         //price drop
+                                //         :(rowData.price < rowData.minPrice)
+                                //             ? "#149dfb"
+                                //             : null
+                                // }),
+                                pageSize: 10,
+                                pageSizeOptions: [10,15,20],
                             }}
                         />
-                        
                 ) : (
                     null
                 )
             }
          </>
-
     )
-
 }
-    
-    
-
