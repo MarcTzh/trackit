@@ -16,20 +16,32 @@ export default function EditUser() {
     const [newPassword, setNewPassword] = useState(null);
     const [newDisplayName, setNewDisplayName] = useState(null);
     const [notiSettings, setNotiSettings] = useState(null);
+
     const useStyles = makeStyles((theme) => ({
-        textField: {
-            marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(1),
-            marginBottom: theme.spacing(1),
-        },
-        root: {
-            width: '100%',
-            '& > * + *': {
-            marginTop: theme.spacing(2),
-            },
-        },
-    }));
-    // const classes = useStyles();
+        title: {
+            fontSize:34,
+            color: "white",
+            fontWeight:700,
+          },
+          subtitle: {
+            fontSize:28,
+            color: "white",
+            fontWeight:500,
+          },
+          subtitle2: {
+            fontSize:24,
+            color: "white",
+            fontWeight:200,
+          },
+          paper: {
+            padding: theme.spacing(1),
+            textAlign: 'center',
+            // color: theme.palette.text.secondary,
+            background: "#212029",
+          },
+      }));
+      
+    const classes = useStyles();
   
     const { userData } = useContext(UserContext);
 
@@ -87,42 +99,39 @@ export default function EditUser() {
 
 
     return (
-        <div className="page">
-        <h2>Edit account information</h2>
-        {/* {error && (
-            <ErrorNotice message={error} clearError={() => setError(undefined)} />
-        )} */}
+        <div>
+            <div style={{marginTop: 15, marginBottom: 15}}  className={classes.subtitle}>Edit account details</div>
 
-        <Slider editSliderValue={(value) => setNotiSettings(value)}/>
-        
-        <GeneralTextField
-          placeholder="New email"
-          onChange ={(e) => setNewEmail(e.target.value)}
-          type="email"
-        //   value = "new email"
-        />
+            <Slider editSliderValue={(value) => setNotiSettings(value)}/>
+            
+            <GeneralTextField
+            placeholder="New email"
+            onChange ={(e) => setNewEmail(e.target.value)}
+            type="email"
+            //   value = "new email"
+            />
 
-        <GeneralTextField
-          placeholder="New password"
-          onChange ={(e) => setNewPassword(e.target.value)}
-        //   value = "new email"
-        />
-        
-        <GeneralTextField
-          placeholder={userData.user.displayName}
-          onChange ={(e) => setNewDisplayName(e.target.value)}
-          type="email"
-        //   value = "new email"
-        />
+            <GeneralTextField
+            placeholder="New password"
+            onChange ={(e) => setNewPassword(e.target.value)}
+            //   value = "new email"
+            />
+            
+            <GeneralTextField
+            placeholder={userData.user.displayName}
+            onChange ={(e) => setNewDisplayName(e.target.value)}
+            type="email"
+            //   value = "new email"
+            />
 
-        <GeneralTextField
-          placeholder="Current password"
-          variant="outlined"
-          onChange ={(e) => setCurrPassword(e.target.value)}
-          type="password"
-        //   value = "new email"
-        />
-            <div style={{paddingTop: 10}}>
+            <GeneralTextField
+            placeholder="Current password"
+            variant="outlined"
+            onChange ={(e) => setCurrPassword(e.target.value)}
+            type="password"
+            //   value = "new email"
+            />
+            <div style={{paddingTop: 15}}>
             <GeneralButton onClick={handleSubmit}
                 fullWidth={true} text="Submit" />
             </div>

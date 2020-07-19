@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         padding: theme.spacing(1),
-        textAlign: 'center',
+        // textAlign: 'center',
         // color: theme.palette.text.secondary,
         backgroundColor: "#212029",
         // opacity: 0.95,
@@ -172,10 +172,9 @@ const useStyles = makeStyles((theme) => ({
         <>
             {
                 userData.user ? (
-                    <div>
-                    < NewMaterialTable userID = {userData.user.id}/>
-                        </div>
-                       
+                    <div className={classes.paper} style={{ margin: 30 , padding: 30}}>
+                        <NewMaterialTable userID = {userData.user.id}/>
+                    </div>
                 ) : (
                     <>
                     <h2>You are not logged in</h2>

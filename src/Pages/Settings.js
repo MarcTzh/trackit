@@ -6,23 +6,41 @@ import UserContext from '../context/UserContext';
 import { Link } from "react-router-dom";
 // import { useHistory } from "react-router-dom";
 import EditUser from '../auth/EditUser'
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+    title: {
+        fontSize:34,
+        color: "white",
+        fontWeight:700,
+      },
+      subtitle: {
+        fontSize:28,
+        color: "white",
+        fontWeight:500,
+      },
+      paper: {
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        // color: theme.palette.text.secondary,
+        background: "#212029",
+      },
+  }));
+
+  
 function Settings(props) {
     // const history = useHistory();
     const { userData } = useContext(UserContext);
-    // const Forgot = () => history.push("/ForgotPassword");
+    const classes = useStyles();
     
     return (
         <>
         {userData.user ? (
-            
-        <Paper style={{ backgroundColor: '#212029', margin: 15 , padding: 30}}>   
-        <div>
-            <h1>User settings</h1>
+        <div className={classes.paper} style={{margin: 30 , padding: 30}}>   
+            <div className={classes.title}>User settings</div>
 
             <EditUser />
-        </div>
-        </Paper >
+        </div >
         ) : (
             <>
             <h2>You are not logged in</h2>

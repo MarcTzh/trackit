@@ -8,11 +8,36 @@ import { ThemeProvider } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 700,
+    // width: 700,
+    margin: theme.spacing(3),
+  },
+  root2: {
+    // width: 700,
     margin: theme.spacing(3),
   },
   margin: {
     height: theme.spacing(3),
+  },
+  title: {
+    fontSize:34,
+    color: "white",
+    fontWeight:700,
+  },
+  subtitle: {
+    fontSize:28,
+    color: "white",
+    fontWeight:500,
+  },
+  subtitle2: {
+    fontSize:24,
+    color: "white",
+    fontWeight:200,
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    // color: theme.palette.text.secondary,
+    background: "#212029",
   },
 }));
 
@@ -59,8 +84,9 @@ export default function DiscreteSlider(props) {
   return (
     <div className={classes.root}>
       <Typography id="discrete-slider-custom" gutterBottom>
-        Choose how often to recieve email notifications if there are price alerts
+        Notification frequency
       </Typography>
+      <div className={classes.subtitle2}>Notification frequency</div>
         <Slider
           defaultValue={24}
           getAriaValueText={valuetext}

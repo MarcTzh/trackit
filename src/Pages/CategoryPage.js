@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -43,6 +44,25 @@ const REMOVE_CATEGORIES_MUTATION = gql `
     }
 `;
 
+const useStyles = makeStyles((theme) => ({
+    title: {
+        fontSize:34,
+        color: "white",
+        fontWeight:700,
+      },
+      subtitle: {
+        fontSize:28,
+        color: "white",
+        fontWeight:500,
+      },
+      paper: {
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        // color: theme.palette.text.secondary,
+        background: "#212029",
+      },
+}));
+
 function CategoryPage(props) {
     const { loading: productLoading, error: productError, data: productData } = useQuery(PRODUCTS_QUERY);
     
@@ -53,6 +73,8 @@ function CategoryPage(props) {
     const [removeCategory] = useMutation(REMOVE_CATEGORIES_MUTATION);
 
     const { userData } = useContext(UserContext);
+
+    const classes = useStyles();
 
     function removeCategoryAndProduct(cat) {
         removeCategory(
@@ -94,9 +116,9 @@ function CategoryPage(props) {
         <>
         {userData.user ?
 
-        (<Paper style={{ backgroundColor: '#212029', margin: 30 , padding: 30}}>   
+        (<div className={classes.paper} style={{margin: 30 , padding: 30}}>   
         
-            <h1>My Categories</h1>
+            <div className={classes.title}>My Categories</div>
             <List>
                 {
                     data.categories.map(
@@ -124,7 +146,7 @@ function CategoryPage(props) {
                 }
             </List>
             <AddNewCategory/>
-        </Paper>
+        </div>
         ) : (
             <>
             <h2>You are not logged in</h2>

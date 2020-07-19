@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-async function checkQ10Price(url) {
+async function q10CheckPrice(url) {
         let browser = await puppeteer.launch(); 
         let page = await browser.newPage();
 
@@ -24,8 +24,12 @@ async function checkQ10Price(url) {
             if(!price) { //if no promos at all, regular price
                 price= document.querySelector('dl[class="detailsArea lsprice"]')
             }
-            
-            //#dl_sell_price dd strong
+            if(!price) { //time sale price
+                price = document.querySelector('#discount_info dd strong')
+            }
+            if(!price) { //last resort, shopping cart
+                price = document.querySelector('#sub_ProcessBtn_cart .prc')
+            }
 
             
             if(price) {
@@ -42,7 +46,7 @@ async function checkQ10Price(url) {
                         .replace('Group Buy Price', '')
                 )
             } else {
-                return null;
+                return 0;
             }
             return price;
         })
@@ -63,4 +67,4 @@ async function checkQ10Price(url) {
 // checkQ10Price('https://www.qoo10.sg/item/NINTENDO-SWITCH-READY-STOCK-NINTENDO-SWITCH-RING-FIT-ADVENTURE/6737187733')
 // checkQ10Price('https://www.qoo10.sg/item/NEW-ARRIVAL-MEMORY-FOAM-PILLOW-ERGONOMIC-DESIGN-RELIEF-FOR-NECK/679430267?sid=16375')
 // checkQ10Price('https://www.qoo10.sg/item/FLASH-DEAL-D24-DURIAN-PUFF-15PCS-BOX-4CM-EACH/651235357?sid=196626');
-exports.checkQ10Price = checkQ10Price;
+exports.q10CheckPrice = q10CheckPrice;

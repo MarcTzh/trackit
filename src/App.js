@@ -19,6 +19,26 @@ import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
 
 import "./style.css";
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  title: {
+      fontSize:34,
+      color: "white",
+      fontWeight:700,
+    },
+    subtitle: {
+      fontSize:28,
+      color: "white",
+      fontWeight:500,
+    },
+    paper: {
+      padding: theme.spacing(1),
+      textAlign: 'center',
+      // color: theme.palette.text.secondary,
+      background: "#212029",
+    },
+}));
 
 const theme = createMuiTheme({
   palette: {
@@ -40,11 +60,13 @@ const theme = createMuiTheme({
 });
 
 
-function App(props) {
+function App() {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
   });
+
+  const classes = useStyles();
 
   useEffect(() => {
     const checkLoggedIn = async () => {

@@ -76,9 +76,41 @@ export default function Form() {
   const [url, setUrl] = useState('');
 
   const { userData } = useContext(UserContext);
+
+  //TODO: FIX THIS JIYU THANKS
+  //to determine whether to add a new category
+  let catArray = [];
+  let currUserID;
+  // console.log(data);
   
+  if(userData !== undefined && userData.user !== undefined && data !== undefined) {
+    currUserID = String(userData.user.id);
+    // for(let i = 0; i < data.categories.length; i++) {
+    //   if(currUserID === data.categories[i].userID) {
+    //     catArray.push(data.categories[i].name)
+    //   }
+    // }
+
+    //alternative also doesnt work
+    data.categories.filter((category) => 
+      category.userID === currUserID)
+    .map((category) => catArray.push(category.name));
+      console.log(catArray)
+    }
   //For dates
   const [today, setToday] = useState(new Date());  
+
+  const CREATE_CATEGORY_MUTATION = gql`
+    mutation createCategory($name: String!, $userID: String!){
+    createCategory(name: $name, userID: $userID) {
+      id
+      name
+      userID
+    }
+  }
+  `;
+  const [createCategory] = useMutation(CREATE_CATEGORY_MUTATION);
+
   useEffect(() => {
       const interval = setInterval(() => {
           setToday(new Date());
@@ -148,9 +180,20 @@ export default function Form() {
 }
 
 function handleSubmit() {
-    
+    console.log(categoryValue)
     const currDate = (new Date().getTime()).toString(10);
     if(brandValue !== null && categoryValue !== null && categoryValue !== undefined && name !== '' && url !== ''){
+      //freesolo function in autocomplete function
+      //if user input is a new cat, create new cat
+      if(catArray !== [] && !catArray.includes(categoryValue)){
+        console.log(catArray);
+        createCategory( 
+                      {
+                          variables: {name: categoryValue, userID: userData.user.id},
+                          refetchQueries: [{ query: CATEGORIES_QUERY}] 
+                      }
+                   )
+      }
       createProduct( 
                     {
                       variables: {name: name, 
@@ -170,7 +213,7 @@ function handleSubmit() {
 
                  setPrice('');
 
-                 setUrl('');   
+                 setUrl('');
 
                 store.addNotification({
                   title: "Success:",
@@ -207,84 +250,72 @@ function handleSubmit() {
 
   return (
     <div>
+        {/* <Loading2 /> */}
+        <div>
+          <CategoryOptions callBackFromParent={setCategoryValue}/>
+        </div>
+        {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
+        <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
+        <div style={{paddingTop:15}}>
+          <Autocomplete
+            brandValue={brandValue}
+            onChange={(event, newValue) => {
+              setBrandValue(newValue);
+            }}
+            inputBrandValue={inputBrandValue}
+            onInputChange={(event, newInputValue) => {
+              setInputBrandValue(newInputValue);
+            }}
+            id="controllable-states-demo"
+            className={classes.textField}
+            options={brandOptions}
+            fullWidth={true}
+            renderInput={(params) => <TextField {...params} label="Platform" variant="outlined" />}
+          />
+          
+        </div>
+
+        <div>
+
         <GeneralTextField
-          onChange ={handleUrlChange}
-          value = {url}
-          placeholder ="Product url"
-        />
-        <div style={{paddingTop: 10, paddingBottom: 50}}>
+            onChange ={handleUrlChange}
+            value = {url}
+            placeholder ="Product url"
+          />
+        {/* autocomplete button */}
+        {/* <div style={{paddingTop: 10, paddingBottom: 50}}>
           <GeneralButton onClick={crawl}
             fullWidth={true} className={classes.textField} text="Autocomplete" />
-        </div>
-
-        {/* <Loading2 /> */}
-
-      <CategoryOptions callBackFromParent={setCategoryValue}/>
-
-
-      {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
-      <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
-      <div className={classes.textField} style={{paddingTop: 20}}>
-        <Autocomplete
-          brandValue={brandValue}
-          onChange={(event, newValue) => {
-            setBrandValue(newValue);
-          }}
-          inputBrandValue={inputBrandValue}
-          onInputChange={(event, newInputValue) => {
-            setInputBrandValue(newInputValue);
-          }}
-          id="controllable-states-demo"
-          options={brandOptions}
-          // style={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="Brand" variant="outlined" />}
-        />
-      </div>
-
-
-
-      <div>
-        <GeneralTextField
-        //PRODUCT NAME
-          id="outlined-full-width"
-          // style={{ margin: 8 }}
-          placeholder="Product name"
-          fullWidth={true}
-          margin="normal"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          variant="outlined"
-          onChange ={handleNameChange}
-          value = {name}
-        />
-        
-{/* 
-        <TextField
-          id="outlined-margin-none"
-          placeholder="Price"
-          margin="normal"
-          className={classes.textField}
-          variant="outlined"
-          onChange ={handlePriceChange}
-          value = {price}
-        /> */}
-        <GeneralTextField
-          id="outlined-margin-none"
-          placeholder="Price floor"
-          className={classes.textField}
-          onChange={handleMinPriceChange}
-        />
-
-        <div style={{paddingTop: 10}}>
-          <GeneralButton 
-            onClick={handleSubmit}
-            fullWidth={true}
-            text="Submit"
+        </div> */}
+          <GeneralTextField
+            placeholder="Product name"
+            onChange ={handleNameChange}
+            value = {name}
+          />
+          
+          {/* 
+          <TextField
+            id="outlined-margin-none"
+            placeholder="Price"
+            margin="normal"
+            className={classes.textField}
+            variant="outlined"
+            onChange ={handlePriceChange}
+            value = {price}
+          /> */}
+          <GeneralTextField
+            placeholder="Price floor"
+            onChange={handleMinPriceChange}
           />
 
-        </div>
+          <div style={{paddingTop: 15}}>
+            <GeneralButton 
+              onClick={handleSubmit}
+              fullWidth={true}
+              text="Submit"
+            />
+
+          </div>
 
       </div>
     </div>

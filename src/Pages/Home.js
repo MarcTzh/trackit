@@ -93,8 +93,8 @@ function Home() {
       let currUserID;
       //for numbers on the dashboard
       let pdtCounter=0;
-      let catCounter=0;
       let notifications=0;
+      
     if(userData !== undefined && userData.user !== undefined) {
       currUserID = String(userData.user.id);
       
@@ -104,7 +104,6 @@ function Home() {
       for(let i = 0; i < data.categories.length; i++) {
         if(currUserID === data.categories[i].userID) {
           catArray.push(data.categories[i].name)
-          catCounter++;
         }
       }
 
@@ -113,10 +112,10 @@ function Home() {
       }
 
       for(let j = 0; j<productData.products.length; j++) {
-        pdtCounter++;
         for(let k= 0; k < catArray.length; k ++){
           if(currUserID === productData.products[j].userID && productData.products[j].category === catArray[k]) {
               pdtCountArray[k] = pdtCountArray[k] + 1
+              pdtCounter++;
           }
         }
       }
@@ -151,7 +150,7 @@ function Home() {
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.card}>
-            <Cards counter={catCounter} text={"Categories"}/>
+            <Cards counter={catArray.length} text={"Categories"}/>
           </Paper>
         </Grid>
         <Grid item xs={4}>

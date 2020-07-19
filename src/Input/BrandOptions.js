@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -27,6 +28,7 @@ export default function BrandbrandOptions() {
           onChange={(event, newValue) => {
             setBrandValue(newValue);
           }}
+          className={classes.textField}
           inputBrandValue={inputBrandValue}
           onInputChange={(event, newInputValue) => {
             setInputBrandValue(newInputValue);
@@ -34,7 +36,7 @@ export default function BrandbrandOptions() {
           // id="controllable-states-demo"
           options={brandOptions}
           // style={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="Brand" variant="outlined" />}
+          renderInput={(params) => <TextField {...params} label="Platforrm" variant="outlined" />}
         />
       {/* </div> */}
     </div>

@@ -16,10 +16,12 @@ const CATEGORIES_QUERY = gql `
     }
 }`;
 
+
 const useStyles = makeStyles((theme) => ({
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
+      marginBottom: theme.spacing(1),
     },
 
   }));
@@ -51,15 +53,24 @@ export default function CategoryOptions(props) {
                     if(props.callBackFromParent) {
                       props.callBackFromParent(newValue); 
                     }
+                    // console.log("onchange" + newValue)
                   }
                 }
                 inputCategoryValue = {inputCategoryValue}
                 onInputChange = {(event, newInputValue) => {
+                  // console.log("newInput" + newInputValue)
                   setInputCategoryValue(newInputValue);
+                  if(props.callBackFromParent) {
+                    setInputCategoryValue(newInputValue);
+                      props.callBackFromParent(newInputValue); 
+                      // console.log("props" + newInputValue)
+                    }
                 }}
                 // id = "controllable-states-demo"
                 options = {categoryOptions}
-                // style = {{ color: "#212029" }}
+                className={classes.textField}
+                freeSolo
+                fullWidth
                 renderInput = {(params) => <TextField {...params} label="Category" variant="outlined" />}
             />
         </div>
