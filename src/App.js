@@ -66,8 +66,6 @@ function App() {
     user: undefined,
   });
 
-  const classes = useStyles();
-
   useEffect(() => {
     const checkLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
