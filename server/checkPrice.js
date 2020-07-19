@@ -12,7 +12,7 @@ async function checkPrice(url) {
             } else if(url.includes('lazada')) {
                 return lazada.checkLazadaPrice(url);
             } else if(url.includes('qoo10')) {
-                return q10.checkQ10Price(url);
+                return q10.q10CheckPrice(url);
             } else {
                 return null;
             }

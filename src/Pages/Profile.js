@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import ChartToggle from '../Input/ChartToggle.js';
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Loading from '../Loaders/Loading';
+import styles from '../style.css'
 
 
 
@@ -54,6 +55,27 @@ function Profile() {
           // color: theme.palette.text.secondary,
           background: "#212029",
         },
+        title: {
+            fontSize:34,
+            color: "white",
+            fontWeight:700,
+          },
+          subtitle: {
+            fontSize:28,
+            color: "white",
+            fontWeight:500,
+          },
+          card: {
+            // padding: theme.spacing(1),
+            marginLeft: theme.spacing(2),
+            // marginRight: theme.spacing(1),
+            marginTop: theme.spacing(1),
+            textAlign: 'center',
+            // color: theme.palette.text.secondary,
+            backgroundColor: "#212029",
+            // opacity: 0.95,
+            border: "1px solid gray"
+          },
       }));
 
       const classes = useStyles();
@@ -165,13 +187,13 @@ function Profile() {
             start = dateArray[0];
             end = dateArray[dateArray.length - 1];
         } else {
-            console.log("bump4");
-            console.log(dateArray)
-            console.log("firstdate " + parseInt(dateArray[0]));
-            console.log("lastdate " + parseInt(dateArray[dateArray.length - 1]));
-            console.log(completeDateArray);
-            console.log("complete first date " + parseInt(completeDateArray[0]));
-            console.log("complete last date " + parseInt(completeDateArray[completeDateArray.length - 1]));
+            // console.log("bump4");
+            // console.log(dateArray)
+            // console.log("firstdate " + parseInt(dateArray[0]));
+            // console.log("lastdate " + parseInt(dateArray[dateArray.length - 1]));
+            // console.log(completeDateArray);
+            // console.log("complete first date " + parseInt(completeDateArray[0]));
+            // console.log("complete last date " + parseInt(completeDateArray[completeDateArray.length - 1]));
 
             if(parseInt(dateArray[0]) <= parseInt(completeDateArray[0])) {
                 start = dateArray[0];
@@ -217,7 +239,9 @@ function Profile() {
         console.log(userData.user.id)
         var dataset = [];
         var finalPriceArrays = [];
-        const val = ['#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#333333', '#808080', '#cccccc', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#FA28FF', '#000000', '#666666', '#B3B3B3', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E'];
+        const val = ['#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#333333'
+        , '#808080', '#cccccc', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#FA28FF',
+         '#000000', '#666666', '#B3B3B3', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E'];
 
         //filter out products and stores them as objects in a new array
         var filteredProducts = [];
@@ -282,11 +306,6 @@ function Profile() {
         }
     }, [data, userData, categoryValue, period])
 
-    const theme = createMuiTheme({
-        palette: {
-            type: 'dark',
-        },
-    });
         
     if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
@@ -297,15 +316,17 @@ function Profile() {
         <>
         {userData.user ? (
             <div className={classes.paper} style={{ margin: 30 , padding: 30}}>
-                <div style={{ marginTop: -30}}> 
-                <ThemeProvider theme={theme}>
-                    <h2>My Profile</h2>
-                    <h2>Please choose a category to display</h2>
+                <div style={{ marginBottom: 30}}> 
+                    <div className={classes.title}>My Profile</div>
+                    <div className={classes.subtitle}>Please choose a category to display</div>
+                </div>
+                <div>
                     <CategoryOptions callBackFromParent={setCategoryValue} />
                     <ChartToggle callBackFromParent={setPeriod}/>
-                    <LineChart chartData={chartData} catValue = {categoryValue}/>
+                    <div className={classes.card} style={{padding:30}}>
+                        <LineChart chartData={chartData} catValue = {categoryValue}/>
+                    </div>
                     <p>Click on individual products to remove them from view</p>
-                </ThemeProvider>
                 </div>
             </div>
         ) : (

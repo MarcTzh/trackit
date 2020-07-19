@@ -16,7 +16,8 @@ const useStyles = makeStyles({
     transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 14,
+    fontSize: 50,
+    fontWeight: 800,
   },
   pos: {
     marginBottom: 12,
@@ -25,16 +26,16 @@ const useStyles = makeStyles({
 
 export default function Cards(props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  // const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <div>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          
+        <Typography className={classes.title} color="#fff" gutterBottom>
+        {props.counter}
         </Typography>
         <Typography variant="h2" component="h2">
-          {props.counter}
+          
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           

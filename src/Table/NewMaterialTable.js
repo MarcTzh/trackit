@@ -22,7 +22,8 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import MoreIcon from '@material-ui/icons/More';
+import LinkIcon from '@material-ui/icons/Link';
+// import MoreIcon from '@material-ui/icons/More';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
@@ -33,6 +34,19 @@ import { TablePagination } from "@material-ui/core";
 import { store } from 'react-notifications-component';
 import Loading from '../Loaders/Loading';
 
+
+const useStyles = makeStyles((theme) => ({
+    title: {
+        fontSize:34,
+        color: "white",
+        fontWeight:700,
+      },
+      subtitle: {
+        fontSize:28,
+        color: "white",
+        fontWeight:500,
+      }
+}));
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -127,7 +141,7 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
 
     // const { loading, error, data } = useQuery(USER_PRODUCTS_QUERY, { variables: { info: props.userID } });
 
-    // const classes = useStyles();
+    const classes = useStyles();
 
     // const [productData, setProductData] = useState(null);
 
@@ -190,18 +204,16 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     // const load = () => {
     //     userProducts({ variables: { info: userData.user.id } })
     // }
-    const title = <div>My Products</div>;
+    const title = <div className={classes.title} style={{textAlign: "center"}}>My Products</div>;
 
     return (
         <>
             {
                 data ? (
-
-                    <ThemeProvider theme={theme}>
                         <MaterialTable
                             // tableRef={tableRef}
                             icons={tableIcons}
-                            style={{ backgroundColor: '#212029',margin: 30 , padding: 30}}
+                            style={{ backgroundColor: '#212029'}}
                             title= {title}
                             columns={[
                                 { title: 'Name', field: 'name' },
@@ -247,19 +259,6 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                     tooltip: 'Update Product',
                                     onClick: (event, rowData) => {
                                         console.log(rowData);
-                                        store.addNotification({
-                                            title: "Success:",
-                                            message: "Your products have been updated",
-                                            type: "success",
-                                            insert: "top",
-                                            container: "top-right",
-                                            animationIn: ["animated", "fadeIn"],
-                                            animationOut: ["animated", "fadeOut"],
-                                            dismiss: {
-                                            duration: 2000,
-                                            onScreen: true
-                                            }
-                                        });
                                         handleUpdate(rowData.id, rowData.url, rowData.dateArray, rowData.priceArray)
                                         store.addNotification({
                                             title: "Success:",
@@ -311,7 +310,7 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                     <div style={{padding: '0px 10px'}}>
                                         <ToggleButtonGroup size = "small" style ={{position:"relative",margin: 5 , padding: 5 }}>
                                             <ToggleButton style ={{ colour :"#fff"}} value="Show URL" aria-label="Show URL">
-                                                <MoreIcon  onClick ={() => setUrlBoolean(!urlBoolean)}/>
+                                                <LinkIcon  onClick ={() => setUrlBoolean(!urlBoolean)}/>
                                             </ToggleButton>
                                             <ToggleButton value="Enable Sort" aria-label="Enable Sort">
                                                 <SortIcon  onClick ={() => setGroupingBoolean(!groupingBoolean)}/>
@@ -330,7 +329,6 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 },
                             }}
                         />
-                    </ThemeProvider>
                         
                 ) : (
                     null

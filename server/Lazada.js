@@ -16,10 +16,15 @@ async function checkLazadaPrice(url) {
         await page.goto(url, { waitUntil: 'networkidle2' });
 
         let data = await page.evaluate(() => {
-            let price = document.querySelector('span[class=" pdp-price pdp-price_type_normal pdp-price_color_orange pdp-price_size_xl"]').innerText
+            let price = document.querySelector('span[class=" pdp-price pdp-price_type_normal pdp-price_color_orange pdp-price_size_xl"]')
+
+            if(!price) {
+                price = document.querySelector('.pdp-price_size_xl')
+            }
+
             if(price) {
                 price = parseFloat(
-                    price
+                    price.innerText
                         //specific to Singapore version of website
                         .replace('S', '')
                         //general removal or dollar sign
@@ -28,8 +33,9 @@ async function checkLazadaPrice(url) {
                         .replace(',', '')
                 )
             } else {
-                return null;
+                return 0;
             }
+            console.log("Lazada: " + price)
             return price;
         })
 
