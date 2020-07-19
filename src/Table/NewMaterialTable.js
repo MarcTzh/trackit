@@ -207,6 +207,7 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     // }
     const title = <div><div className={classes.title} style={{textAlign: "center"}}>My Products</div>
                     <div className={classes.subtitle}>Click to visit link</div></div>;
+    
 
     return (
         <>
@@ -223,9 +224,12 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 { title: 'Brand', field: 'brand', editable: 'never' },
                                 { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
                                     (rowData.price == null || rowData.price === 0)
+                                    //url not working
                                     ? <div style={{paddingLeft: 7}}><ErrorIcon htmlColor="#dc3646"/></div>
                                     : (rowData.price < rowData.minPrice)
-                                        ?<div style={{paddingLeft: 7}}><NotificationsActiveIcon htmlColor="#2e7cff"/></div>
+                                        //price drop
+                                        ? <div style={{paddingLeft: 7}}><NotificationsActiveIcon htmlColor="#2e7cff"/></div>
+                                        //url working
                                         : <div style={{paddingLeft: 7}}><CheckCircleIcon htmlColor="#34aa4a"/></div>
                                 },
                                 { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
