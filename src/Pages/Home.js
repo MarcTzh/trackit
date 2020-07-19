@@ -69,12 +69,20 @@ const PRODUCTS_QUERY = gql `
         price
         category
         userID
+        minPrice
     }
 }`;
 
+let catArray = [];
+let pdtCountArray = [];
+let notifications = 0;
+//breakdown of notifications
+let faultyLinks = 0;
+let priceDrops = 0;
+
 function Home() {
 
-    const [donutChartData, setDonutChartData] = useState({})
+    // const [donutChartData, setDonutChartData] = useState({})
 
     const { userData } = useContext(UserContext);
 
@@ -88,22 +96,24 @@ function Home() {
     if (error) return <p>Error! :( Please reload the page or try again later.</p>;
     if (productLoading) return <Loading open={true}/>;
     if (productError) return <p>Error! :( Please reload the page or try again later.</p>;
-      let catArray =[];
-      let pdtCountArray =[];
-      let currUserID;
-      //for numbers on the dashboard
-      let pdtCounter=0;
-      let notifications=0;
+    
+    let currUserID;
+    //for numbers on the dashboard
+    let pdtCounter=0;
+
       
     if(userData !== undefined && userData.user !== undefined) {
       currUserID = String(userData.user.id);
-      
-        catArray =[];
-        pdtCountArray =[];
+      catArray =[];
+      pdtCountArray =[];
+      notifications = 0;
+      faultyLinks = 0;
+      priceDrops = 0;
 
       for(let i = 0; i < data.categories.length; i++) {
         if(currUserID === data.categories[i].userID) {
           catArray.push(data.categories[i].name)
+          // console.log("catArray: [" + catArray + "]")
         }
       }
 
@@ -113,13 +123,28 @@ function Home() {
 
       for(let j = 0; j<productData.products.length; j++) {
         for(let k= 0; k < catArray.length; k ++){
-          if(currUserID === productData.products[j].userID && productData.products[j].category === catArray[k]) {
-              pdtCountArray[k] = pdtCountArray[k] + 1
-              pdtCounter++;
+          const product= productData.products[j];
+          if(currUserID === product.userID && product.category === catArray[k]) {
+            pdtCountArray[k] = pdtCountArray[k] + 1
+            pdtCounter++;
+            //check if faulty link
+            const price = product.price;
+            console.log(product.name)
+            if(price == null || price === 0) {
+              // console.log(price)
+              faultyLinks++;
+            } else {
+              //price drops
+              if(price < product.minPrice) {
+                priceDrops++;
+                console.log("drop: " + product.name)
+              }
+            }
           }
         }
       }
-              
+      //count notifications
+      notifications = faultyLinks + priceDrops;
     }
 
     return (
@@ -155,7 +180,7 @@ function Home() {
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.card}>
-            <Cards counter={notifications} text={"Notifications"}/>
+            <Cards counter={notifications} text={"Notifications"} text3={`${priceDrops} Price drops and ${faultyLinks} Faulty links`}/>
           </Paper>
         </Grid>
         <Grid item xs={6} >
@@ -172,7 +197,7 @@ function Home() {
             {/* <BarChart /> */}
             {
               data?
-                (<BarChart label={catArray} data ={pdtCountArray} title = "Platforms"/>)
+                (<BarChart label={['Amazon', 'Lazada', 'Qoo10']} data ={[4,5,2]} title = "Platforms"/>)
                 : (null)
             }
           </Paper>

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: 50,
-    fontWeight: 800,
+    fontWeight: 600,
   },
   pos: {
     marginBottom: 12,
@@ -35,10 +35,10 @@ export default function Cards(props) {
         {props.counter}
         </Typography>
         <Typography variant="h2" component="h2">
-          
+        {props.text2}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          
+        {props.text3}
         </Typography>
         <Typography variant="h5" component="h2">
         {props.text}
