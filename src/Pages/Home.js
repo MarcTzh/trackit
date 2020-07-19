@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, createElement} from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import Loading from '../Loaders/Loading';
@@ -137,7 +137,7 @@ function Home() {
               //price drops
               if(price < product.minPrice) {
                 priceDrops++;
-                console.log("drop: " + product.name)
+                // console.log("drop: " + product.name)
               }
             }
           }
