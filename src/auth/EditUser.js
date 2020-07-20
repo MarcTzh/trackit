@@ -19,7 +19,7 @@ export default function EditUser() {
 
     const useStyles = makeStyles((theme) => ({
         title: {
-            fontSize:34,
+            fontSize:44,
             color: "white",
             fontWeight:700,
           },
@@ -29,7 +29,7 @@ export default function EditUser() {
             fontWeight:500,
           },
           subtitle2: {
-            fontSize:24,
+            fontSize:20,
             color: "white",
             fontWeight:200,
           },

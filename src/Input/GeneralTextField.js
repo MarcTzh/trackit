@@ -48,6 +48,7 @@ export default function GeneralTextField(props) {
           onChange ={props.onChange}
           value = {props.value}
           type={props.type}
+          error={props.error}
         />
     )
 

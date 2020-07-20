@@ -58,7 +58,7 @@ export default function AddNewCategory() {
       setName('');
       store.addNotification({
         title: "Success!",
-        message: "Your product is being processed! Please wait a moment for it to appear on your Products Page",
+        message: "Your Category had been added successfully!",
         type: "success",
         insert: "top",
         container: "top-right",

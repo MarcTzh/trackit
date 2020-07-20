@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
       // opacity: 0.95,
     },
     title: {
-      fontSize:60,
+      fontSize:76,
       color: "white",
       fontWeight:700,
     },

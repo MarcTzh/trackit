@@ -36,7 +36,7 @@ export default function Pie(props) {
                         position: "right",
                         align: "center",
                         onClick: null,
-                        fontSize: 30,
+                        fontSize: 28,
                         fullWidth:true,
                         labels: {
                             fontColor: '#fff',
