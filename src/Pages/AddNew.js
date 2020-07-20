@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     title: {
-        fontSize:34,
+        fontSize:44,
         color: "white",
         fontWeight:700,
       },

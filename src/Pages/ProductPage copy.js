@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
 import { makeStyles } from '@material-ui/core/styles';
-import PdtMaterialTable from '../Table/PdtMaterialTable';
+import CatMaterialTable from '../Table/CatMaterialTable';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
             {
                 userData.user ? (
                     <div className={classes.paper} style={{ margin: 30 , padding: 30}}>
-                        <PdtMaterialTable userID = {userData.user.id}/>
+                        <CatMaterialTable userID = {userData.user.id}/>
                     </div>
                 ) : (
                     <>

@@ -10,7 +10,7 @@ export default function BarChart(props) {
             labels: props.label,
             datasets: [
                 {
-                    backgroundColor: ['#159dfb', '#c83955', '#FFD166', '#17d993', '#9CFFFA', '#2BD9FE', '#623CEA', '#DFB2F4', '#D36135', '#EF476F '],
+                    backgroundColor: ['#9CFFFA', '#623CEA', '#DFB2F4', '#D36135', '#2BD9FE', '#EF476F','#159dfb', '#c83955', '#FFD166', '#17d993'],
                     data: props.data
                 }
             ],
@@ -35,7 +35,7 @@ export default function BarChart(props) {
                         position: "bottom",
                         align: "center",
                         // onClick: null,
-                        fontSize: 30,
+                        fontSize: 28,
                         fullWidth:true,
                         labels: {
                             fontColor: '#fff',

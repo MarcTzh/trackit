@@ -58,21 +58,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const brandOptions = ['Amazon', 'Lazada', 'Qoo10'];
+// const brandOptions = ['Amazon', 'Lazada', 'Qoo10'];
 
 export default function Form() {
 
   const { loading, error, data } = useQuery(CATEGORIES_QUERY);    
   const classes = useStyles();
   const [createProduct] = useMutation(CREATE_MUTATION);
-  const [brandValue, setBrandValue] = useState(brandOptions[0]);
-  const [inputBrandValue, setInputBrandValue] = useState('');
+  // const [brandValue, setBrandValue] = useState(brandOptions[0]);
+  // const [inputBrandValue, setInputBrandValue] = useState('');
   // categoryValue is set to undefined. if user selects and unselects it, it will be set to null. 
   // therefore below categoryValue will check for both undefined and null value
   const [categoryValue, setCategoryValue] = useState();
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [minPrice, setMinPrice] = useState(0)
+  const [minPriceError, setMinPriceError] = useState(false)
   const [url, setUrl] = useState('');
 
   const { userData } = useContext(UserContext);
@@ -138,9 +139,15 @@ export default function Form() {
   function handleMinPriceChange(e) {
     const newMinPrice = e.target.value;
     if(newMinPrice !== null) {
-      setMinPrice(parseFloat(newMinPrice));  
+      const tempMinPrice = parseFloat(newMinPrice);
+      if(tempMinPrice) {
+        setMinPriceError(false);
+        setMinPrice(tempMinPrice);  
+      } else {
+        setMinPriceError(true);
+      }
+      
     }
-    
   }
 
   function crawl() {
@@ -182,7 +189,7 @@ export default function Form() {
 function handleSubmit() {
     console.log(categoryValue)
     const currDate = (new Date().getTime()).toString(10);
-    if(brandValue !== null && categoryValue !== null && categoryValue !== undefined && name !== '' && url !== ''){
+    if(categoryValue !== null && categoryValue !== undefined && name !== '' && url !== '' && minPrice > 0){
       //freesolo function in autocomplete function
       //if user input is a new cat, create new cat
       if(catArray !== [] && !catArray.includes(categoryValue)){
@@ -198,7 +205,7 @@ function handleSubmit() {
                     {
                       variables: {name: name, 
                                   category: categoryValue, 
-                                  brand: brandValue, 
+                                  brand: '', 
                                   price: 0, 
                                   url: url, 
                                   minPrice: minPrice,
@@ -214,6 +221,8 @@ function handleSubmit() {
                  setPrice('');
 
                  setUrl('');
+
+                 setMinPrice(0);
 
                 store.addNotification({
                   title: "Success:",
@@ -231,7 +240,7 @@ function handleSubmit() {
     } else {
       store.addNotification({
         title: "Error:",
-        message: "Not at required fields are entered",
+        message: "Not all required fields are entered correctly",
         type: "danger",
         insert: "top",
         container: "top-right",
@@ -257,7 +266,7 @@ function handleSubmit() {
         {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
         <div>{`inputBrandValue: '${inputBrandValue}'`}</div> */}
         <div style={{paddingTop:15}}>
-          <Autocomplete
+          {/* <Autocomplete
             brandValue={brandValue}
             onChange={(event, newValue) => {
               setBrandValue(newValue);
@@ -271,7 +280,7 @@ function handleSubmit() {
             options={brandOptions}
             fullWidth={true}
             renderInput={(params) => <TextField {...params} label="Platform" variant="outlined" />}
-          />
+          /> */}
           
         </div>
 
@@ -304,8 +313,9 @@ function handleSubmit() {
             value = {price}
           /> */}
           <GeneralTextField
-            placeholder="Price floor"
+            placeholder="Price to be notified at"
             onChange={handleMinPriceChange}
+            error = {minPriceError}
           />
 
           <div style={{paddingTop: 15}}>

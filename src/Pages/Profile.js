@@ -56,7 +56,7 @@ function Profile() {
           background: "#212029",
         },
         title: {
-            fontSize:34,
+            fontSize:44,
             color: "white",
             fontWeight:700,
           },
