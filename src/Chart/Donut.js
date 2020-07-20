@@ -29,7 +29,7 @@ export default function Donut(props) {
                     // responsive: true,
                     // maintainAspectRatio: true,
                     title: {text:props.title, display: false},
-                    animation: true,
+                    // animation: true,
                     animationSteps: 60,
                     legend: {
                         display: true,

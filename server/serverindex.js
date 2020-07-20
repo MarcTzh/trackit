@@ -44,7 +44,7 @@ const typeDefs = `
     name: String!
     category: String!
     brand: String!
-    price: Float!
+    price: Float
     url: String!
     minPrice: Float!
     priceArray:  [Float]!
@@ -66,7 +66,7 @@ const typeDefs = `
         name: String!, 
         category: String!, 
         brand: String!, 
-        price: Float!, 
+        price: Float, 
         url: String!,
         minPrice: Float!,
         priceArray: [Float]!,
@@ -80,7 +80,7 @@ const typeDefs = `
         name: String!, 
         category: String!, 
         brand: String!, 
-        price: Float!, 
+        price: Float, 
         url: String!,
         minPrice: Float!,
         priceArray: [Float]!,
@@ -91,7 +91,7 @@ const typeDefs = `
 
       updateProductPrice(
         id: ID!,
-        price: Float!,
+        price: Float,
         isScraped: Boolean!
       ): Boolean
 
@@ -99,7 +99,7 @@ const typeDefs = `
         id: ID!,
         url: String!,
         date: String!,
-        price: Float!,
+        price: Float,
         priceArray: [Float]!,
         dateArray: [String!]!
       ): Boolean
@@ -149,6 +149,15 @@ const resolvers = {
       createProduct: async (_,{ name, category, brand, price, url, minPrice, priceArray, dateArray, userID}) => {
         price = await (parser.checkPrice(url));
         console.log("price" + price);
+        if(url.includes('amazon')) {
+          brand = 'Amazon'
+        } else if(url.includes('lazada')) {
+          brand = 'Lazada'
+        } else if(url.includes('qoo10')) {
+          brand = 'Qoo10'        
+        } else {
+          brand = 'Other Brands'
+        }
         priceArray.push(price);
         if(Number.isNaN(price)) {
           price = null;

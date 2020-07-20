@@ -118,7 +118,7 @@ mutation UpdateProduct($id: ID!, $name: String!, $url: String!) {
 `;
 
 const ADD_PRICE_AND_DATE_MUTATION = gql `
-    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float!, $priceArray: [Float]!, $dateArray: [String!]!) {
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!) {
         addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
     }
 `;

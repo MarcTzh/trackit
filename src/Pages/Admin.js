@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { gql } from 'apollo-boost';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import Loading from '../Loaders/Loading';
 import UserContext from '../context/UserContext';
 import Paper from '@material-ui/core/Paper';
@@ -62,14 +62,25 @@ const useStyles = makeStyles((theme) => ({
 
 const PRODUCTS_QUERY = gql `
 {
-    products {
-        id
-        name
-        price
-        category
-        userID
-    }
+  products {
+    id
+    name
+    price
+    category
+    brand
+    url
+    userID
+    priceArray
+    dateArray
+    minPrice
+}
 }`;
+
+const ADD_PRICE_AND_DATE_MUTATION = gql `
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!) {
+        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
+    }
+`;
 
 function Admin() {
 
@@ -80,6 +91,20 @@ function Admin() {
     const { loading: productLoading, error: productError, data: productData } = useQuery(PRODUCTS_QUERY);
     
     const { loading, error, data } = useQuery(CATEGORIES_QUERY);
+
+    const [addPriceAndDate] = useMutation(ADD_PRICE_AND_DATE_MUTATION);
+
+    //For dates
+    const [today, setToday] = useState(new Date());  
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+          setToday(new Date());
+      }, 1000);
+      return () => clearInterval(interval);
+    }, []);
+
+    const currDate = (today.getTime()).toString(10);
 
     if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :( Please reload the page or try again later.</p>;
@@ -95,6 +120,26 @@ function Admin() {
 
     //TODO: JIYU
     function refreshProducts() {
+
+      for(let n = 0; n < productData.products.length; n++) {
+        let product = productData.products[n];
+        addPriceAndDate(
+          {
+              variables: 
+              {
+                  id: product.id,
+                  url: product.url,
+                  date: currDate,
+                  price: 0,  
+                  priceArray:product.priceArray, 
+                  dateArray:product.dateArray,
+              }, 
+              refetchQueries: [{ query: PRODUCTS_QUERY}] 
+          }
+        )
+      }
+
+
         if(userData !== undefined && userData.user !== undefined) {
             for(let j = 0; j<productData.products.length; j++) {
                 pdtCounter++;
@@ -133,6 +178,7 @@ function Admin() {
               });
         }
     }
+
     if(userData !== undefined && userData.user !== undefined) {
         console.log(productData); //products
         console.log(data); //categories
