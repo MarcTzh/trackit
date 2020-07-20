@@ -29,7 +29,6 @@ export default function BarChart(props) {
                     // responsive: true,
                     // maintainAspectRatio: true,
                     title: {text:props.title, display: false},
-                    animation: true,
                     animationSteps: 60,
                     legend: {
                         display: true,

@@ -25,7 +25,7 @@ const PRODUCTS_QUERY = gql`
 }`;
 
 const CREATE_MUTATION = gql`
-  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Float!, $url: String!, $minPrice: Float!, $priceArray: [Float]!, $dateArray: [String!]!, $userID: String!){
+  mutation CreateProduct($name: String!, $category: String!, $brand: String!, $price: Float, $url: String!, $minPrice: Float!, $priceArray: [Float]!, $dateArray: [String!]!, $userID: String!){
   createProduct(name: $name, category: $category, brand: $brand, price: $price, url: $url, minPrice: $minPrice, priceArray: $priceArray, dateArray: $dateArray, userID: $userID) {
     id
     name

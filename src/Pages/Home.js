@@ -70,11 +70,14 @@ const PRODUCTS_QUERY = gql `
         category
         userID
         minPrice
+        brand
     }
 }`;
 
 let catArray = [];
 let pdtCountArray = [];
+let brandsArray =[];
+let brandsCountArray =[];
 let notifications = 0;
 //breakdown of notifications
 let faultyLinks = 0;
@@ -106,6 +109,8 @@ function Home() {
       currUserID = String(userData.user.id);
       catArray =[];
       pdtCountArray =[];
+      brandsArray =[];
+      brandsCountArray =[];
       notifications = 0;
       faultyLinks = 0;
       priceDrops = 0;
@@ -122,29 +127,47 @@ function Home() {
       }
 
       for(let j = 0; j<productData.products.length; j++) {
-        for(let k= 0; k < catArray.length; k ++){
-          const product= productData.products[j];
-          if(currUserID === product.userID && product.category === catArray[k]) {
-            pdtCountArray[k] = pdtCountArray[k] + 1
-            pdtCounter++;
-            //check if faulty link
-            const price = product.price;
-            console.log(product.name)
-            if(price == null || price === 0) {
-              // console.log(price)
-              faultyLinks++;
-            } else {
-              //price drops
-              if(price < product.minPrice) {
-                priceDrops++;
-                console.log("drop: " + product.name)
+        
+        if(currUserID === productData.products[j].userID) {
+
+          // for brands chart
+          let index = brandsArray.indexOf(productData.products[j].brand)
+          if(index === -1) {
+            // not inside list of brands
+            brandsArray.push(productData.products[j].brand);
+            brandsCountArray.push(1);
+          } else {
+            brandsCountArray[index] = brandsCountArray[index] + 1;
+          }
+
+          // for categories chart
+          for(let k= 0; k < catArray.length; k ++){
+            const product= productData.products[j];
+            if(product.category === catArray[k]) {
+              pdtCountArray[k] = pdtCountArray[k] + 1
+              pdtCounter++;
+              //check if faulty link
+              const price = product.price;
+              console.log(product.name)
+              if(price == null || price === 0) {
+                // console.log(price)
+                faultyLinks++;
+              } else {
+                //price drops
+                if(price < product.minPrice) {
+                  priceDrops++;
+                  console.log("drop: " + product.name)
+                }
               }
             }
           }
-        }
+
+        }        
       }
       //count notifications
       notifications = faultyLinks + priceDrops;
+      console.log(brandsArray);
+      console.log(brandsCountArray)
     }
 
     return (
@@ -197,7 +220,7 @@ function Home() {
             {/* <BarChart /> */}
             {
               data?
-                (<BarChart label={['Amazon', 'Lazada', 'Qoo10']} data ={[4,5,2]} title = "Platforms"/>)
+                (<BarChart label={brandsArray} data ={brandsCountArray} title = "Platforms"/>)
                 : (null)
             }
           </Paper>
