@@ -11,6 +11,8 @@ import CategoryOptions from '../Input/CategoryOptions'
 import UserContext from '../context/UserContext';
 import { store } from 'react-notifications-component';
 import Loading2 from '../Loaders/Loading2';
+import Loading from '../Loaders/Loading';
+
 // import checkPrice from '../Parser/checkPrice';
 
 
@@ -254,7 +256,7 @@ function handleSubmit() {
     }
 }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading open={true}/>;
   if (error) return <p>Error! :(</p>;
 
   return (

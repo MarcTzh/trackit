@@ -6,6 +6,8 @@ import { gql } from 'apollo-boost';
 import { useQuery, } from '@apollo/react-hooks';
 import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
+import Loading from '../Loaders/Loading';
+
 
 const CATEGORIES_QUERY = gql `
 {
@@ -34,7 +36,7 @@ export default function CategoryOptions(props) {
   const [inputCategoryValue, setInputCategoryValue] = useState('');
   const { userData } = useContext(UserContext);
   
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading open={true}/>;
   if (error) return <p>Error! :(</p>;
   
     data.categories.filter((category) => 

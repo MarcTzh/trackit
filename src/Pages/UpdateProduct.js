@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Loading from '../Loaders/Loading';
 
 const PRODUCTS_QUERY = gql `
 {
@@ -111,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
         )
     }
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
 
     return (
