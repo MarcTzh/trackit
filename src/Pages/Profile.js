@@ -317,7 +317,7 @@ function Profile() {
         {userData.user ? (
             <div className={classes.paper} style={{ margin: 30 , padding: 30}}>
                 <div style={{ marginBottom: 30}}> 
-                    <div className={classes.title}>My Profile</div>
+                    <div className={classes.title}>Charts</div>
                     <div className={classes.subtitle}>Please choose a category to display</div>
                 </div>
                 <div>

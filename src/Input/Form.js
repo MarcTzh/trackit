@@ -56,7 +56,22 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
-
+  subtitle2: {
+    padding: theme.spacing(2),
+    marginTop: 5,
+    marginBottom: -5,
+    fontSize:20,
+    color: "white",
+    fontWeight:200,
+  },
+  subtitle3: {
+    padding: theme.spacing(2),
+    marginTop: 5,
+    marginBottom: -15,
+    fontSize:20,
+    color: "white",
+    fontWeight:200,
+  },
 }));
 
 
@@ -263,6 +278,7 @@ function handleSubmit() {
     <div>
         {/* <Loading2 /> */}
         <div>
+          <div className={classes.subtitle2}>Choose from existing category or enter a new one</div> 
           <CategoryOptions callBackFromParent={setCategoryValue}/>
         </div>
         {/* <div>{`brandValue: ${brandValue !== null ? `'${brandValue}'` : 'null'}`}</div>
@@ -287,7 +303,7 @@ function handleSubmit() {
         </div>
 
         <div>
-
+        <div className={classes.subtitle3}>Product information</div> 
         <GeneralTextField
             onChange ={handleUrlChange}
             value = {url}

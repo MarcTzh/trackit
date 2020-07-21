@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize:44,
         color: "white",
         fontWeight:700,
+        textAlign: 'center',
       },
       subtitle: {
         fontSize:28,
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
       },
       paper: {
         padding: theme.spacing(1),
-        textAlign: 'center',
+        // textAlign: 'center',
         // color: theme.palette.text.secondary,
         background: "#212029",
       },

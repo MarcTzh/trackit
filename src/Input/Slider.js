@@ -83,10 +83,10 @@ export default function DiscreteSlider(props) {
 
   return (
     <div className={classes.root}>
-      <Typography id="discrete-slider-custom" gutterBottom>
+      {/* <Typography id="discrete-slider-custom" gutterBottom>
         Notification frequency
       </Typography>
-      <div className={classes.subtitle2}>Notification frequency</div>
+      <div className={classes.subtitle2}>Notification frequency</div> */}
         <Slider
           defaultValue={24}
           getAriaValueText={valuetext}

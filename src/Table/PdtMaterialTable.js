@@ -222,16 +222,16 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category', editable: 'never'},
                                 { title: 'Brand', field: 'brand', editable: 'never' },
-                                // { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
-                                //     (rowData.price == null || rowData.price === 0)
-                                //     //url not working
-                                //     ? <div style={{paddingLeft: 7}}><ErrorIcon htmlColor="#dc3646"/></div>
-                                //     : (rowData.price < rowData.minPrice)
-                                //         //price drop
-                                //         ? <div style={{paddingLeft: 7}}><NotificationsActiveIcon htmlColor="#2e7cff"/></div>
-                                //         //url working
-                                //         : <div style={{paddingLeft: 7}}><CheckCircleIcon htmlColor="#34aa4a"/></div>
-                                // },
+                                { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
+                                    (rowData.price == null || rowData.price === 0)
+                                    //url not working
+                                    ? <div style={{paddingLeft: 7}}><ErrorIcon htmlColor="#dc3646"/></div>
+                                    : (rowData.price < rowData.minPrice)
+                                        //price drop
+                                        ? <div style={{paddingLeft: 7}}><NotificationsActiveIcon htmlColor="#2e7cff"/></div>
+                                        //url working
+                                        : <div style={{paddingLeft: 7}}><CheckCircleIcon htmlColor="#34aa4a"/></div>
+                                },
                                 { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
                                 { title: 'URL', field: 'url', hidden: urlBoolean, editable: 'onUpdate'},
@@ -239,7 +239,22 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 { title: 'Date Array', field: 'dateArray', hidden: true},
                             ]}
                             //visit link maybe
-                            // onRowClick={((evt, selectedRow) => (selectedRow.price == null || selectedRow.price <= 0) ? window.location.assign(selectedRow.url) : console.log(selectedRow.price))}
+                            onRowClick={((evt, selectedRow) => !(selectedRow.price == null || selectedRow.price <= 0) 
+                                ? window.location.assign(selectedRow.url) 
+                                : store.addNotification({
+                                            title: "Error:",
+                                            message: "Your product url is faulty",
+                                            type: "danger",
+                                            insert: "top",
+                                            container: "top-right",
+                                            animationIn: ["animated", "fadeIn"],
+                                            animationOut: ["animated", "fadeOut"],
+                                            dismiss: {
+                                            duration: 2000,
+                                            onScreen: true
+                                            }
+                                        })
+                            )}
                             data= {data.products.filter((product) => product.userID === userData.user.id)}
                             // data = {userProducts({ variables: { info: userData.user.id } })}
                             // data = {data.products}
@@ -340,7 +355,7 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 headerStyle: {
                                     backgroundColor: '#212029',
                                 },
-                                //to highlight entire row based on url status
+                                // to highlight entire row based on url status
                                 // rowStyle: rowData => ({
                                 //     //if valid link then do nothing
                                 //     backgroundColor: (rowData.price == null || rowData.price == 0) ?

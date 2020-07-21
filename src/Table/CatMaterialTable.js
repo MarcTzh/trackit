@@ -235,8 +235,8 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                             style={{ backgroundColor: '#212029'}}
                             title= {title}
                             columns={[
-                                { title: 'Name', field: 'name' },
-                                { title: 'Amount', field: 'amount', editable: 'never' },
+                                { title: 'Category', field: 'name' },
+                                { title: 'Number', field: 'amount', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
                             ]}
                             data= {handleData()}
