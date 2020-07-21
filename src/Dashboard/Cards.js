@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -19,9 +20,29 @@ const useStyles = makeStyles({
     fontSize: 50,
     fontWeight: 600,
   },
+  subtitle: {
+    fontSize: 28,
+    fontWeight: 600
+  },
   pos: {
     marginBottom: 12,
   },
+  button: {
+    backgroundColor: "#3f51b5",
+    // backgroundColor: "#3f51b5",
+    color: "white",
+    '&:hover': {
+        // backgroundColor: '#32408f',
+        color: '#FFF'
+    },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+    // margin-top: 16px;
+  },
+  link: {
+    color: "white"
+  }
 });
 
 export default function Cards(props) {
@@ -40,15 +61,18 @@ export default function Cards(props) {
         <Typography className={classes.pos} color="textSecondary">
         {props.text3}
         </Typography>
-        <Typography variant="h5" component="h2">
-        {props.text}
+        {/* <Typography variant="h5" component="h2"> */}
+        <Typography className={classes.subtitle} color="#fff" gutterBottom>
+          <Link onClick={props.onClick} className={classes.link}>
+            {props.text}
+          </Link>
         </Typography>
       </CardContent>
-        {/* <div>
+        <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
           <CardActions>
-            <Button size="large">Learn More</Button>
+            {/* <Button className={classes.button} size="small" ></Button> */}
           </CardActions>
-        </div> */}
+        </div>
     </div>
   );
 }

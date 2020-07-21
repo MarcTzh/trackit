@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     title: {
+        textAlign: 'center',
         fontSize:44,
         color: "white",
         fontWeight:700,
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
       },
       paper: {
         padding: theme.spacing(1),
-        textAlign: 'center',
+        // textAlign: 'center',
         // color: theme.palette.text.secondary,
         background: "#212029",
       },

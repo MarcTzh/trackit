@@ -211,7 +211,7 @@ export default function PersistentDrawerLeft(props) {
             </MenuItem>
             <MenuItem component={Link} to="/profile">
             <ListItemIcon><PersonIcon color="primary"/></ListItemIcon>
-                Profile
+                Charts
             </MenuItem>
             <MenuItem component={Link} to="/products">
             <ListItemIcon><PhoneAndroidIcon color="primary"/></ListItemIcon>

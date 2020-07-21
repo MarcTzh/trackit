@@ -3,7 +3,6 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import Loading from '../Loaders/Loading';
 // import Poster2 from "../Images/Poster2.jpg";
-import { Link } from "react-router-dom";
 import UserContext from '../context/UserContext';
 import Paper from '@material-ui/core/Paper';
 import ComplexGrid from '../Dashboard/ComplexGrid';
@@ -19,7 +18,7 @@ import * as styles from '../style.css'
 // import GeneralButton from '../Input/GeneralButton';
 import { castArray } from 'lodash';
 // import Cards from '../Dashboard/Cards';
-
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -84,6 +83,7 @@ let faultyLinks = 0;
 let priceDrops = 0;
 
 function Home() {
+    let history = useHistory();
 
     // const [donutChartData, setDonutChartData] = useState({})
 
@@ -193,17 +193,19 @@ function Home() {
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.card}>
-            <Cards counter={pdtCounter} text={"Products"}/>
+            <Cards counter={pdtCounter} text={"Products"} buttonMessage={"View Products"}  onClick={() => history.push("/Products")}/>
           </Paper>
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.card}>
-            <Cards counter={catArray.length} text={"Categories"}/>
+            <Cards counter={catArray.length} text={"Categories"} buttonMessage={"View Categories"}  onClick={() => history.push("/Categories")} />
           </Paper>
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.card}>
-            <Cards counter={notifications} text={"Notifications"} text3={`${priceDrops} Price drops and ${faultyLinks} Faulty links`}/>
+            <Cards counter={notifications} text={"Notifications"} text3={`${priceDrops} Price drops and ${faultyLinks} Faulty links`}
+              buttonMessage={"View products"} onClick={() => history.push("/Products")}
+            />
           </Paper>
         </Grid>
         <Grid item xs={6} >

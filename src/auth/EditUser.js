@@ -24,11 +24,17 @@ export default function EditUser() {
             fontWeight:700,
           },
           subtitle: {
+            padding: theme.spacing(2),
+            marginTop: 15,
+            marginBottom: 5,
             fontSize:28,
             color: "white",
             fontWeight:500,
           },
           subtitle2: {
+            padding: theme.spacing(2),
+            marginTop: 5,
+            marginBottom: -15,
             fontSize:20,
             color: "white",
             fontWeight:200,
@@ -100,10 +106,12 @@ export default function EditUser() {
 
     return (
         <div>
-            <div style={{marginTop: 15, marginBottom: 15}}  className={classes.subtitle}>Edit account details</div>
+            <div className={classes.subtitle}>Edit account details</div>
 
+            <div className={classes.subtitle2}>Notification settings</div>
             <Slider editSliderValue={(value) => setNotiSettings(value)}/>
             
+            <div className={classes.subtitle2}>Edit email</div>
             <GeneralTextField
             placeholder="New email"
             onChange ={(e) => setNewEmail(e.target.value)}
@@ -111,12 +119,14 @@ export default function EditUser() {
             //   value = "new email"
             />
 
+            <div className={classes.subtitle2}>Edit password</div>
             <GeneralTextField
             placeholder="New password"
             onChange ={(e) => setNewPassword(e.target.value)}
             //   value = "new email"
             />
             
+            <div className={classes.subtitle2}>Edit display name</div>
             <GeneralTextField
             placeholder={userData.user.displayName}
             onChange ={(e) => setNewDisplayName(e.target.value)}
@@ -124,6 +134,7 @@ export default function EditUser() {
             //   value = "new email"
             />
 
+            <div className={classes.subtitle2}>Enter current password</div> 
             <GeneralTextField
             placeholder="Current password"
             variant="outlined"
