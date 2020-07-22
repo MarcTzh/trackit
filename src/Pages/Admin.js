@@ -77,14 +77,15 @@ const PRODUCTS_QUERY = gql `
 }`;
 
 const ADD_PRICE_AND_DATE_MUTATION = gql `
-    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!) {
-        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!, $email: String!) {
+        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray, email: $email)
     }
 `;
 
 function Admin() {
 
     const { userData } = useContext(UserContext);
+
 
     const classes = useStyles();
 
@@ -133,6 +134,7 @@ function Admin() {
                   price: 0,  
                   priceArray:product.priceArray, 
                   dateArray:product.dateArray,
+                  email: userData.user.email
               }, 
               refetchQueries: [{ query: PRODUCTS_QUERY}] 
           }
@@ -180,8 +182,8 @@ function Admin() {
     }
 
     if(userData !== undefined && userData.user !== undefined) {
-        console.log(productData); //products
-        console.log(data); //categories
+        // console.log(productData); //products
+        // console.log(data); //categories
         currUserID = String(userData.user.id);
         catArray =[];
         pdtCountArray =[];
@@ -253,25 +255,8 @@ function Admin() {
             <Cards counter={notifications} text={"Notifications"}/>
           </Paper>
         </Grid>
-        <Grid item xs={6} >
-          <Paper className={classes.card}>
-            {
-              data?
-                (<Donut label={catArray} data ={pdtCountArray} title = "Product's categories"/>)
-                : (null)
-            }
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.card}>
-            {/* <BarChart /> */}
-            {
-              data?
-                (<BarChart label={catArray} data ={pdtCountArray} title = "Platforms"/>)
-                : (null)
-            }
-          </Paper>
-        </Grid>
+        
+       
 
       </Grid>
     </div>

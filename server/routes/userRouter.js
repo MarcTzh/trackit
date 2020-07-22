@@ -70,6 +70,7 @@ router.post("/login", async (req, res) => {
       user: {
         id: user._id,
         displayName: user.displayName,
+        email: user.email
       },
     });
   } catch (err) {
@@ -105,25 +106,26 @@ router.post("/tokenIsValid", async (req, res) => {
 });
 
 //crawl
-router.get("/crawl", async (req, res) => {
-  const { 
-    url
-  } = req.body;
-  let result = null;
-  try {
-    result = checkPrice(url)
-  } catch (err) {
-    console.log("userRouter error: " + err)
-  }
-  return res.json(result);
+// router.get("/crawl", async (req, res) => {
+//   const { 
+//     url
+//   } = req.body;
+//   let result = null;
+//   try {
+//     result = checkPrice(url)
+//   } catch (err) {
+//     console.log("userRouter error: " + err)
+//   }
+//   return res.json(result);
 
-});
+// });
 
 router.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
   res.json({
     displayName: user.displayName,
     id: user._id,
+    email: user.email
   });
 });
 

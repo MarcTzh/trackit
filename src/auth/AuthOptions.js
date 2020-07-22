@@ -15,6 +15,7 @@ export default function AuthOptions(props) {
     setUserData({
       token: undefined,
       user: undefined,
+      email: undefined
     });
     localStorage.setItem("auth-token", "");
     props.closeDrawer()

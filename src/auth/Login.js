@@ -42,6 +42,7 @@ export default function Login() {
       setUserData({
         token: loginRes.data.token,
         user: loginRes.data.user,
+        email: loginRes.data.email
       });
       localStorage.setItem("auth-token", loginRes.data.token);
       history.push("/");

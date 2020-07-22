@@ -132,8 +132,8 @@ mutation UpdateProduct($id: ID!, $name: String!, $url: String!) {
 `;
 
 const ADD_PRICE_AND_DATE_MUTATION = gql `
-    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!) {
-        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!, $email: String!) {
+        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray, email: $email)
     }
 `;
 let notifications = 0;
@@ -193,21 +193,24 @@ let priceDrops = 0;
     // const tableRef = useRef();
 
     function handleUpdate(productID, productUrl, productDateArray, productPriceArray) {
-        addPriceAndDate(
-            {
-                variables: 
+        if(userData !== undefined && userData.user !== undefined) {
+            addPriceAndDate(
                 {
-                    id: productID,
-                    url: productUrl,
-                    date: currDate,
-                    price: 0,  
-                    priceArray:productPriceArray, 
-                    dateArray:productDateArray,
-                }, 
-                refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                    variables: 
+                    {
+                        id: productID,
+                        url: productUrl,
+                        date: currDate,
+                        price: 0,  
+                        priceArray:productPriceArray, 
+                        dateArray:productDateArray,
+                        email: userData.user.email
+                    }, 
+                    refetchQueries: [{ query: PRODUCTS_QUERY}] 
 
-            }
-        )
+                }
+            )
+        }
     }
     
 

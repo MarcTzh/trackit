@@ -107,6 +107,7 @@ function Home(props) {
 
       
     if(userData !== undefined && userData.user !== undefined) {
+      console.log(userData)
       currUserID = String(userData.user.id);
       catArray =[];
       pdtCountArray =[];
@@ -149,7 +150,7 @@ function Home(props) {
               pdtCounter++;
               //check if faulty link
               const price = product.price;
-              console.log(product.name)
+              // console.log(product.name)
               if(price == null || price === 0) {
                 // console.log(price)
                 faultyLinks++;
