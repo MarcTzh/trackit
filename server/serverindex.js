@@ -1,11 +1,14 @@
 const { GraphQLServer } = require('graphql-yoga');
 // const parser = require('./AmazonParser.js');
-
 const parser = require('./checkPrice');
-
+const Mailer = require("./Mailer");
 const mongoose = require('mongoose');
+const notification = require('./notification');
+// const { default: UserContext } = require('../src/context/UserContext');
 mongoose.connect('mongodb+srv://teamBogo:rainbow6siege@cluster0-vo9fe.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useFindAndModify', false);
+
+
 
 
 //schema model
@@ -101,7 +104,8 @@ const typeDefs = `
         date: String!,
         price: Float,
         priceArray: [Float]!,
-        dateArray: [String!]!
+        dateArray: [String!]!,
+        email: String!
       ): Boolean
 
       removeProduct(
@@ -186,21 +190,26 @@ const resolvers = {
         return true;
       },
       
-      addPriceAndDate: async (_, {id, url, date, price, priceArray, dateArray}) => {
+      addPriceAndDate: async (_, {id, url, date, price, priceArray, dateArray, email}) => {
         console.log("Start");
         price = parseFloat(await parser.checkPrice(url));
-        console.log("price in serverindex " + price);
-
+        console.log("Price in serverindex: " + price);
+        const pdt = await Product.findById(id);
         if(Number.isNaN(price)) {
           price = null;
           await Product.findByIdAndUpdate(id, {url, date, priceArray, dateArray});
+          notification.notify(email, pdt, true);
+          console.log("notify broken link: " + email)
           return false;
         } else {
           priceArray.push(price);
-          console.log("pushed into priceArray");
+          // console.log("pushed into priceArray");
           dateArray.push(date);
-          console.log("pushed into dateArray");
+          notification.notify(email, pdt, false);
+          console.log("notify price drop: " + email)
+          // console.log("pushed into dateArray");
           await Product.findByIdAndUpdate(id, {url, date, price, priceArray, dateArray});
+          console.log("Product updated")
           return true;
         }
         

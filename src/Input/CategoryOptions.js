@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
       marginBottom: theme.spacing(1),
+      justifyContent: "flex-end"
     },
 
   }));
@@ -73,7 +74,7 @@ export default function CategoryOptions(props) {
                 className={classes.textField}
                 freeSolo
                 fullWidth
-                renderInput = {(params) => <TextField {...params} label="Category" variant="outlined" />}
+                renderInput = {(params) => <TextField {...params} margin="normal" label="Category" variant="outlined" />}
             />
         </div>
       ) : (

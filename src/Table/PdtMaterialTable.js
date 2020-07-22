@@ -35,10 +35,16 @@ import { store } from 'react-notifications-component';
 import Loading from '../Loaders/Loading';
 import { Redirect } from 'react-router';
 
+//tool tip
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import Fab from '@material-ui/core/Fab';
+
 //url status
 import ErrorIcon from '@material-ui/icons/Error';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import Grid from '@material-ui/core/Grid';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +57,15 @@ const useStyles = makeStyles((theme) => ({
         fontSize:28,
         color: "white",
         fontWeight:500,
-      }
+      },
+      fab: {
+        margin: theme.spacing(2),
+      },
+      absolute: {
+        position: 'relative',
+        bottom: theme.spacing(2),
+        right: theme.spacing(3),
+      },
 }));
 
 const tableIcons = {
@@ -118,11 +132,14 @@ mutation UpdateProduct($id: ID!, $name: String!, $url: String!) {
 `;
 
 const ADD_PRICE_AND_DATE_MUTATION = gql `
-    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!) {
-        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!, $email: String!) {
+        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray, email: $email)
     }
 `;
-
+let notifications = 0;
+//breakdown of notifications
+let faultyLinks = 0;
+let priceDrops = 0;
 
  export default function PdtMaterialTable(props) {
 
@@ -176,26 +193,63 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     // const tableRef = useRef();
 
     function handleUpdate(productID, productUrl, productDateArray, productPriceArray) {
-        addPriceAndDate(
-            {
-                variables: 
+        if(userData !== undefined && userData.user !== undefined) {
+            addPriceAndDate(
                 {
-                    id: productID,
-                    url: productUrl,
-                    date: currDate,
-                    price: 0,  
-                    priceArray:productPriceArray, 
-                    dateArray:productDateArray,
-                }, 
-                refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                    variables: 
+                    {
+                        id: productID,
+                        url: productUrl,
+                        date: currDate,
+                        price: 0,  
+                        priceArray:productPriceArray, 
+                        dateArray:productDateArray,
+                        email: userData.user.email
+                    }, 
+                    refetchQueries: [{ query: PRODUCTS_QUERY}] 
 
-            }
-        )
+                }
+            )
+        }
     }
+    
 
 
     if (loading) return <Loading open={true}/>;
     if (error) return <p>Error! :(</p>;
+
+    let currUserID;
+ 
+    if(userData !== undefined && userData.user !== undefined && data !== undefined) {
+        currUserID = String(userData.user.id);
+        notifications = 0;
+        faultyLinks = 0;
+        priceDrops = 0;
+
+
+        for(let j = 0; j< data.products.length; j++) {
+            const product = data.products[j];
+            if(currUserID === product.userID) {
+                // console.log(data[j])
+                //check if faulty link
+                const price = product.price;
+                // console.log(product.name)
+                if(price == null || price === 0) {
+                // console.log(price)
+                faultyLinks++;
+                } else {
+                    //price drops
+                    if(price < product.minPrice) {
+                        priceDrops++;
+                    }
+                }
+            }
+        }
+        //count notifications
+        notifications = faultyLinks + priceDrops;
+        // console.log(notifications);
+
+    }
 
     // if (data && data.products) {
     //     console.log("dataproducts in")
@@ -205,8 +259,15 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     // const load = () => {
     //     userProducts({ variables: { info: userData.user.id } })
     // }
-    const title = <div><div className={classes.title} style={{textAlign: "center"}}>My Products</div>
-                    <div className={classes.subtitle}>Click to visit link</div></div>;
+    const title = <div>
+                    <div className={classes.title}>My Products</div>
+                    <div className={classes.subtitle}>{priceDrops} Price drops and {faultyLinks} Faulty links</div>
+                    {/* <Grid item xs={12}>
+                        <div>
+                            <h3>test</h3>
+                        </div>
+                    </Grid> */}
+                  </div>;
     
 
     return (
@@ -216,29 +277,46 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                         <MaterialTable
                             // tableRef={tableRef}
                             icons={tableIcons}
-                            style={{ backgroundColor: '#212029'}}
+                            style={{ backgroundColor: '#211f29'}}
                             title= {title}
                             columns={[
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category', editable: 'never'},
                                 { title: 'Brand', field: 'brand', editable: 'never' },
-                                { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
-                                    (rowData.price == null || rowData.price === 0)
-                                    //url not working
-                                    ? <div style={{paddingLeft: 7}}><ErrorIcon htmlColor="#dc3646"/></div>
-                                    : (rowData.price < rowData.minPrice)
-                                        //price drop
-                                        ? <div style={{paddingLeft: 7}}><NotificationsActiveIcon htmlColor="#2e7cff"/></div>
-                                        //url working
-                                        : <div style={{paddingLeft: 7}}><CheckCircleIcon htmlColor="#34aa4a"/></div>
-                                },
+                                // { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
+                                //     (rowData.price == null || rowData.price === 0)
+                                //     //url not working
+                                //     ? <div>
+                                //         <Tooltip title="URL is dead">
+                                //             <IconButton aria-label="delete">
+                                //                 <ErrorIcon htmlColor="#dc3646"/>
+                                //             </IconButton>
+                                //         </Tooltip>
+                                //         </div>
+                                //     : (rowData.price < rowData.minPrice)
+                                //         //price drop
+                                //         ? <div>
+                                //         <Tooltip title="Price drop">
+                                //             <IconButton aria-label="delete">
+                                //                 <NotificationsActiveIcon htmlColor="#2e7cff"/>
+                                //             </IconButton>
+                                //             </Tooltip>
+                                //         </div>
+                                //         //url working
+                                //         : <div>
+                                //             <Tooltip title="URL is working">
+                                //                 <IconButton aria-label="delete">
+                                //                     <CheckCircleIcon htmlColor="#34aa4a"/>
+                                //                 </IconButton>
+                                //             </Tooltip>
+                                //             </div>
+                                // },
                                 { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
                                 { title: 'URL', field: 'url', hidden: urlBoolean, editable: 'onUpdate'},
                                 { title: 'Price Array', field: 'priceArray', hidden: true},
                                 { title: 'Date Array', field: 'dateArray', hidden: true},
                             ]}
-                            //visit link maybe
                             onRowClick={((evt, selectedRow) => !(selectedRow.price == null || selectedRow.price <= 0) 
                                 ? window.location.assign(selectedRow.url) 
                                 : store.addNotification({

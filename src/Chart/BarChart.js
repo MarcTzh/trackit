@@ -10,7 +10,7 @@ export default function BarChart(props) {
             labels: props.label,
             datasets: [
                 {
-                    backgroundColor: ['#9CFFFA', '#623CEA', '#DFB2F4', '#D36135', '#2BD9FE', '#EF476F','#159dfb', '#c83955', '#FFD166', '#17d993'],
+                    backgroundColor: ['#9CFFFA', '#623CEA', '#DFB2F4'], //, '#D36135', '#2BD9FE', '#EF476F','#159dfb', '#c83955', '#FFD166', '#17d993'],
                     data: props.data
                 }
             ],
@@ -31,7 +31,7 @@ export default function BarChart(props) {
                     title: {text:props.title, display: false},
                     animationSteps: 60,
                     legend: {
-                        display: true,
+                        display: false,
                         position: "bottom",
                         align: "center",
                         // onClick: null,
@@ -43,6 +43,36 @@ export default function BarChart(props) {
                             padding:15,
                         }
                     },
+                    Axes: {
+                        color:  '#000'
+                    },
+                    borderColor: "#fff",
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // // Include a dollar sign in the ticks
+                                // callback: function(value, index, values) {
+                                //     return '$' + value;
+                                // },
+                                fontColor: 'white',
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                color: 'gray',
+                                lineWidth: 0.2
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: 'white'
+                            },
+                            gridLines: {
+                                color: 'gray',
+                                lineWidth: 0
+                            }
+                        }],
+                    },
+                    fontColor: 'white'
                 }}/>
             </div>
         </div>

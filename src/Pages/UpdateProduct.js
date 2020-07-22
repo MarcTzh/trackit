@@ -37,8 +37,8 @@ const REMOVE_MUTATION = gql `
 `;
 
 const ADD_PRICE_AND_DATE_MUTATION = gql `
-    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!) {
-        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray)
+    mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!, $email: String!) {
+        addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray, email: $email)
     }
 `;
 
@@ -97,19 +97,22 @@ const useStyles = makeStyles((theme) => ({
     const currDate = (today.getTime()).toString(10);
 
     function handleUpdate(product) {
-        addPriceAndDate(
-            {
-                variables: 
+        if(userData !== undefined && userData.user !== undefined) {
+            addPriceAndDate(
                 {
-                    id: product.id,
-                    url: product.url,
-                    date: currDate,
-                    price: 0,  
-                    priceArray:product.priceArray, 
-                    dateArray:product.dateArray,
+                    variables: 
+                    {
+                        id: product.id,
+                        url: product.url,
+                        date: currDate,
+                        price: 0,  
+                        priceArray:product.priceArray, 
+                        dateArray:product.dateArray,
+                        email: userData.email,
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     if (loading) return <Loading open={true}/>;

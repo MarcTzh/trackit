@@ -64,9 +64,8 @@ function App() {
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined,
+    email: undefined
   });
-
-  const [notifications, setNotifications] = useState(0);
 
   useEffect(() => {
     const checkLoggedIn = async () => {
