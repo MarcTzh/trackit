@@ -12,17 +12,20 @@ import UserContext from '../context/UserContext';
 import { store } from 'react-notifications-component';
 import Loading2 from '../Loaders/Loading2';
 import Loading from '../Loaders/Loading';
-
+import Axios from "axios";
 // import checkPrice from '../Parser/checkPrice';
 
 
 const PRODUCTS_QUERY = gql`
 {
     products {
-        id
-        name
-        price
-        dateArray
+      id
+      name
+      price
+      category
+      userID
+      minPrice
+      brand
     }
 }`;
 
@@ -40,7 +43,8 @@ const CATEGORIES_QUERY = gql `
 {
     categories {
         id
-        name  
+        name
+        userID
     }
 }`;
 
@@ -95,26 +99,32 @@ export default function Form() {
 
   const { userData } = useContext(UserContext);
 
-  //TODO: FIX THIS JIYU THANKS
   //to determine whether to add a new category
   let catArray = [];
   let currUserID;
   // console.log(data);
   
   if(userData !== undefined && userData.user !== undefined && data !== undefined) {
+    catArray =[]
     currUserID = String(userData.user.id);
-    // for(let i = 0; i < data.categories.length; i++) {
-    //   if(currUserID === data.categories[i].userID) {
-    //     catArray.push(data.categories[i].name)
-    //   }
-    // }
-
-    //alternative also doesnt work
-    data.categories.filter((category) => 
-      category.userID === currUserID)
-    .map((category) => catArray.push(category.name));
-      console.log(catArray)
+    // console.log(currUserID)
+    // console.log(data.categories.userID)
+    for(let i = 0; i < data.categories.length; i++) {
+      // console.log("1: " + data.categories[i])
+      // console.log("2" + currUserID)
+      if(currUserID == data.categories[i].userID) {
+        catArray.push(data.categories[i].name)
+        // console.log("name: " + data.categories[i].name)
+        // console.log("catArray: [" + catArray + "]")
+      }
     }
+
+    // //alternative also doesnt work
+    // data.categories.filter((category) => 
+    //   category.userID === currUserID)
+    // .map((category) => catArray.push(category.name));
+    // console.log(catArray)
+  }
   //For dates
   const [today, setToday] = useState(new Date());  
 
@@ -167,7 +177,7 @@ export default function Form() {
     }
   }
 
-  function crawl() {
+  async function crawl() {
     if(url !== '') {
       console.log(`${url}`)
       store.addNotification({
@@ -186,6 +196,29 @@ export default function Form() {
 
       //i am stuck here, cannot do this
       // checkPrice(url);
+      // try {
+      //   const link = url;
+      //   const price = await Axios.post("http://localhost:5000/crawl", link);
+      //   console.log(price);
+      // } catch(err) {
+      //   if(err.response.data.msg) {
+      //     store.addNotification({
+      //       title: "Error:",
+      //       message: `${err.response.data.msg}`,
+      //       type: "danger",
+      //       insert: "top",
+      //       container: "top-right",
+      //       animationIn: ["animated", "fadeIn"],
+      //       animationOut: ["animated", "fadeOut"],
+      //       dismiss: {
+      //         duration: 2000,
+      //         onScreen: true
+      //       }
+      //     });
+      //   }
+      // }
+      
+      
     } else {
       store.addNotification({
         title: "Error:",

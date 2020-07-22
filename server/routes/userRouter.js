@@ -5,6 +5,7 @@ const auth = require("../middleware/auth");
 const User = require("../models/userModel");
 const _ = require("lodash");
 const Mailer = require("../Mailer");
+const checkPrice = require('../checkPrice');
 
 router.post("/register", async (req, res) => {
   try {
@@ -85,6 +86,7 @@ router.delete("/delete", auth, async (req, res) => {
   }
 });
 
+
 router.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("x-auth-token");
@@ -100,6 +102,21 @@ router.post("/tokenIsValid", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+//crawl
+router.get("/crawl", async (req, res) => {
+  const { 
+    url
+  } = req.body;
+  let result = null;
+  try {
+    result = checkPrice(url)
+  } catch (err) {
+    console.log("userRouter error: " + err)
+  }
+  return res.json(result);
+
 });
 
 router.get("/", auth, async (req, res) => {

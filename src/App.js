@@ -66,8 +66,6 @@ function App() {
     user: undefined,
   });
 
-  const [notifications, setNotifications] = useState(0);
-
   useEffect(() => {
     const checkLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");

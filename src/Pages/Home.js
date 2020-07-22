@@ -20,6 +20,7 @@ import { castArray } from 'lodash';
 // import Cards from '../Dashboard/Cards';
 import { useHistory } from "react-router-dom";
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -82,7 +83,7 @@ let notifications = 0;
 let faultyLinks = 0;
 let priceDrops = 0;
 
-function Home() {
+function Home(props) {
     let history = useHistory();
 
     // const [donutChartData, setDonutChartData] = useState({})
@@ -156,7 +157,6 @@ function Home() {
                 //price drops
                 if(price < product.minPrice) {
                   priceDrops++;
-                  console.log("drop: " + product.name)
                 }
               }
             }
@@ -166,8 +166,8 @@ function Home() {
       }
       //count notifications
       notifications = faultyLinks + priceDrops;
-      console.log(brandsArray);
-      console.log(brandsCountArray)
+      // console.log(brandsArray);
+      // console.log(brandsCountArray)
     }
 
     return (
@@ -203,7 +203,8 @@ function Home() {
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.card}>
-            <Cards counter={notifications} text={"Notifications"} text3={`${priceDrops} Price drops and ${faultyLinks} Faulty links`}
+            <Cards counter={notifications} text={"Notifications"}
+            //text3={`${priceDrops} Price drops and ${faultyLinks} Faulty links`}
               buttonMessage={"View products"} onClick={() => history.push("/Products")}
             />
           </Paper>
