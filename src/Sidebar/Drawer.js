@@ -14,8 +14,11 @@ import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
 import AddIcon from "@material-ui/icons/Add";
 import SettingsIcon from "@material-ui/icons/Settings";
-import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
-import PhoneAndroidTwoToneIcon from '@material-ui/icons/PhoneAndroidTwoTone';
+// import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
+import ListIcon from '@material-ui/icons/List';
+// import PhoneAndroidTwoToneIcon from '@material-ui/icons/PhoneAndroidTwoTone';
+import FolderIcon from '@material-ui/icons/Folder';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -214,11 +217,11 @@ export default function PersistentDrawerLeft(props) {
                 Charts
             </MenuItem>
             <MenuItem component={Link} to="/products">
-            <ListItemIcon><PhoneAndroidIcon color="primary"/></ListItemIcon>
+            <ListItemIcon><ListIcon color="primary"/></ListItemIcon>
                 Products
             </MenuItem>
             <MenuItem component={Link} to="/categories">
-            <ListItemIcon><PhoneAndroidTwoToneIcon color="primary"/></ListItemIcon>
+            <ListItemIcon><FolderIcon color="primary"/></ListItemIcon>
                 Categories
             </MenuItem>
             <MenuItem component={Link} to="/addnew">
@@ -234,7 +237,7 @@ export default function PersistentDrawerLeft(props) {
                 Settings
             </MenuItem>
             <MenuItem component={Link} to="/admin">
-            <ListItemIcon><SettingsIcon color="primary"/></ListItemIcon>
+            <ListItemIcon><SupervisorAccountIcon color="primary"/></ListItemIcon>
                 Admin
             </MenuItem>
         </MenuList>
