@@ -26,8 +26,8 @@ export default function BarChart(props) {
             {/* //options */}
             <div class="canvas-container">
                 <Bar data={chartData} options={{
-                    // responsive: true,
-                    // maintainAspectRatio: true,
+                    responsive: true,
+                    maintainAspectRatio: true,
                     title: {text:props.title, display: false},
                     animationSteps: 60,
                     legend: {

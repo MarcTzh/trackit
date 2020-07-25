@@ -6,7 +6,7 @@ import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks';
 import UserContext from '../context/UserContext';
 import SortIcon from '@material-ui/icons/Sort';
 import DeleteIcon from '@material-ui/icons/Delete';
-import UpdateIcon from '@material-ui/icons/Update';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -27,6 +27,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 // import Divider from '@material-ui/core/Divider';
 import { makeStyles, withTheme } from '@material-ui/core/styles';
 import MaterialTable, { MTableToolbar } from 'material-table';
@@ -159,6 +160,10 @@ let priceDrops = 0;
 
     const { userData } = useContext(UserContext);
 
+    const [showNoti, setShowNoti] = useState(true);
+
+    const [displayedPdts, setDisplayedPdts] = useState();
+
     const [addPriceAndDate] = useMutation(ADD_PRICE_AND_DATE_MUTATION);
 
     // const [userProducts, {loading,error, data }] = useLazyQuery(USER_PRODUCTS_QUERY, {fetchPolicy: "cache-and-network"});
@@ -178,6 +183,18 @@ let priceDrops = 0;
       }, 1000);
       return () => clearInterval(interval);
     }, []);
+
+    useEffect(() => {
+        if(data !== undefined && userData !== undefined) {
+            if(!showNoti) {
+                setDisplayedPdts(data.products.filter((product) => product.userID === userData.user.id));
+            } else {
+                setDisplayedPdts(data.products.filter((product) => product.userID === userData.user.id
+                                                                && ((product.price == null || product.price === 0)
+                                                                    || (product.price <= product.minPrice))));
+            }
+        }
+    }, [showNoti, data, userData])
 
     const currDate = (today.getTime()).toString(10);
 
@@ -283,34 +300,34 @@ let priceDrops = 0;
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category', editable: 'never'},
                                 { title: 'Brand', field: 'brand', editable: 'never' },
-                                // { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
-                                //     (rowData.price == null || rowData.price === 0)
-                                //     //url not working
-                                //     ? <div>
-                                //         <Tooltip title="URL is dead">
-                                //             <IconButton aria-label="delete">
-                                //                 <ErrorIcon htmlColor="#dc3646"/>
-                                //             </IconButton>
-                                //         </Tooltip>
-                                //         </div>
-                                //     : (rowData.price < rowData.minPrice)
-                                //         //price drop
-                                //         ? <div>
-                                //         <Tooltip title="Price drop">
-                                //             <IconButton aria-label="delete">
-                                //                 <NotificationsActiveIcon htmlColor="#2e7cff"/>
-                                //             </IconButton>
-                                //             </Tooltip>
-                                //         </div>
-                                //         //url working
-                                //         : <div>
-                                //             <Tooltip title="URL is working">
-                                //                 <IconButton aria-label="delete">
-                                //                     <CheckCircleIcon htmlColor="#34aa4a"/>
-                                //                 </IconButton>
-                                //             </Tooltip>
-                                //             </div>
-                                // },
+                                { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
+                                    (rowData.price == null || rowData.price === 0)
+                                    //url not working
+                                    ? <div>
+                                        <Tooltip title="URL is dead">
+                                            <IconButton aria-label="delete">
+                                                <ErrorIcon htmlColor="#dc3646"/>
+                                            </IconButton>
+                                        </Tooltip>
+                                        </div>
+                                    : (rowData.price < rowData.minPrice)
+                                        //price drop
+                                        ? <div>
+                                        <Tooltip title="Price drop">
+                                            <IconButton aria-label="delete">
+                                                <NotificationsActiveIcon htmlColor="#2e7cff"/>
+                                            </IconButton>
+                                            </Tooltip>
+                                        </div>
+                                        //url working
+                                        : <div>
+                                            <Tooltip title="URL is working">
+                                                <IconButton aria-label="delete">
+                                                    <CheckCircleIcon htmlColor="#34aa4a"/>
+                                                </IconButton>
+                                            </Tooltip>
+                                            </div>
+                                },
                                 { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
                                 { title: 'URL', field: 'url', hidden: urlBoolean, editable: 'onUpdate'},
@@ -333,7 +350,7 @@ let priceDrops = 0;
                                             }
                                         })
                             )}
-                            data= {data.products.filter((product) => product.userID === userData.user.id)}
+                            data= {displayedPdts}
                             // data = {userProducts({ variables: { info: userData.user.id } })}
                             // data = {data.products}
                             // data = {new Promise((resolve, reject) => resolve({data: data.products}))}
@@ -342,8 +359,8 @@ let priceDrops = 0;
                                 new Promise((resolve, reject) => {
                                     setTimeout(() => {
                                         const productID = oldData.id;
-                                        // console.log(newData);
-                                        // console.log(oldData);
+                                        console.log("newData: " + newData);
+                                        console.log("oldData: " + oldData);
                                         updateProduct(
                                             {
                                                 variables: 
@@ -361,7 +378,7 @@ let priceDrops = 0;
                             }}
                             actions={[
                                 {
-                                    icon: UpdateIcon,
+                                    icon: RefreshIcon,
                                     tooltip: 'Update Product',
                                     onClick: (event, rowData) => {
                                         console.log(rowData);
@@ -406,7 +423,7 @@ let priceDrops = 0;
                                             }
                                         });
                                     }
-                                },  
+                                },
                             ]}
                             
                             components={{
@@ -418,8 +435,11 @@ let priceDrops = 0;
                                             <ToggleButton style ={{ colour :"#fff"}} value="Show URL" aria-label="Show URL">
                                                 <LinkIcon  onClick ={() => setUrlBoolean(!urlBoolean)}/>
                                             </ToggleButton>
-                                            <ToggleButton value="Enable Sort" aria-label="Enable Sort">
+                                            {/* <ToggleButton value="Enable Sort" aria-label="Enable Sort">
                                                 <SortIcon  onClick ={() => setGroupingBoolean(!groupingBoolean)}/>
+                                            </ToggleButton> */}
+                                            <ToggleButton value="Show notifications" aria-label="Show notifications">
+                                                <NotificationsIcon onClick ={() => setShowNoti(!showNoti)}/>
                                             </ToggleButton>
                                         </ToggleButtonGroup>
                                     </div>
@@ -434,15 +454,20 @@ let priceDrops = 0;
                                     backgroundColor: '#212029',
                                 },
                                 // to highlight entire row based on url status
-                                // rowStyle: rowData => ({
+                                // rowStyle: (rowData) => ({
                                 //     //if valid link then do nothing
-                                //     backgroundColor: (rowData.price == null || rowData.price == 0) ?
+                                //     backgroundColor: (rowData !== undefined && (rowData.price == null || rowData.price === 0))
                                 //         //invalid link
-                                //         "#FF0000"
+                                //         ? showNoti 
+                                //             ? "#FF0000"
+                                //             : null
                                 //         //price drop
                                 //         :(rowData.price < rowData.minPrice)
-                                //             ? "#149dfb"
+                                //             ? showNoti
+                                //                 ? "#149dfb"
+                                //                 : null
                                 //             : null
+                                            
                                 // }),
                                 pageSize: 10,
                                 pageSizeOptions: [10,15,20],

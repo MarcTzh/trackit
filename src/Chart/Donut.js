@@ -26,8 +26,8 @@ export default function Donut(props) {
             {/* //options */}
             <div class="canvas-container">
                 <Doughnut data={chartData} options={{
-                    // responsive: true,
-                    // maintainAspectRatio: true,
+                    responsive: true,
+                    maintainAspectRatio: true,
                     title: {text:props.title, display: false},
                     // animation: true,
                     animationSteps: 60,
