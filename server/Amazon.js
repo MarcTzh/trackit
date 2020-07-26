@@ -1,22 +1,24 @@
 const puppeteer = require('puppeteer');
 
 async function checkAmazonPrice(url) {
-        let browser = await puppeteer.launch(); 
-        let page = await browser.newPage();
+    let price = null;
+    let browser = await puppeteer.launch(); 
+    let page = await browser.newPage();
+
+    try {
+        await page.goto(url, { waitUntil: 'networkidle2' });
 
         page.on('error', err=> {
             console.log('error happen at the page: ', err);
         });
-
+    
         page.on('pageerror', pageerr=> {
             console.log('pageerror occurred: ', pageerr);
         })
-    try {
-        await page.goto(url, { waitUntil: 'networkidle2' });
 
         let data = await page.evaluate(() => {
             //check if dealprice
-            let price = document.querySelector("#priceblock_dealprice")
+            price = document.querySelector("#priceblock_dealprice")
 
             if(!price) { //sale price
                 price = document.querySelector("#priceblock_saleprice")

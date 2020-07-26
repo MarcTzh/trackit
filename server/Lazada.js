@@ -1,19 +1,21 @@
 const puppeteer = require('puppeteer');
 
 async function checkLazadaPrice(url) {
-    let browser = await puppeteer.launch();
+    let price = null;
+    let browser = await puppeteer.launch(); 
     let page = await browser.newPage();
-
-    page.on('error', err=> {
-        console.log('error happen at the page: ', err);
-    });
-
-    page.on('pageerror', pageerr=> {
-        console.log('pageerror occurred: ', pageerr);
-    })
-
+    
     try {
         await page.goto(url, { waitUntil: 'networkidle2' });
+
+        page.on('error', err=> {
+            console.log('error happen at the page: ', err);
+        });
+    
+        page.on('pageerror', pageerr=> {
+            console.log('pageerror occurred: ', pageerr);
+        })
+    
 
         let data = await page.evaluate(() => {
             let price = document.querySelector('span[class=" pdp-price pdp-price_type_normal pdp-price_color_orange pdp-price_size_xl"]')

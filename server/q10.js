@@ -1,22 +1,24 @@
 const puppeteer = require('puppeteer');
 
 async function q10CheckPrice(url) {
-        let browser = await puppeteer.launch(); 
-        let page = await browser.newPage();
+    let price = null;
+    let browser = await puppeteer.launch(); 
+    let page = await browser.newPage();
+
+    try {
+        await page.goto(url, { waitUntil: 'networkidle2' });
 
         page.on('error', err=> {
             console.log('error happen at the page: ', err);
         });
-
+    
         page.on('pageerror', pageerr=> {
             console.log('pageerror occurred: ', pageerr);
         })
-    try {
-        await page.goto(url, { waitUntil: 'networkidle2' });
 
         let data = await page.evaluate(() => {
             //check if there are discounts
-            let price = document.querySelector("#discount_info dd strong")
+            price = document.querySelector("#discount_info dd strong")
             
             if(!price) { //if not group buy promo
                 price = document.querySelector("#div_GroupBuyRegion .prc strong")
@@ -24,9 +26,6 @@ async function q10CheckPrice(url) {
             if(!price) { //if no promos at all, regular price
                 price= document.querySelector('dl[class="detailsArea lsprice"]')
             }
-            // if(!price) { //time sale price
-            //     price = document.querySelector('#discount_info dd strong')
-            // }
             if(!price) { //last resort, shopping cart
                 price = document.querySelector('#sub_ProcessBtn_cart .prc')
             }
@@ -51,8 +50,6 @@ async function q10CheckPrice(url) {
             return price;
         })
 
-
-        console.log("in q10, data: " + data);
         return data;
 
        
