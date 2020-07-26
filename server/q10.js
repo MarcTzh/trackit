@@ -24,9 +24,9 @@ async function q10CheckPrice(url) {
             if(!price) { //if no promos at all, regular price
                 price= document.querySelector('dl[class="detailsArea lsprice"]')
             }
-            if(!price) { //time sale price
-                price = document.querySelector('#discount_info dd strong')
-            }
+            // if(!price) { //time sale price
+            //     price = document.querySelector('#discount_info dd strong')
+            // }
             if(!price) { //last resort, shopping cart
                 price = document.querySelector('#sub_ProcessBtn_cart .prc')
             }
