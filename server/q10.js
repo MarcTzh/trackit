@@ -46,7 +46,7 @@ async function q10CheckPrice(url) {
                         .replace('Group Buy Price', '')
                 )
             } else {
-                return 0;
+                return null;
             }
             return price;
         })

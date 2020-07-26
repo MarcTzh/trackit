@@ -33,13 +33,11 @@ async function checkLazadaPrice(url) {
                         .replace(',', '')
                 )
             } else {
-                return 0;
+                return null;
             }
-            console.log("Lazada: " + price)
             return price;
         })
 
-        console.log(data);
         return data;
     } catch (err) {
         console.log(err);

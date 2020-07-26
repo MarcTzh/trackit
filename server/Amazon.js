@@ -37,12 +37,11 @@ async function checkAmazonPrice(url) {
                         .replace(',', '')
                 )
             } else {
-                return 0;
+                return null;
             }
             return price;
         })
 
-        console.log("amazon: " + data);
         return data;
        
     } catch (err) {
