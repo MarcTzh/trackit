@@ -138,6 +138,12 @@ mutation UpdateCategory($id: ID!, $name: String!) {
 }
 `;
 
+const UPDATE_PRODUCT_MUTATION = gql `
+mutation UpdateProduct($id: ID!, $name: String!, $url: String!, $category: String!) {
+    updateProduct(id: $id, name: $name, url: $url, category: $category)
+}
+`;
+
 const ADD_PRICE_AND_DATE_MUTATION = gql `
     mutation addPriceAndDate($id: ID!, $url: String!, $date: String!, $price: Float, $priceArray: [Float]!, $dateArray: [String!]!, $email: String!) {
         addPriceAndDate(id: $id, url: $url, date: $date, price: $price, priceArray: $priceArray, dateArray: $dateArray, email: $email)
@@ -156,6 +162,8 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
     const [removeCategory] = useMutation(REMOVE_CATEGORIES_MUTATION);
 
     const [updateCategory] = useMutation(UPDATE_CATEGORY_MUTATION);
+
+    const [updateProduct] = useMutation(UPDATE_PRODUCT_MUTATION);
 
     // const [groupingBoolean, setGroupingBoolean] = useState(false);
 
@@ -205,7 +213,7 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
             }
         )
         productData.products.map((product) => {
-            if(product.category === cat.name) {
+            if(product.category === cat.name && product.userID === userData.user.id) {
                 removeProduct(
                     {
                         variables: {
@@ -215,6 +223,38 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                     }
                 )
         
+            }
+            return null;
+        } 
+        )
+    } 
+
+
+    function updateCategoryAndProduct(oldCat, newCat) {
+        updateCategory(
+            {
+                variables: 
+                {
+                    id: oldCat.id,
+                    name: newCat.name,
+                },
+                refetchQueries: [{ query: CATEGORIES_QUERY}] 
+            }
+        )
+        productData.products.map((product) => {
+            if(product.userID === userData.user.id && product.category === oldCat.name ) {
+                updateProduct(
+                    {
+                        variables: 
+                        {
+                            id: product.id,
+                            name: product.name,
+                            url: product.url,
+                            category: newCat.name
+                        },
+                        refetchQueries: [{ query: PRODUCTS_QUERY}] 
+                    }
+                )
             }
             return null;
         } 
@@ -244,19 +284,9 @@ const ADD_PRICE_AND_DATE_MUTATION = gql `
                                 onRowUpdate: (newData, oldData) =>
                                 new Promise((resolve, reject) => {
                                     setTimeout(() => {
-                                        const categoryID = oldData.id;
-                                        updateCategory(
-                                            {
-                                                variables: 
-                                                {
-                                                    id: categoryID,
-                                                    name: newData.name,
-                                                },
-                                                refetchQueries: [{ query: CATEGORIES_QUERY}] 
-                                            }
-                                        )
+                                        // updateCategoryAndProduct(newData, oldData)
                                     resolve();
-                                    }, 1000)
+                                    }, 300000)
                                 })
                             }}
                             actions={[
