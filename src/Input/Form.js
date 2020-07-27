@@ -336,11 +336,11 @@ function handleSubmit() {
         </div>
 
         <div>
-        <div className={classes.subtitle3}>Product information</div> 
+        <div className={classes.subtitle3}>Product Information</div> 
         <GeneralTextField
             onChange ={handleUrlChange}
             value = {url}
-            placeholder ="Product url"
+            placeholder ="Product URL"
           />
         {/* autocomplete button */}
         {/* <div style={{paddingTop: 10, paddingBottom: 50}}>
@@ -348,7 +348,7 @@ function handleSubmit() {
             fullWidth={true} className={classes.textField} text="Autocomplete" />
         </div> */}
           <GeneralTextField
-            placeholder="Product name"
+            placeholder="Product Name"
             onChange ={handleNameChange}
             value = {name}
           />

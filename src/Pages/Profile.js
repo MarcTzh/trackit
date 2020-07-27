@@ -318,7 +318,7 @@ function Profile() {
             <div className={classes.paper} style={{ margin: 30 , padding: 30}}>
                 <div style={{ marginBottom: 30}}> 
                     <div className={classes.title}>Charts</div>
-                    <div className={classes.subtitle}>Please choose a category to display</div>
+                    <div className={classes.subtitle}>Please Choose a Category to Display</div>
                 </div>
                 <div>
                     <CategoryOptions callBackFromParent={setCategoryValue} />

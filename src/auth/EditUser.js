@@ -106,27 +106,27 @@ export default function EditUser() {
 
     return (
         <div>
-            <div className={classes.subtitle}>Edit account details</div>
+            <div className={classes.subtitle}>Edit Account Details</div>
 
-            <div className={classes.subtitle2}>Notification settings</div>
+            <div className={classes.subtitle2}>Notification Settings</div>
             <Slider editSliderValue={(value) => setNotiSettings(value)}/>
             
-            <div className={classes.subtitle2}>Edit email</div>
+            <div className={classes.subtitle2}>Edit Email</div>
             <GeneralTextField
-            placeholder="New email"
+            placeholder="New Email"
             onChange ={(e) => setNewEmail(e.target.value)}
             type="email"
             //   value = "new email"
             />
 
-            <div className={classes.subtitle2}>Edit password</div>
+            <div className={classes.subtitle2}>Edit Password</div>
             <GeneralTextField
-            placeholder="New password"
+            placeholder="New Password"
             onChange ={(e) => setNewPassword(e.target.value)}
             //   value = "new email"
             />
             
-            <div className={classes.subtitle2}>Edit display name</div>
+            <div className={classes.subtitle2}>Edit Display Name</div>
             <GeneralTextField
             placeholder={userData.user.displayName}
             onChange ={(e) => setNewDisplayName(e.target.value)}
@@ -134,9 +134,9 @@ export default function EditUser() {
             //   value = "new email"
             />
 
-            <div className={classes.subtitle2}>Enter current password</div> 
+            <div className={classes.subtitle2}>Enter Current Password</div> 
             <GeneralTextField
-            placeholder="Current password"
+            placeholder="Current Password"
             variant="outlined"
             onChange ={(e) => setCurrPassword(e.target.value)}
             type="password"

@@ -38,7 +38,7 @@ function Settings(props) {
         <>
         {userData.user ? (
         <div className={classes.paper} style={{margin: 30 , padding: 30}}>   
-            <div className={classes.title}>User settings</div>
+            <div className={classes.title}>User Settings</div>
 
             <EditUser />
         </div >

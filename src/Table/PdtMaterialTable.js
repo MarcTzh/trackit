@@ -299,7 +299,7 @@ let priceDrops = 0;
                             columns={[
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category', editable: 'never'},
-                                { title: 'Brand', field: 'brand', editable: 'never' },
+                                { title: 'Platform', field: 'brand', editable: 'never' },
                                 // { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
                                 //     (rowData.price == null || rowData.price === 0)
                                 //     //url not working

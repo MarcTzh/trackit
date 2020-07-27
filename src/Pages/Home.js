@@ -187,7 +187,7 @@ function Home(props) {
                     <div className={classes.title}>Welcome {userData.user.displayName}</div>
                 ) : null }
             </div>
-            <div style={{paddingBottom: 10}} className={classes.subtitle}>Your product summary</div>
+            <div style={{paddingBottom: 10}} className={classes.subtitle}>Your Product Summary</div>
             {/* <img src={Poster2} alt="Poster2" /> */}
           </div>
           
