@@ -300,34 +300,34 @@ let priceDrops = 0;
                                 { title: 'Name', field: 'name' },
                                 { title: 'Category', field: 'category', editable: 'never'},
                                 { title: 'Brand', field: 'brand', editable: 'never' },
-                                { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
-                                    (rowData.price == null || rowData.price === 0)
-                                    //url not working
-                                    ? <div>
-                                        <Tooltip title="URL is dead">
-                                            <IconButton aria-label="delete">
-                                                <ErrorIcon htmlColor="#dc3646"/>
-                                            </IconButton>
-                                        </Tooltip>
-                                        </div>
-                                    : (rowData.price < rowData.minPrice)
-                                        //price drop
-                                        ? <div>
-                                        <Tooltip title="Price drop">
-                                            <IconButton aria-label="delete">
-                                                <NotificationsActiveIcon htmlColor="#2e7cff"/>
-                                            </IconButton>
-                                            </Tooltip>
-                                        </div>
-                                        //url working
-                                        : <div>
-                                            <Tooltip title="URL is working">
-                                                <IconButton aria-label="delete">
-                                                    <CheckCircleIcon htmlColor="#34aa4a"/>
-                                                </IconButton>
-                                            </Tooltip>
-                                            </div>
-                                },
+                                // { title: 'Status', field: 'imageUrl' ,editable: 'never', render: (rowData) => 
+                                //     (rowData.price == null || rowData.price === 0)
+                                //     //url not working
+                                //     ? <div>
+                                //         <Tooltip title="URL is dead">
+                                //             <IconButton aria-label="delete">
+                                //                 <ErrorIcon htmlColor="#dc3646"/>
+                                //             </IconButton>
+                                //         </Tooltip>
+                                //         </div>
+                                //     : (rowData.price < rowData.minPrice)
+                                //         //price drop
+                                //         ? <div>
+                                //         <Tooltip title="Price drop">
+                                //             <IconButton aria-label="delete">
+                                //                 <NotificationsActiveIcon htmlColor="#2e7cff"/>
+                                //             </IconButton>
+                                //             </Tooltip>
+                                //         </div>
+                                //         //url working
+                                //         : <div>
+                                //             <Tooltip title="URL is working">
+                                //                 <IconButton aria-label="delete">
+                                //                     <CheckCircleIcon htmlColor="#34aa4a"/>
+                                //                 </IconButton>
+                                //             </Tooltip>
+                                //             </div>
+                                // },
                                 { title: 'Price', field: 'price', type: 'currency', editable: 'never' },
                                 { title: 'ID', field: 'id', hidden: true},
                                 { title: 'URL', field: 'url', hidden: urlBoolean, editable: 'onUpdate'},
@@ -436,9 +436,9 @@ let priceDrops = 0;
                                             <ToggleButton style ={{ colour :"#fff"}} value="Show URL" aria-label="Show URL">
                                                 <LinkIcon  onClick ={() => setUrlBoolean(!urlBoolean)}/>
                                             </ToggleButton>
-                                            {/* <ToggleButton value="Enable Sort" aria-label="Enable Sort">
+                                            <ToggleButton value="Enable Sort" aria-label="Enable Sort">
                                                 <SortIcon  onClick ={() => setGroupingBoolean(!groupingBoolean)}/>
-                                            </ToggleButton> */}
+                                            </ToggleButton>
                                             <ToggleButton value="Show notifications" aria-label="Show notifications">
                                                 <NotificationsIcon onClick ={() => setShowNoti(!showNoti)}/>
                                             </ToggleButton>

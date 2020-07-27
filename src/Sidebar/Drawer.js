@@ -236,10 +236,10 @@ export default function PersistentDrawerLeft(props) {
             <ListItemIcon><SettingsIcon color="primary"/></ListItemIcon>
                 Settings
             </MenuItem>
-            <MenuItem component={Link} to="/admin">
+            {/* <MenuItem component={Link} to="/admin">
             <ListItemIcon><SupervisorAccountIcon color="primary"/></ListItemIcon>
                 Admin
-            </MenuItem>
+            </MenuItem> */}
         </MenuList>
 
         </List>

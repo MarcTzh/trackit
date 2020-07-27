@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import Loading from '../Loaders/Loading';
-// import Poster2 from "../Images/Poster2.jpg";
+import Poster3 from "../Images/Poster3.jpg";
 import UserContext from '../context/UserContext';
 import Paper from '@material-ui/core/Paper';
 import ComplexGrid from '../Dashboard/ComplexGrid';
@@ -15,7 +15,7 @@ import BigNumber from '../Chart/BigNumber';
 // import Chart from '../Chart/Chart';
 import BarChart from '../Chart/BarChart';
 import * as styles from '../style.css'
-// import GeneralButton from '../Input/GeneralButton';
+import GeneralButton from '../Input/GeneralButton';
 import { castArray } from 'lodash';
 // import Cards from '../Dashboard/Cards';
 import { useHistory } from "react-router-dom";
@@ -237,15 +237,9 @@ function Home(props) {
                   
       ) : (
           <>
-          <h2 style={{textAlign:"center"}}>You are not logged in</h2>
+          <div style={{padding:30}} className ={classes.subtitle}>Welcome to Trackit, please log in</div>
           
-          {/* <div style={{marginTop: 15}}>
-            <GeneralButton 
-                handleSubmit={login}
-                fullWidth={true}
-                text="Log in"
-            />
-          </div> */}
+          <img src={Poster3} alt="Poster3" />
           </>
       )}
       </>
