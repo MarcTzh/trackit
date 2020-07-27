@@ -127,8 +127,8 @@ const REMOVE_MUTATION = gql `
 `;
 
 const UPDATE_PRODUCT_MUTATION = gql `
-mutation UpdateProduct($id: ID!, $name: String!, $url: String!) {
-    updateProduct(id: $id, name: $name, url: $url)
+mutation UpdateProduct($id: ID!, $name: String!, $url: String!, $category: String!) {
+    updateProduct(id: $id, name: $name, url: $url, category: $category)
 }
 `;
 
@@ -367,7 +367,8 @@ let priceDrops = 0;
                                                 {
                                                     id: productID,
                                                     name: newData.name,
-                                                    url: newData.url
+                                                    url: newData.url,
+                                                    category: newData.category
                                                 },
                                                 refetchQueries: [{ query: PRODUCTS_QUERY}] 
                                             }

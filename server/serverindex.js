@@ -126,6 +126,7 @@ const typeDefs = `
         id: ID!,
         name: String!
         url: String!
+        category: String!
       ): Boolean
 
       removeCategory(
@@ -220,8 +221,8 @@ const resolvers = {
         return true;
       },
 
-      updateProduct: async (_, {id, name, url}) => {
-        await Product.findByIdAndUpdate(id, {name, url});
+      updateProduct: async (_, {id, name, url, category}) => {
+        await Product.findByIdAndUpdate(id, {name, url, category});
         return true;
       },
 
