@@ -94,11 +94,13 @@ export default function Register() {
           placeholder="Password"
           onChange ={(e) => setPassword(e.target.value)}
           value = {password}
+          type="password"
         />
         <GeneralTextField
           placeholder="Verify password"
           onChange ={(e) => setPasswordCheck(e.target.value)}
-          value = {password}
+          value = {passwordCheck}
+          type="password"
         />
         <GeneralTextField
           placeholder="Display name"
