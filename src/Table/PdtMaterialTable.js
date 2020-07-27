@@ -160,7 +160,7 @@ let priceDrops = 0;
 
     const { userData } = useContext(UserContext);
 
-    const [showNoti, setShowNoti] = useState(true);
+    const [showNoti, setShowNoti] = useState(false);
 
     const [displayedPdts, setDisplayedPdts] = useState();
 
